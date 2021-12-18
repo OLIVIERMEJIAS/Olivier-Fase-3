@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace PresentacionWeb
 {
-    public partial class wfrSinPermiso : System.Web.UI.Page
+    public partial class wfrEncargados : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {

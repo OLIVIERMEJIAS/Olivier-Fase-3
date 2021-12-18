@@ -11,7 +11,7 @@ namespace PresentacionWeb
 {
 
 
-    public partial class WebForm2
+    public partial class wfrInicio
     {
     }
 }
