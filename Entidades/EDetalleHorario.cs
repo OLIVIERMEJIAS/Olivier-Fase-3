@@ -7,7 +7,7 @@ namespace Entidades
     public class EDetalleHorario
     {
         public byte HorarioId { get; set; }
-        public ushort ProfesorID { get; set; }
+        public byte ProfesorID { get; set; }
         public byte AulaID { get; set; }
         public char Dia { get; set; }
         public string HoraInicio { get; set; }

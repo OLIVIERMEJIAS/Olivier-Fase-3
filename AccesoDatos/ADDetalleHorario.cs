@@ -41,7 +41,7 @@ namespace AccesoDatos
                 {
                     result = true;
                 }
-
+                conexion.Close();
             }
             catch (Exception)
             {
@@ -55,6 +55,107 @@ namespace AccesoDatos
             }
             return result;
         }
+
+        public bool existe(EDetalleHorario det)
+        {
+
+            bool result = false;
+            SqlConnection conexion = new SqlConnection(CadConexion);
+            string sentencia = "Select 1 From DetallesHorario Where " +
+                "horarioId = @horId and profesorId = @profId and aulaId = " +
+                "@aulaId and dia = @dia and horaInicio = " +
+                "@horI and horaFin = @horF";
+            SqlCommand comando = new SqlCommand(sentencia, conexion);
+            comando.Parameters.AddWithValue("@horId", det.HorarioId);
+            comando.Parameters.AddWithValue("@profId", det.ProfesorID);
+            comando.Parameters.AddWithValue("@aulaId", det.AulaID);
+            comando.Parameters.AddWithValue("@dia", det.Dia);
+            comando.Parameters.AddWithValue("@horI", det.HoraInicio);
+            comando.Parameters.AddWithValue("@horF", det.HoraFin);
+
+            try
+            {
+                conexion.Open();
+                if (comando.ExecuteNonQuery() != 0)
+                {
+                    result = true;
+                }
+                conexion.Close();
+            }
+            catch (Exception)
+            {
+                conexion.Close();
+                throw new Exception("No se pudo realizar conexión de datos");
+            }
+            finally
+            {
+                conexion.Dispose();
+                comando.Dispose();
+            }
+            return result;
+        }
+
+
+        public bool hayRegistros()
+        {
+            SqlDataReader reader;
+            bool result = false;
+            SqlConnection conexion = new SqlConnection(CadConexion);
+            string sentencia = "Select 1 from DetallesHorario";
+            SqlCommand comando = new SqlCommand(sentencia, conexion);
+            try
+            {
+                conexion.Open();
+                reader = comando.ExecuteReader();
+                if ( reader != null)
+                {
+                    result = true;
+                }
+                conexion.Close();
+            }
+            catch (Exception)
+            {
+                conexion.Close();
+                throw new Exception("No se pudo realizar conexión de datos");
+            }
+            finally
+            {
+                conexion.Dispose();
+                comando.Dispose();
+            }
+            return result;
+        }
+
+
+        public bool eliminarRegistros()
+        {
+
+            bool result = false;
+            SqlConnection conexion = new SqlConnection(CadConexion);
+            string sentencia = "Delete From DetallesHorarios";
+            SqlCommand comando = new SqlCommand(sentencia, conexion);
+            try
+            {
+                conexion.Open();
+                if (comando.ExecuteNonQuery() != 0)
+                {
+                    result = true;
+                }
+                conexion.Close();
+            }
+            catch (Exception)
+            {
+                conexion.Close();
+                throw new Exception("No se pudo realizar conexión de datos");
+            }
+            finally
+            {
+                conexion.Dispose();
+                comando.Dispose();
+            }
+            return result;
+        }
+
         public DataTable listarPorSeccion(string sec)
         {
 

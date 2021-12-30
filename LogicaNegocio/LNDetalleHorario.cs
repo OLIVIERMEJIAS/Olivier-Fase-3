@@ -70,5 +70,47 @@ namespace LogicaNegocio
             }
         }
 
+        public bool hayRegistros()
+        {
+            ADDetalleHorario adDH = new ADDetalleHorario(CadCadena);
+            try
+            {
+                return adDH.hayRegistros();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        public bool eliminarRegistros()
+        {
+            ADDetalleHorario adDH = new ADDetalleHorario(CadCadena);
+            try
+            {
+                return adDH.eliminarRegistros();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        public bool existe(EDetalleHorario det)
+        {
+            ADDetalleHorario adDH = new ADDetalleHorario(CadCadena);
+
+            try
+            {
+                return adDH.existe(det);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
     }
 }

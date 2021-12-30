@@ -34,5 +34,34 @@ namespace LogicaNegocio
             }
             return result;
         }
+
+        public byte numLecciones(int profId)
+        {
+            ADProfesor adp = new ADProfesor(CadConexion);
+            try
+            {
+                return adp.numLecciones(profId);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        public int accederAProfesor(byte mateId)
+        {
+            ADProfesor adp = new ADProfesor(CadConexion);
+
+            try
+            {
+                return adp.accederAProfesor(mateId);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
     }
 }
