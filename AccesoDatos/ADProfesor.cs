@@ -59,30 +59,24 @@ namespace AccesoDatos
         public byte numLecciones(int profId)
         {
             byte result = 0;
-            string sentencia = "contarLecciones";
+            Object dato;
+            string sentencia = $"Select Count(profesorId) From DetallesHorario Where profesorId = {@profId}";
 
             SqlConnection conexion = new SqlConnection(CadConexion);
             SqlCommand comando = new SqlCommand(sentencia, conexion);
 
-            comando.Parameters.AddWithValue("@profId", profId).Direction = ParameterDirection.Input;
-
-            //DEFINIR QUE EL TIPO DE COMANDO A EJECUTAR ES UN STORE PROCEDURE
-            comando.CommandType = CommandType.StoredProcedure;
-
-            // ↓ Parametro de SALIDA
-            comando.Parameters.Add("@cont", SqlDbType.TinyInt).Direction = ParameterDirection.InputOutput;
-
             try
             {
                 conexion.Open();
-                comando.ExecuteNonQuery();
-                result = byte.Parse(comando.Parameters["@cont"].Value.ToString());
+                dato = comando.ExecuteScalar();
+                if(dato != null)
+                     result = byte.Parse(dato.ToString());
                 conexion.Close();
             }
             catch (Exception)
             {
                 conexion.Close();
-                throw new Exception("Se ha presentando un error con el Procedimiento Almacenado");
+                throw new Exception("Se ha presentando un error con el acceso a datos");
             }
             finally
             {
@@ -96,25 +90,24 @@ namespace AccesoDatos
         public int accederAProfesor(byte mateId)
         {
 
-            Object escalar;
+            Object dato;
             int result = -1;
-            EMateria mat = new EMateria();
+            string aux;
             SqlConnection conexion = new SqlConnection(CadConexion);
-            string sentencia = "Select profesorId From MateriasProfesores mp " +
+            string sentencia = "Select profesorId From MateriasProfesores " +
                 $"where materiaId = {mateId}";
             SqlCommand comando = new SqlCommand(sentencia, conexion);
-
-            conexion.Close();
-
             try
             {
                 conexion.Open();
-                escalar = comando.ExecuteScalar();
-                if (escalar != null)
+                dato = comando.ExecuteScalar();
+                if (dato != null)
                 {
-                    result = int.Parse(escalar.ToString());
+                 
+                    aux = dato.ToString();
+                    result = int.Parse(aux);
                 }
-
+                conexion.Close();
             }
             catch (Exception)
             {
@@ -128,6 +121,70 @@ namespace AccesoDatos
             }
             return result;
 
+        }
+
+        public bool disponibleHoraF(string horaF, char dia, int profeId)
+        {
+
+            bool result = true;
+            SqlConnection conexion = new SqlConnection(CadConexion);
+            string sentencia = "Select 1 From DetallesHorario Where " +
+                $"profesorId = {profeId} and dia = '{dia}' " +
+                $"and horaFin = '{horaF}'";
+            SqlCommand comando = new SqlCommand(sentencia, conexion);
+
+            try
+            {
+                conexion.Open();
+                if (comando.ExecuteScalar() != null)
+                {
+                    result = false;
+                }
+                conexion.Close();
+            }
+            catch (Exception)
+            {
+                conexion.Close();
+                throw new Exception("No se pudo realizar conexión de datos");
+            }
+            finally
+            {
+                conexion.Dispose();
+                comando.Dispose();
+            }
+            return result;
+        }
+
+        public bool disponibleHoraI(string horaI, char dia, int profeId)
+        {
+
+            bool result = true;
+            SqlConnection conexion = new SqlConnection(CadConexion);
+            string sentencia = "Select 1 From DetallesHorario Where " +
+                $"profesorId = {profeId} and dia = '{dia}' and horaInicio = " +
+                $"'{horaI}'";
+            SqlCommand comando = new SqlCommand(sentencia, conexion);
+
+            try
+            {
+                conexion.Open();
+                if (comando.ExecuteScalar() != null)
+                {
+                    result = false;
+                }
+                conexion.Close();
+            }
+            catch (Exception)
+            {
+                conexion.Close();
+                throw new Exception("No se pudo realizar conexión de datos");
+            }
+            finally
+            {
+                conexion.Dispose();
+                comando.Dispose();
+            }
+            return result;
         }
     }
 }

@@ -95,6 +95,7 @@ namespace AccesoDatos
             return result;
         }
 
+       
 
         public bool hayRegistros()
         {
@@ -103,11 +104,12 @@ namespace AccesoDatos
             SqlConnection conexion = new SqlConnection(CadConexion);
             string sentencia = "Select 1 from DetallesHorario";
             SqlCommand comando = new SqlCommand(sentencia, conexion);
+             
             try
             {
-                conexion.Open();
+               conexion.Open();
                 reader = comando.ExecuteReader();
-                if ( reader != null)
+                if ( reader.HasRows)
                 {
                     result = true;
                 }

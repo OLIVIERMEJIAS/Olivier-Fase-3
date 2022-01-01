@@ -5,7 +5,7 @@ using AccesoDatos;
 
 namespace LogicaNegocio
 {
-    class LNAula
+    public class LNAula
     {
         public string CadConexion { get; set; }
         
@@ -19,12 +19,26 @@ namespace LogicaNegocio
             CadConexion = cad;
         }
 
-        public bool disponible(string horaI, string horaF, char dia, byte aulaId)
+        public bool disponibleHoraI(string horaI, char dia, byte aulaId)
         {
             ADAula adA = new ADAula(CadConexion);
             try
             {
-                return adA.disponible(horaI, horaF, dia, aulaId);
+                return adA.disponibleHoraI(horaI, dia, aulaId);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        public bool disponibleHoraF(string horaF, char dia, byte aulaId)
+        {
+            ADAula adA = new ADAula(CadConexion);
+            try
+            {
+                return adA.disponibleHoraF(horaF, dia, aulaId);
             }
             catch (Exception ex)
             {

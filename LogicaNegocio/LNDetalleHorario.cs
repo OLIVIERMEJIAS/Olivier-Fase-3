@@ -84,6 +84,8 @@ namespace LogicaNegocio
             }
         }
 
+        
+
         public bool eliminarRegistros()
         {
             ADDetalleHorario adDH = new ADDetalleHorario(CadCadena);

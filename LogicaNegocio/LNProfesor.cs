@@ -63,5 +63,31 @@ namespace LogicaNegocio
                 throw ex;
             }
         }
+
+        public bool disponibleHoraI(string horaI, char dia, int profeId)
+        {
+            ADProfesor adp = new ADProfesor(CadConexion); try
+            {
+                return adp.disponibleHoraI(horaI, dia, profeId);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        public bool disponibleHoraF(string horaF, char dia, int profeId)
+        {
+            ADProfesor adp = new ADProfesor(CadConexion); try
+            {
+                return adp.disponibleHoraF(horaF, dia, profeId);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
     }
 }

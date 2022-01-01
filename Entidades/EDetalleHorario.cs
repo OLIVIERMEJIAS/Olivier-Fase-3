@@ -7,7 +7,7 @@ namespace Entidades
     public class EDetalleHorario
     {
         public byte HorarioId { get; set; }
-        public byte ProfesorID { get; set; }
+        public int ProfesorID { get; set; }
         public byte AulaID { get; set; }
         public char Dia { get; set; }
         public string HoraInicio { get; set; }
@@ -24,7 +24,7 @@ namespace Entidades
         }
 
         public EDetalleHorario(byte horarId,
-            byte prof, byte aul, char diaSem,
+            int prof, byte aul, char diaSem,
             string horI, string horF)
         {
             HorarioId = horarId;
