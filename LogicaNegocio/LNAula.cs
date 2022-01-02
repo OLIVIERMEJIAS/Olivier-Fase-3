@@ -19,7 +19,7 @@ namespace LogicaNegocio
             CadConexion = cad;
         }
 
-        public bool disponibleHoraI(string horaI, char dia, byte aulaId)
+        public string disponibleHoraI(string horaI, char dia, byte aulaId)
         {
             ADAula adA = new ADAula(CadConexion);
             try
@@ -33,18 +33,6 @@ namespace LogicaNegocio
             }
         }
 
-        public bool disponibleHoraF(string horaF, char dia, byte aulaId)
-        {
-            ADAula adA = new ADAula(CadConexion);
-            try
-            {
-                return adA.disponibleHoraF(horaF, dia, aulaId);
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
-        }
+        
     }
 }

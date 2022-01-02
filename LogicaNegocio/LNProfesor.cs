@@ -64,7 +64,7 @@ namespace LogicaNegocio
             }
         }
 
-        public bool disponibleHoraI(string horaI, char dia, int profeId)
+        public string disponibleHoraI(string horaI, char dia, int profeId)
         {
             ADProfesor adp = new ADProfesor(CadConexion); try
             {
@@ -77,17 +77,6 @@ namespace LogicaNegocio
             }
         }
 
-        public bool disponibleHoraF(string horaF, char dia, int profeId)
-        {
-            ADProfesor adp = new ADProfesor(CadConexion); try
-            {
-                return adp.disponibleHoraF(horaF, dia, profeId);
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
-        }
+        
     }
 }

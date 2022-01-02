@@ -123,44 +123,15 @@ namespace AccesoDatos
 
         }
 
-        public bool disponibleHoraF(string horaF, char dia, int profeId)
+       
+
+        public string disponibleHoraI(string horaI, char dia, int profeId)
         {
 
-            bool result = true;
+            string result = "";
+            Object dato;
             SqlConnection conexion = new SqlConnection(CadConexion);
-            string sentencia = "Select 1 From DetallesHorario Where " +
-                $"profesorId = {profeId} and dia = '{dia}' " +
-                $"and horaFin = '{horaF}'";
-            SqlCommand comando = new SqlCommand(sentencia, conexion);
-
-            try
-            {
-                conexion.Open();
-                if (comando.ExecuteScalar() != null)
-                {
-                    result = false;
-                }
-                conexion.Close();
-            }
-            catch (Exception)
-            {
-                conexion.Close();
-                throw new Exception("No se pudo realizar conexión de datos");
-            }
-            finally
-            {
-                conexion.Dispose();
-                comando.Dispose();
-            }
-            return result;
-        }
-
-        public bool disponibleHoraI(string horaI, char dia, int profeId)
-        {
-
-            bool result = true;
-            SqlConnection conexion = new SqlConnection(CadConexion);
-            string sentencia = "Select 1 From DetallesHorario Where " +
+            string sentencia = "Select horaFin From DetallesHorario Where " +
                 $"profesorId = {profeId} and dia = '{dia}' and horaInicio = " +
                 $"'{horaI}'";
             SqlCommand comando = new SqlCommand(sentencia, conexion);
@@ -168,9 +139,10 @@ namespace AccesoDatos
             try
             {
                 conexion.Open();
-                if (comando.ExecuteScalar() != null)
+                dato = comando.ExecuteScalar();
+                if (dato != null)
                 {
-                    result = false;
+                    result = dato.ToString();
                 }
                 conexion.Close();
             }

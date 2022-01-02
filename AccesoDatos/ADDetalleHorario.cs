@@ -25,7 +25,7 @@ namespace AccesoDatos
 
             bool result = false;
             SqlConnection conexion = new SqlConnection(CadConexion);
-            string sentencia = "Insert Into DetallesHorario Values(@horId,@profId,aulaId,@dia,@horI,@horF)";
+            string sentencia = "Insert Into DetallesHorario Values(@horId,@profId,@aulaId,@dia,@horI,@horF)";
             SqlCommand comando = new SqlCommand(sentencia, conexion);
             comando.Parameters.AddWithValue("@horId", det.HorarioId);
             comando.Parameters.AddWithValue("@profId", det.ProfesorID);
@@ -56,44 +56,7 @@ namespace AccesoDatos
             return result;
         }
 
-        public bool existe(EDetalleHorario det)
-        {
-
-            bool result = false;
-            SqlConnection conexion = new SqlConnection(CadConexion);
-            string sentencia = "Select 1 From DetallesHorario Where " +
-                "horarioId = @horId and profesorId = @profId and aulaId = " +
-                "@aulaId and dia = @dia and horaInicio = " +
-                "@horI and horaFin = @horF";
-            SqlCommand comando = new SqlCommand(sentencia, conexion);
-            comando.Parameters.AddWithValue("@horId", det.HorarioId);
-            comando.Parameters.AddWithValue("@profId", det.ProfesorID);
-            comando.Parameters.AddWithValue("@aulaId", det.AulaID);
-            comando.Parameters.AddWithValue("@dia", det.Dia);
-            comando.Parameters.AddWithValue("@horI", det.HoraInicio);
-            comando.Parameters.AddWithValue("@horF", det.HoraFin);
-
-            try
-            {
-                conexion.Open();
-                if (comando.ExecuteNonQuery() != 0)
-                {
-                    result = true;
-                }
-                conexion.Close();
-            }
-            catch (Exception)
-            {
-                conexion.Close();
-                throw new Exception("No se pudo realizar conexión de datos");
-            }
-            finally
-            {
-                conexion.Dispose();
-                comando.Dispose();
-            }
-            return result;
-        }
+       
 
        
 
@@ -134,7 +97,7 @@ namespace AccesoDatos
 
             bool result = false;
             SqlConnection conexion = new SqlConnection(CadConexion);
-            string sentencia = "Delete From DetallesHorarios";
+            string sentencia = "Delete From DetallesHorario";
             SqlCommand comando = new SqlCommand(sentencia, conexion);
             try
             {
@@ -184,5 +147,41 @@ namespace AccesoDatos
 
             return datos;
         }
+
+        public string disponibleHoraI(string horaI, char dia, int horId)
+        {
+
+            string result = "";
+            Object dato;
+            SqlConnection conexion = new SqlConnection(CadConexion);
+            string sentencia = "Select horaFin From DetallesHorario Where " +
+                $"horaInicio = '{horaI}' and dia = '{dia}' and horarioId = " +
+                $"'{horId}'";
+            SqlCommand comando = new SqlCommand(sentencia, conexion);
+
+            try
+            {
+                conexion.Open();
+                dato = comando.ExecuteScalar();
+                if (dato != null)
+                {
+                    result = dato.ToString();
+                }
+                conexion.Close();
+            }
+            catch (Exception)
+            {
+                conexion.Close();
+                throw new Exception("No se pudo realizar conexión de datos");
+            }
+            finally
+            {
+                conexion.Dispose();
+                comando.Dispose();
+            }
+            return result;
+        }
+
+        
     }
 }

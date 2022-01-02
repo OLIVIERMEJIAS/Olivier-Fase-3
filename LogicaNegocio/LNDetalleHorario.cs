@@ -86,6 +86,21 @@ namespace LogicaNegocio
 
         
 
+        public string disponibleHoraI(string horaI, char dia, int horId)
+        {
+            ADDetalleHorario adDH = new ADDetalleHorario(CadCadena);
+
+            try
+            {
+                return adDH.disponibleHoraI(horaI, dia, horId);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
         public bool eliminarRegistros()
         {
             ADDetalleHorario adDH = new ADDetalleHorario(CadCadena);
@@ -100,19 +115,6 @@ namespace LogicaNegocio
             }
         }
 
-        public bool existe(EDetalleHorario det)
-        {
-            ADDetalleHorario adDH = new ADDetalleHorario(CadCadena);
-
-            try
-            {
-                return adDH.existe(det);
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
-        }
+        
     }
 }
