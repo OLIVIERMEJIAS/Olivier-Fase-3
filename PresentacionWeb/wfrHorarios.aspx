@@ -37,47 +37,25 @@
         </div>
         <br />
         <div class="container" style="width: fit-content">
-            <asp:Label ID="lblSeccion" runat="server" Text="Sección"></asp:Label>
-
-            <div class="input-group mb-3">
-                <asp:TextBox CssClass="form-control" ID="txtSeccion" runat="server"  ReadOnly="True" aria-describedby="btnModalSeccion" ValidationGroup="5"></asp:TextBox>
-                
-                <button class="btn btn-outline-primary" type="button" id="btnModalSeccion"
-                data-bs-toggle="modal"
-                data-bs-target="#seccionModal" style="width: 62px">Buscar</button>
-            </div>
+            <asp:DropDownList ID="ddlSecciones" runat="server">
+                <asp:ListItem Selected="True">7-1</asp:ListItem>
+                <asp:ListItem>7-2</asp:ListItem>
+                <asp:ListItem>7-3</asp:ListItem>
+                <asp:ListItem>7-4</asp:ListItem>
+                <asp:ListItem>8-1</asp:ListItem>
+                <asp:ListItem>8-2</asp:ListItem>
+                <asp:ListItem>8-3</asp:ListItem>
+                <asp:ListItem>9-1</asp:ListItem>
+                <asp:ListItem>9-2</asp:ListItem>
+                <asp:ListItem>10-1</asp:ListItem>
+                <asp:ListItem>10-2</asp:ListItem>
+                <asp:ListItem>11-1</asp:ListItem>
+                <asp:ListItem>12-1</asp:ListItem>
+            </asp:DropDownList>
             <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ErrorMessage="Sección incompleta!! Por favor, complétela." ValidationGroup="5" ControlToValidate="txtSeccion" ForeColor="Red">*</asp:RequiredFieldValidator>
        </div>
-
-         <%--modal sección--%>
-        <div class="modal" tabindex="-1" id="seccionModal">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title">Buscar Sección</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                <div class="row mt-3">
-                    <div class="col-auto">
-                        <asp:Label ID="Label5" runat="server" Text="Sección"></asp:Label>
-                    </div>
-                    <div class="col-auto">
-                        <asp:TextBox ID="txtNumSeccion" runat="server" CccClass="form-control" ValidationGroup="1"></asp:TextBox>
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="RequiredFieldValidator" ValidationGroup="1" ControlToValidate="txtNumSeccion"></asp:RequiredFieldValidator>
-                        <asp:ValidationSummary ID="ValidationSummary1" runat="server" ValidationGroup="1" />
-                    </div>
-                    <div class="col-auto">
-                        <asp:Button ID="btnBuscarSeccion" runat="server" Text="Filtrar" CssClass="btn btn-secondary" />
-                    </div>
-                </div>
-                    <br />
-                  <asp:GridView ID="gdvSecciones" runat="server"></asp:GridView>
-                </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-              </div>
-            </div>
-          </div>
-        </div>
+    <br />
+    <br />
+    <asp:GridView ID="gdvLunes" runat="server"></asp:GridView>
+        
 </asp:Content>
