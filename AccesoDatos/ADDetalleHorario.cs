@@ -91,6 +91,75 @@ namespace AccesoDatos
             return result;
         }
 
+        public bool buscarHorEspecialidadSegDia(int horId, int profeId, ref string horI,
+           ref byte limInfAula, ref char diaSem)
+        {
+            DataTable datos = new DataTable();
+            SqlDataAdapter adaptador;
+            bool result = false;
+            string aula;
+            SqlConnection conexion = new SqlConnection(CadConexion);
+            string sentencia = "Select horaInicio, aulaId, dia from DetallesHorario" +
+                $" where profesorId = {profeId} and horarioId = {horId}";
+
+            try
+            {
+                adaptador = new SqlDataAdapter(sentencia, conexion);
+                adaptador.Fill(datos);
+                if (datos != null)
+                {
+
+                    horI = datos.Rows[1][0].ToString();
+                    aula = datos.Rows[1][1].ToString();
+                    diaSem = char.Parse(datos.Rows[1][2].ToString());
+                    limInfAula = byte.Parse(aula);
+                    result = true;
+                }
+
+            }
+            catch (Exception)
+            {
+
+                throw new Exception("No se pudo realizar conexión de datos");
+            }
+
+            return result;
+        }
+
+        public bool buscarHorEspecialidadPrimerDia(int horId, int profeId, ref string horI, 
+            ref byte limInfAula, ref char diaSem)
+        {
+            DataTable datos = new DataTable();
+            SqlDataAdapter adaptador;
+            bool result = false;
+            string aula;
+            SqlConnection conexion = new SqlConnection(CadConexion);
+            string sentencia = "Select horaInicio, aulaId, dia from DetallesHorario" +
+                $" where profesorId = {profeId} and horarioId = {horId}";
+
+            try
+            {
+               adaptador = new SqlDataAdapter(sentencia, conexion);
+                adaptador.Fill(datos);
+                if (datos.Rows.Count != 0)
+                {
+
+                    horI = datos.Rows[0][0].ToString();
+                    aula = datos.Rows[0][1].ToString();
+                    diaSem = char.Parse(datos.Rows[0][2].ToString());
+                    limInfAula = byte.Parse(aula);
+                    result = true;
+                }
+                
+            }
+            catch (Exception)
+            {
+            
+                throw new Exception("No se pudo realizar conexión de datos");
+            }
+            
+            return result;
+        }
 
         public bool eliminarRegistros()
         {

@@ -35,9 +35,18 @@
         <div class="container" style="width: fit-content">
             <asp:Button CssClass="btn btn-outline-primary container" ID="btnGenerar" runat="server" Text="Generar Horarios Nuevos" OnClick="btnGenerar_Click" />
         </div>
+        <div class="container text-center">
+            <asp:Label ID="lblAdvertencia" runat="server" Text="*Al usar este botón se borrarán los registros existentes" ForeColor="Red" Font-Size="Medium" Font-Italic="True"></asp:Label>
+        </div>
+        <br />
+        <div class="container">
+            <div class="card-header text-center">   
+                <h2>Para Ver Horarios: Seleccione una Sección</h2>
+            </div>
+        </div>
         <br />
         <div class="container" style="width: fit-content">
-            <asp:DropDownList ID="ddlSecciones" runat="server">
+            <asp:DropDownList ID="ddlSecciones" runat="server" ClientIDMode="Inherit" OnTextChanged="ddlSecciones_TextChanged">
                 <asp:ListItem Selected="True">7-1</asp:ListItem>
                 <asp:ListItem>7-2</asp:ListItem>
                 <asp:ListItem>7-3</asp:ListItem>
@@ -52,10 +61,45 @@
                 <asp:ListItem>11-1</asp:ListItem>
                 <asp:ListItem>12-1</asp:ListItem>
             </asp:DropDownList>
-            <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ErrorMessage="Sección incompleta!! Por favor, complétela." ValidationGroup="5" ControlToValidate="txtSeccion" ForeColor="Red">*</asp:RequiredFieldValidator>
+            
        </div>
     <br />
     <br />
-    <asp:GridView ID="gdvLunes" runat="server"></asp:GridView>
-        
+    <div>
+        <asp:GridView ID="gdvLunes" runat="server" AutoGenerateColumns="False">
+            <Columns>
+                <asp:BoundField DataField="HoraInicio" HeaderText="Hora Inicio" />
+                <asp:BoundField DataField="HoraFin" HeaderText="Hora Fin" />
+                <asp:BoundField DataField="Detalle" HeaderText="Lunes" />
+            </Columns>
+        </asp:GridView>
+        <asp:GridView ID="gdvMartes" runat="server" AutoGenerateColumns="False">
+            <Columns>
+                <asp:BoundField DataField="HoraInicio" HeaderText="Hora Inicio" />
+                <asp:BoundField DataField="HoraFin" HeaderText="Hora Fin" />
+                <asp:BoundField DataField="Detalle" HeaderText="Martes" />
+            </Columns>
+        </asp:GridView>
+        <asp:GridView ID="gdvMiercoles" runat="server" AutoGenerateColumns="False">
+            <Columns>
+                <asp:BoundField DataField="HoraInicio" HeaderText="Hora Inicio" />
+                <asp:BoundField DataField="HoraFin" HeaderText="Hora Fin" />
+                <asp:BoundField DataField="Detalle" HeaderText="Miércoles" />
+            </Columns>
+        </asp:GridView>
+        <asp:GridView ID="gdvJueves" runat="server" AutoGenerateColumns="False">
+            <Columns>
+                <asp:BoundField DataField="HoraInicio" HeaderText="Hora Inicio" />
+                <asp:BoundField DataField="HoraFin" HeaderText="Hora Fin" />
+                <asp:BoundField DataField="Detalle" HeaderText="Jueves" />
+            </Columns>
+        </asp:GridView>
+        <asp:GridView ID="gdvViernes" runat="server" AutoGenerateColumns="False">
+            <Columns>
+                <asp:BoundField DataField="HoraInicio" HeaderText="Hora Inicio" />
+                <asp:BoundField DataField="HoraFin" HeaderText="Hora Fin" />
+                <asp:BoundField DataField="Detalle" HeaderText="Viernes" />
+            </Columns>
+        </asp:GridView>
+    </div>    
 </asp:Content>

@@ -37,6 +37,36 @@ namespace LogicaNegocio
             }
         }
 
+        public bool buscarHorEspecialidadPrimerDia(int horId, int profeId, ref string horI, 
+            ref byte limInfAula, ref char diaSem)
+        {
+            ADDetalleHorario add = new ADDetalleHorario(CadCadena);
+            try
+            {
+                return add.buscarHorEspecialidadPrimerDia(horId, profeId, ref horI, ref limInfAula, ref diaSem);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        public bool buscarHorEspecialidadSegDia(int horId, int profeId, ref string horI,
+            ref byte limInfAula, ref char diaSem)
+        {
+            ADDetalleHorario add = new ADDetalleHorario(CadCadena);
+            try
+            {
+                return add.buscarHorEspecialidadSegDia(horId, profeId, ref horI, ref limInfAula, ref diaSem);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
         public bool agregarDetallesHorarrio(ArrayList detalles)
         {
             ADDetalleHorario add = new ADDetalleHorario(CadCadena);

@@ -13,16 +13,40 @@ namespace PresentacionWeb
     {
         LNDetalleHorario lnDH = new LNDetalleHorario(Config.getCadConec);
         LNAula lnA = new LNAula(Config.getCadConec);
+        LNHorario lnH = new LNHorario(Config.getCadConec);
         LNProfesor lnP = new LNProfesor(Config.getCadConec);
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (!IsPostBack)
+            {
+                cargarDatos();
+            }
         }
+        public void cargarDatos()
+        {
+            try
+            {
+                gdvLunes.DataSource = lnH.horarioPorDiaYSeccion(ddlSecciones.Text, 'L');
+                gdvLunes.DataBind();
+                gdvMartes.DataSource = lnH.horarioPorDiaYSeccion(ddlSecciones.Text, 'K');
+                gdvMartes.DataBind();
+                gdvMiercoles.DataSource = lnH.horarioPorDiaYSeccion(ddlSecciones.Text, 'M');
+                gdvMiercoles.DataBind();
+                gdvJueves.DataSource = lnH.horarioPorDiaYSeccion(ddlSecciones.Text, 'J');
+                gdvJueves.DataBind();
+                gdvViernes.DataSource = lnH.horarioPorDiaYSeccion(ddlSecciones.Text, 'V');
+                gdvViernes.DataBind();
+            }
+            catch (Exception ex)
+            {
 
+                Session["_err"] = ex.Message;
+            }
+        }
         protected void btnGenerar_Click(object sender, EventArgs e)
         {
 
-            List<int> horariosId = new List<int> { 1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 13 };
+            List<int> horariosId = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
             char[] diasGrupInf = new char[5] { 'L', 'K', 'M', 'J', 'V' };
             char[] diasGrupSup = new char[5] { 'M', 'J', 'V', 'L', 'K' };
             char[] dias;
@@ -37,7 +61,7 @@ namespace PresentacionWeb
             byte limInfAula = 1;
             byte limSupAula = 2;
             bool haySegundProf = true;
-            Random ran = new Random(12);
+            Random ran = new Random(1);
             int ranNum = 0;
             int iHoraI = 0;
             int iHoraF = 0;
@@ -49,9 +73,12 @@ namespace PresentacionWeb
             bool materiaAgregada = false;
             bool segundoProfe = false;
             bool segundoDiaEsp = false;
+            bool segundaEsp = false;
+            bool asignacionDos = false;
             string disponibleGrupo = "";
             string disponibleAula = "";
             string disponibleProfe = "";
+            byte espMaxLecciones = 0;
 
 
             //valoración si ya existen registros en la entidad DetallesHorario
@@ -90,25 +117,32 @@ namespace PresentacionWeb
                 }
                 materia = 0;
                 segundoDiaEsp = false;
+                asignacionDos = false;
                 dia = 0;
                 diaSem = dias[dia];
                 iHoraI = 0;
                 iHoraF = 0;
-                while (materia != materias.Count())
+                while (materia < materias.Count())
                 {
                     materiaAgregada = false;
-                    
+                    segundoDiaEsp = false;
                     fijarLimitesAulas(ref limInfAula, ref limSupAula, materias[materia]);
+
                     while (limInfAula <= limSupAula && !materiaAgregada)
                     {
+                        if (materias[materia] == 7 || (materias[materia] == 6 && asignacionDos == true))
+                            fijarLimitesAulas(ref limInfAula, ref limSupAula, materias[materia]);
+
                         asignaciondeProfe(materias[materia], ref haySegundProf,
                         ref profeId, ref segundoProfe);
 
                         asignarHoras(iHoraI, iHoraF,
                                     ref horI, ref horF,
                                     horasInicio, horasFin, horasFinEduFinan, materias[materia]);
+                        
                         disponibleGrupo = lnDH.disponibleHoraI(horI, diaSem, horId);
-
+                        if (materias[materia] == 7)
+                            disponibleGrupo = "";
                         if (disponibleGrupo == "")
                         {
                             disponibleAula = lnA.disponibleHoraI(horI, diaSem, limInfAula);
@@ -127,21 +161,45 @@ namespace PresentacionWeb
                                                 case 1:
                                                 case 6:
                                                 case 7:
-                                                    if (lnP.numLecciones(profeId) <= 6)
+                                                    if (materias[materia] == 1)
+                                                        espMaxLecciones = 6;
+                                                    else
+                                                        espMaxLecciones = 4;
+                                                    if (lnP.numLecciones(profeId) <= espMaxLecciones)
                                                     {
 
                                                         EDetalleHorario det = new EDetalleHorario(horId, profeId, limInfAula, diaSem, horI, horF);
                                                         lnDH.agregar(det);
-                                                        if (materias[materia] != 1 && !segundoDiaEsp)
+                                                        if (materias[materia] != 1 &&
+                                                            !segundoDiaEsp && segundaEsp)
                                                         {
                                                             segundoProfe = true;
-                                                            segundoDiaEsp = true;
                                                             dia++;
+                                                            if (dia > 4)
+                                                                dia = 0;
                                                             diaSem = dias[dia];
                                                             iHoraI = 0;
                                                             iHoraF = 0;
+                                                            materia--;
+                                                            segundaEsp = false;
+                                                            asignacionDos = true;
                                                         }
-
+                                                        else if (materias[materia] != 1 && !segundoDiaEsp && !segundaEsp)
+                                                        {
+                                                            if (!asignacionDos)
+                                                            {
+                                                                segundoProfe = true;
+                                                                materia++;
+                                                                segundaEsp = true;
+                                                            }
+                                                            else
+                                                            {
+                                                                segundoProfe = true;
+                                                                materia++;
+                                                                segundaEsp = true;
+                                                                segundoDiaEsp = true;
+                                                            }
+                                                        }
                                                         else
                                                         {
                                                             materiaAgregada = true;
@@ -301,6 +359,7 @@ namespace PresentacionWeb
                         }
                     }
                     materia++;
+                    
                 }
             }
         }
@@ -308,7 +367,7 @@ namespace PresentacionWeb
         private void asignaciondeProfe(byte materia, ref bool haySegundProf,
             ref int profeId, ref bool segundoProfe)
         {
-            if (materia <= 5 || materia == 7)
+            if (materia <= 5 || materia == 7 || materia ==6)
             {
                 haySegundProf = true;
                 profeId = lnP.accederAProfesor(materia);
@@ -392,6 +451,8 @@ namespace PresentacionWeb
                     iHoraI = 0;
                     iHoraF = 0;
                     dia++;
+                    if (dia > 4)
+                        dia = 0;
                     diaSem = dias[dia];
                 }
                 else if (evalAulas && !evalProfe)
@@ -405,5 +466,14 @@ namespace PresentacionWeb
                 
             }
         }
+
+        
+
+        protected void ddlSecciones_TextChanged(object sender, EventArgs e)
+        {
+            cargarDatos();
+        }
+
+       
     }
 }
