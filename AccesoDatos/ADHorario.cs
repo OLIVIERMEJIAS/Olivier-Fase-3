@@ -46,5 +46,25 @@ namespace AccesoDatos
             }
             return datos;
         }
+
+        public DataTable secciones()
+        {
+
+            DataTable datos = new DataTable();
+            SqlDataAdapter adaptador;
+            SqlConnection conexion = new SqlConnection(CadConexion);
+            string sentencia = "Select seccion From Horarios Order by horarioId";
+            try
+            {
+                adaptador = new SqlDataAdapter(sentencia, conexion);
+                adaptador.Fill(datos);
+
+            }
+            catch (Exception)
+            {
+                throw new Exception("No se pudo realizar búsqueda de estudiante");
+            }
+            return datos;
+        }
     }
 }

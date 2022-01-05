@@ -28,7 +28,22 @@ namespace LogicaNegocio
             catch (Exception ex)
             {
 
-                throw;
+                throw ex;
+            }
+        }
+
+        public DataTable secciones()
+        {
+            ADHorario adH = new ADHorario(CadConexion);
+
+            try
+            {
+                return adH.secciones();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex; 
             }
         }
 

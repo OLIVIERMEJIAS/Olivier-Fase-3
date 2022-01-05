@@ -21,20 +21,29 @@ namespace PresentacionWeb
             {
                 cargarDatos();
             }
+            gdvSecciones.DataSource = lnH.secciones();
+            gdvSecciones.DataBind();
         }
+
+        protected void lnkSeleccionarSeccion_Command(object sender, CommandEventArgs e)
+        {
+            txtSeccion.Text = e.CommandArgument.ToString();
+            cargarDatos();
+        }
+
         public void cargarDatos()
         {
             try
             {
-                gdvLunes.DataSource = lnH.horarioPorDiaYSeccion(ddlSecciones.Text, 'L');
+                gdvLunes.DataSource = lnH.horarioPorDiaYSeccion(txtSeccion.Text, 'L');
                 gdvLunes.DataBind();
-                gdvMartes.DataSource = lnH.horarioPorDiaYSeccion(ddlSecciones.Text, 'K');
+                gdvMartes.DataSource = lnH.horarioPorDiaYSeccion(txtSeccion.Text, 'K');
                 gdvMartes.DataBind();
-                gdvMiercoles.DataSource = lnH.horarioPorDiaYSeccion(ddlSecciones.Text, 'M');
+                gdvMiercoles.DataSource = lnH.horarioPorDiaYSeccion(txtSeccion.Text, 'M');
                 gdvMiercoles.DataBind();
-                gdvJueves.DataSource = lnH.horarioPorDiaYSeccion(ddlSecciones.Text, 'J');
+                gdvJueves.DataSource = lnH.horarioPorDiaYSeccion(txtSeccion.Text, 'J');
                 gdvJueves.DataBind();
-                gdvViernes.DataSource = lnH.horarioPorDiaYSeccion(ddlSecciones.Text, 'V');
+                gdvViernes.DataSource = lnH.horarioPorDiaYSeccion(txtSeccion.Text, 'V');
                 gdvViernes.DataBind();
             }
             catch (Exception ex)
