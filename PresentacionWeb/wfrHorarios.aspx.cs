@@ -55,7 +55,7 @@ namespace PresentacionWeb
         protected void btnGenerar_Click(object sender, EventArgs e)
         {
 
-            List<int> horariosId = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
+            List<int> horariosId = new List<int> { 1, 2, 3, 4, 5, 13, 10, 12};
             char[] diasGrupInf = new char[5] { 'L', 'K', 'M', 'J', 'V' };
             char[] diasGrupSup = new char[5] { 'M', 'J', 'V', 'L', 'K' };
             char[] dias;
@@ -70,7 +70,7 @@ namespace PresentacionWeb
             byte limInfAula = 1;
             byte limSupAula = 2;
             bool haySegundProf = true;
-            Random ran = new Random(1);
+            Random ran = new Random(7);
             int ranNum = 0;
             int iHoraI = 0;
             int iHoraF = 0;
@@ -135,16 +135,30 @@ namespace PresentacionWeb
                 {
                     materiaAgregada = false;
                     segundoDiaEsp = false;
+                    
                     fijarLimitesAulas(ref limInfAula, ref limSupAula, materias[materia]);
-
+                    segundoProfe = false;
                     while (limInfAula <= limSupAula && !materiaAgregada)
                     {
+
                         if (materias[materia] == 7 || (materias[materia] == 6 && asignacionDos == true))
-                            fijarLimitesAulas(ref limInfAula, ref limSupAula, materias[materia]);
-
-                        asignaciondeProfe(materias[materia], ref haySegundProf,
-                        ref profeId, ref segundoProfe);
-
+                        {
+                            if (materias[materia] == 7 && limInfAula != 9)
+                            {
+                                fijarLimitesAulas(ref limInfAula, ref limSupAula, materias[materia]);
+                                
+                            }
+                            else if(materias[materia] == 6 && limInfAula != 11)
+                            {
+                                fijarLimitesAulas(ref limInfAula, ref limSupAula, materias[materia]);
+                               
+                            }
+                            
+                        }
+                        if(!segundoProfe)
+                            asignaciondeProfe(materias[materia], ref haySegundProf,
+                            ref profeId, ref segundoProfe);
+                        
                         asignarHoras(iHoraI, iHoraF,
                                     ref horI, ref horF,
                                     horasInicio, horasFin, horasFinEduFinan, materias[materia]);
@@ -158,8 +172,7 @@ namespace PresentacionWeb
                             if (disponibleAula == "")
                             {
                                 disponibleProfe = lnP.disponibleHoraI(horI, diaSem, profeId);
-                                while (!segundoProfe)
-                                {
+                                
                                     if (disponibleProfe == "")
                                     {
 
@@ -182,7 +195,7 @@ namespace PresentacionWeb
                                                         if (materias[materia] != 1 &&
                                                             !segundoDiaEsp && segundaEsp)
                                                         {
-                                                            segundoProfe = true;
+                                                            
                                                             dia++;
                                                             if (dia > 4)
                                                                 dia = 0;
@@ -197,13 +210,13 @@ namespace PresentacionWeb
                                                         {
                                                             if (!asignacionDos)
                                                             {
-                                                                segundoProfe = true;
+                                                             
                                                                 materia++;
                                                                 segundaEsp = true;
                                                             }
                                                             else
                                                             {
-                                                                segundoProfe = true;
+                                                                
                                                                 materia++;
                                                                 segundaEsp = true;
                                                                 segundoDiaEsp = true;
@@ -212,21 +225,32 @@ namespace PresentacionWeb
                                                         else
                                                         {
                                                             materiaAgregada = true;
-                                                            segundoProfe = true;
+                                                            
                                                         }
+                                                    }
+                                                    else if (segundoProfe)
+                                                    {
+                                                        materiaAgregada = true;
                                                     }
                                                     else
                                                     {
-                                                        if (haySegundProf && !segundoProfe)
+                                                        if (materias[materia] != 10 && (disponibleProfe.Substring(0, 5) == "08:00" ||
+                                                            disponibleProfe.Substring(0, 5) == "09:40"
+                                                            || disponibleProfe.Substring(0, 5) == "11:20" ||
+                                                            disponibleProfe.Substring(0, 5) == "13:40" ||
+                                                            disponibleProfe.Substring(0, 5) == "15:20"))
                                                         {
-                                                            profeId++;
-                                                            haySegundProf = false;
 
+                                                            buscarIndiceHoraFinal(disponibleProfe, horasFinEduFinan,
+                                                            materias[materia], ref iHoraI, ref iHoraF, ref dia,
+                                                            ref diaSem, dias, false, true, ref limInfAula,
+                                                            ref limSupAula, haySegundProf, ref segundoProfe, ref profeId);
                                                         }
-                                                        else if (!haySegundProf)
-                                                        {
-                                                            segundoProfe = true;
-                                                        }
+                                                        else
+                                                            buscarIndiceHoraFinal(disponibleProfe, horasFin,
+                                                            materias[materia], ref iHoraI, ref iHoraF, ref dia,
+                                                            ref diaSem, dias, false, true, ref limInfAula,
+                                                            ref limSupAula, haySegundProf, ref segundoProfe, ref profeId);
                                                     }
                                                     break;
 
@@ -241,18 +265,29 @@ namespace PresentacionWeb
                                                         materiaAgregada = true;
                                                         segundoProfe = true;
                                                     }
+                                                    else if (segundoProfe)
+                                                    {
+                                                        materiaAgregada = true;
+                                                    }
                                                     else
                                                     {
-                                                        if (haySegundProf && !segundoProfe)
+                                                        if (materias[materia] != 10 && (disponibleProfe.Substring(0, 5) == "08:00" ||
+                                                            disponibleProfe.Substring(0, 5) == "09:40"
+                                                            || disponibleProfe.Substring(0, 5) == "11:20" ||
+                                                            disponibleProfe.Substring(0, 5) == "13:40" ||
+                                                            disponibleProfe.Substring(0, 5) == "15:20"))
                                                         {
-                                                            profeId++;
-                                                            segundoProfe = true;
 
+                                                            buscarIndiceHoraFinal(disponibleProfe, horasFinEduFinan,
+                                                            materias[materia], ref iHoraI, ref iHoraF, ref dia,
+                                                            ref diaSem, dias, false, true, ref limInfAula,
+                                                            ref limSupAula, haySegundProf, ref segundoProfe, ref profeId);
                                                         }
-                                                        else if (!haySegundProf)
-                                                        {
-                                                            segundoProfe = true;
-                                                        }
+                                                        else
+                                                            buscarIndiceHoraFinal(disponibleProfe, horasFin,
+                                                            materias[materia], ref iHoraI, ref iHoraF, ref dia,
+                                                            ref diaSem, dias, false, true, ref limInfAula,
+                                                            ref limSupAula, haySegundProf, ref segundoProfe, ref profeId);
                                                     }
                                                     break;
                                                 case 8:
@@ -265,12 +300,12 @@ namespace PresentacionWeb
                                                         EDetalleHorario det = new EDetalleHorario(horId, profeId, limInfAula, diaSem, horI, horF);
                                                         lnDH.agregar(det);
                                                         materiaAgregada = true;
-                                                        segundoProfe = true;
+                                                       
                                                     }
                                                     else
                                                     {
-                                                        iHoraI = iHoraI + 1;
-                                                        iHoraF = iHoraF + 1;
+                                                        materiaAgregada = true;
+                                                        
                                                     }
                                                     break;
                                                 case 10:
@@ -280,12 +315,12 @@ namespace PresentacionWeb
                                                         EDetalleHorario det = new EDetalleHorario(horId, profeId, limInfAula, diaSem, horI, horF);
                                                         lnDH.agregar(det);
                                                         materiaAgregada = true;
-                                                        segundoProfe = true;
+                                                        
                                                     }
                                                     else
                                                     {
-                                                        iHoraI = iHoraI + 1;
-                                                        iHoraF = iHoraF + 1;
+                                                        materiaAgregada = true;
+                                                       
                                                     }
                                                     break;
                                             }
@@ -297,35 +332,27 @@ namespace PresentacionWeb
                                     }
                                     else
                                     {
-                                        if (haySegundProf && !segundoProfe)
+                                    
+                                        if (materias[materia] != 10 && (disponibleProfe.Substring(0, 5) == "08:00" ||
+                                            disponibleProfe.Substring(0, 5) == "09:40"
+                                            || disponibleProfe.Substring(0, 5) == "11:20" ||
+                                            disponibleProfe.Substring(0, 5) == "13:40" ||
+                                            disponibleProfe.Substring(0, 5) == "15:20"))
                                         {
-                                            profeId++;
-                                            segundoProfe = true;
-                                        }
-                                        else if (!haySegundProf)
-                                            segundoProfe = true;
-                                        else
-                                        {
-                                            if (materias[materia] != 10 && (disponibleProfe.Substring(0, 5) == "08:00" ||
-                                                disponibleProfe.Substring(0, 5) == "09:40"
-                                                || disponibleProfe.Substring(0, 5) == "11:20" ||
-                                                disponibleProfe.Substring(0, 5) == "13:40" ||
-                                                disponibleProfe.Substring(0, 5) == "15:20"))
-                                            {
 
-                                                buscarIndiceHoraFinal(disponibleProfe, horasFinEduFinan,
-                                                materias[materia], ref iHoraI, ref iHoraF, ref dia,
-                                                ref diaSem, dias, false, true, ref limInfAula,
-                                                ref limSupAula);
-                                            }
-                                            else
-                                                buscarIndiceHoraFinal(disponibleProfe, horasFin,
-                                                materias[materia], ref iHoraI, ref iHoraF, ref dia,
-                                                ref diaSem, dias, false, true, ref limInfAula,
-                                                ref limSupAula);
+                                            buscarIndiceHoraFinal(disponibleProfe, horasFinEduFinan,
+                                            materias[materia], ref iHoraI, ref iHoraF, ref dia,
+                                            ref diaSem, dias, false, true, ref limInfAula,
+                                            ref limSupAula, haySegundProf, ref segundoProfe, ref profeId);
                                         }
+                                        else
+                                            buscarIndiceHoraFinal(disponibleProfe, horasFin,
+                                            materias[materia], ref iHoraI, ref iHoraF, ref dia,
+                                            ref diaSem, dias, false, true, ref limInfAula,
+                                            ref limSupAula, haySegundProf, ref segundoProfe, ref profeId);
+                                        
                                     }
-                                }
+                                
                             }
                             else
                             {
@@ -338,13 +365,13 @@ namespace PresentacionWeb
                                     buscarIndiceHoraFinal(disponibleAula, horasFinEduFinan,
                                     materias[materia], ref iHoraI, ref iHoraF, ref dia,
                                     ref diaSem, dias, true, false, ref limInfAula,
-                                    ref limSupAula);
+                                    ref limSupAula, haySegundProf, ref segundoProfe, ref profeId);
                                 }
                                 else
                                     buscarIndiceHoraFinal(disponibleAula, horasFin,
                                     materias[materia], ref iHoraI, ref iHoraF, ref dia,
                                     ref diaSem, dias, true, false, ref limInfAula,
-                                    ref limSupAula);
+                                    ref limSupAula, haySegundProf, ref segundoProfe, ref profeId);
                             }
                         }
                         else
@@ -358,13 +385,13 @@ namespace PresentacionWeb
                                 buscarIndiceHoraFinal(disponibleGrupo, horasFinEduFinan,
                                 materias[materia], ref iHoraI, ref iHoraF, ref dia,
                                 ref diaSem, dias, false, false, ref limInfAula,
-                                ref limSupAula);
+                                ref limSupAula,haySegundProf, ref segundoProfe, ref profeId);
                             }
                             else
                                 buscarIndiceHoraFinal(disponibleGrupo, horasFin,
                                 materias[materia], ref iHoraI, ref iHoraF, ref dia,
                                 ref diaSem, dias, false, false, ref limInfAula,
-                                ref limSupAula);
+                                ref limSupAula, haySegundProf, ref segundoProfe, ref profeId);
                         }
                     }
                     materia++;
@@ -379,14 +406,16 @@ namespace PresentacionWeb
             if (materia <= 5 || materia == 7 || materia ==6)
             {
                 haySegundProf = true;
+                segundoProfe = false;
                 profeId = lnP.accederAProfesor(materia);
             }
             else
             {
                 haySegundProf = false;
+                segundoProfe = false;
                 profeId = lnP.accederAProfesor(materia);
             }
-            segundoProfe = false;
+            
         }
 
         private void asignarHoras(int iHoraI, int iHoraF, 
@@ -437,14 +466,12 @@ namespace PresentacionWeb
                 limSupAula = 8;
             }
         }
-
-        private void buscarIndiceHoraFinal(string horaFinal, string[] horasFin
-            ,byte materia, ref int iHoraI, ref int iHoraF, ref byte dia, ref char diaSem, char[] dias,
-            bool evalAulas, bool evalProfe, ref byte limInfAula, ref byte limSupAula)
+        private void avanzarHoras(string[] horasFin, byte materia, ref int iHoraI,
+            ref int iHoraF, string horaFinal, ref byte dia, ref char diaSem, char[] dias)
         {
             for (int i = 0; i < horasFin.Length; i++)
             {
-                if (horaFinal.Substring(0,5) == horasFin[i])
+                if (horaFinal.Substring(0, 5) == horasFin[i])
                 {
                     iHoraI = i + 1;
                     if (materia == 1 || materia == 6
@@ -454,35 +481,65 @@ namespace PresentacionWeb
                         iHoraF = iHoraI + 1;
                     else
                         iHoraF = iHoraI;
+                    if (iHoraI > 4 || iHoraF > 4)
+                    {
+                        iHoraI = 0;
+                        iHoraF = 0;
+                        dia++;
+                        if (dia > 4)
+                            dia = 0;
+                        diaSem = dias[dia];
+                    }
+
+                    break;
                 }
-                if (iHoraI > 4 || iHoraF > 4)
-                {
-                    iHoraI = 0;
-                    iHoraF = 0;
-                    dia++;
-                    if (dia > 4)
-                        dia = 0;
-                    diaSem = dias[dia];
-                }
-                else if (evalAulas && !evalProfe)
-                    limInfAula++;
-                else if (!evalAulas && evalProfe)
-                {
-                    fijarLimitesAulas(ref limInfAula, ref limSupAula, materia);
-                }
-                
-                
-                
             }
         }
 
-        
-
-        protected void ddlSecciones_TextChanged(object sender, EventArgs e)
+        private void buscarIndiceHoraFinal(string horaFinal, string[] horasFin
+            ,byte materia, ref int iHoraI, ref int iHoraF, ref byte dia, ref char diaSem, char[] dias,
+            bool evalAulas, bool evalProfe, ref byte limInfAula, ref byte limSupAula, 
+            bool haySegundProf, ref bool segundoProfe, ref int profeId)
         {
-            cargarDatos();
+
+            if (evalAulas && !evalProfe)
+            {
+                if (limInfAula != limSupAula)
+                    limInfAula++;
+                else
+                {
+                    fijarLimitesAulas(ref limInfAula, ref limSupAula, materia);
+                    avanzarHoras(horasFin, materia, ref iHoraI,
+                    ref iHoraF, horaFinal, ref dia, ref diaSem, dias);
+                }
+
+            }
+            else if (!evalAulas && evalProfe)
+            {
+                if (haySegundProf && !segundoProfe)
+                {
+                    profeId++;
+                    segundoProfe = true;
+                }
+                else if(haySegundProf && segundoProfe)
+                {
+                    segundoProfe = false;
+                    avanzarHoras(horasFin, materia, ref iHoraI,
+                    ref iHoraF, horaFinal, ref dia, ref diaSem, dias);
+                }
+                else
+                {
+                    
+                    avanzarHoras(horasFin, materia, ref iHoraI,
+                    ref iHoraF, horaFinal, ref dia, ref diaSem, dias);
+                }
+            }
+            else
+            {
+                avanzarHoras(horasFin, materia, ref iHoraI,
+                    ref iHoraF, horaFinal, ref dia, ref diaSem, dias);
+            }
         }
 
-       
     }
 }

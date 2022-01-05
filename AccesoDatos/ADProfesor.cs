@@ -39,7 +39,7 @@ namespace AccesoDatos
                 if (reader.HasRows)
                 {
                     reader.Read();
-                    result = reader.GetInt16(0);
+                    result = reader.GetInt32(0);
                 }
                 conexion.Close();
             }

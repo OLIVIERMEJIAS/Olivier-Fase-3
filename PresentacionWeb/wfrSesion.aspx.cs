@@ -16,7 +16,9 @@ namespace PresentacionWeb
         LNAsistente lna = new LNAsistente(Config.getCadConec);
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            Session["_director"] = null;
+            Session["_asistente"] = null;
+            Session["_profesor"] = null;
         }
 
         protected void btnAccesoDirector_Click(object sender, EventArgs e)
@@ -28,7 +30,7 @@ namespace PresentacionWeb
                 if (lnd.accesoUsuario(dir))
                 {
                     Session["_director"] = "Acceso";
-                    Response.Redirect("wfrInicio.aspx");
+                    Response.Redirect("wfrInicio.aspx",false);
                 }
                 else
                     Session["_wrn"] = "Su Nombre de Usuario y/o su Contraseña son erroneos!!";
@@ -49,7 +51,7 @@ namespace PresentacionWeb
                 if (lna.accesoUsuario(asist))
                 {
                     Session["_asistente"] = "Acceso";
-                    Response.Redirect("wfrInicio.aspx");
+                    Response.Redirect("wfrInicio.aspx",false);
                 }
                 else
                     Session["_wrn"] = "Su Nombre de Usuario y/o su Contraseña son erroneos!!";
@@ -70,7 +72,7 @@ namespace PresentacionWeb
                 if (lnp.accesoUsuario(prof) != -1)
                 {
                     Session["_profesor"] = "Acceso";
-                    Response.Redirect("wfrInicio.aspx");
+                    Response.Redirect("wfrInicio.aspx",false);
                 }
                 else
                     Session["_wrn"] = "Su Nombre de Usuario y/o su Contraseña son erroneos!!";
@@ -81,5 +83,7 @@ namespace PresentacionWeb
                 Session["_err"] = ex.Message;
             }
         }
+
+        
     }
 }

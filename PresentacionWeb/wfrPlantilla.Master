@@ -65,7 +65,7 @@
 
      <%--alerts--%>
         <% if (Session["_exito"] != null) { %>
-            <div class="alert alert-success" role="alert">
+            <div class="alert alert-success container" role="alert">
                 <%= Session["_exito"]%>
                   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
@@ -73,7 +73,7 @@
           }%>
 
         <% if (Session["_wrn"] != null) { %>
-            <div class="alert alert-warning" role="alert">
+            <div class="alert alert-warning container" role="alert">
                 <%= Session["_wrn"]%>
                   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
@@ -81,7 +81,7 @@
           }%>
 
         <% if (Session["_err"] != null) { %>
-            <div class="alert alert-danger" role="alert">
+            <div class="alert alert-danger container" role="alert">
                 <%= Session["_err"]%>
                   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>

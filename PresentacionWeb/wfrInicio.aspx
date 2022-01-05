@@ -10,6 +10,6 @@
     </div>
     <br />
     <div class="container">
-        <img style="width: 100%" src="https://www.fundacioncnse.org/educa/bancolse/colegio/colegio/descargas/colegio-dibujo.jpg" alt="Alternate Text" />
+        <img style="width: 100%; height: 60vh" src="https://www.fundacioncnse.org/educa/bancolse/colegio/colegio/descargas/colegio-dibujo.jpg" alt="Alternate Text" />
     </div>
 </asp:Content>

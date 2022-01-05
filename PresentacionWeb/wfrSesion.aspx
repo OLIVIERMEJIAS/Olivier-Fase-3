@@ -13,7 +13,32 @@
 <body>
     <form id="form1" runat="server">
         <br />
-        <div class="container card">
+         <%--alerts--%>
+        <% if (Session["_exito"] != null) { %>
+            <div class="alert alert-success container" role="alert">
+                <%= Session["_exito"]%>
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        <% Session["_exito"] = null;
+          }%>
+
+        <% if (Session["_wrn"] != null) { %>
+            <div class="alert alert-warning container" role="alert">
+                <%= Session["_wrn"]%>
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        <% Session["_wrn"] = null;
+          }%>
+
+        <% if (Session["_err"] != null) { %>
+            <div class="alert alert-danger container" role="alert">
+                <%= Session["_err"]%>
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        <% Session["_err"] = null;
+          }%>
+        <br />
+        <div class="container card bg-info">
             <h1 class="text-center">Inicio de Sesión</h1>
         </div>
         <br />
@@ -39,7 +64,7 @@
             <asp:Button ID="btnAccesoAsistente" runat="server" Text="Asistente" CssClass="btn btn-outline-primary" ValidationGroup="1" OnClick="btnAccesoAsistente_Click" />
             <br />
             <br />
-            <asp:Button ID="btnAccesoProfesor" runat="server" Text="Profesor" CssClass="btn btn-outline-primary" ValidationGroup="1" />
+            <asp:Button ID="btnAccesoProfesor" runat="server" Text="Profesor" CssClass="btn btn-outline-primary" ValidationGroup="1" OnClick="btnAccesoProfesor_Click" />
             <br />
             <br />
 
