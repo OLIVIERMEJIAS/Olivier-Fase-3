@@ -72,14 +72,21 @@
   <ItemGroup>
     <Content Include="Web.config" />
     <Content Include="wfrAsistencias.aspx" />
+    <Content Include="wfrBuzon.aspx" />
     <Content Include="wfrCalificaciones.aspx" />
     <Content Include="wfrEncargados.aspx" />
     <Content Include="wfrEstudiantes.aspx" />
     <Content Include="wfrHorarios.aspx" />
     <Content Include="wfrInicio.aspx" />
     <Content Include="wfrInicioSesion.aspx" />
+    <Content Include="wfrListarAsistencias.aspx" />
+    <Content Include="wfrListarCalificaciones.aspx" />
+    <Content Include="wfrListarEncargados.aspx" />
+    <Content Include="wfrListarEstudiantes.aspx" />
+    <Content Include="wfrListarMaterias.aspx" />
+    <Content Include="wfrListarProfesores.aspx" />
     <Content Include="wfrProfesores.aspx" />
-    <Content Include="wfrSinPermiso.aspx" />
+    <Content Include="wfrSesion.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config.cs" />
@@ -90,6 +97,13 @@
     </Compile>
     <Compile Include="wfrAsistencias.aspx.designer.cs">
       <DependentUpon>wfrAsistencias.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="wfrBuzon.aspx.cs">
+      <DependentUpon>wfrBuzon.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="wfrBuzon.aspx.designer.cs">
+      <DependentUpon>wfrBuzon.aspx</DependentUpon>
     </Compile>
     <Compile Include="wfrCalificaciones.aspx.cs">
       <DependentUpon>wfrCalificaciones.aspx</DependentUpon>
@@ -133,6 +147,48 @@
     <Compile Include="wfrInicioSesion.aspx.designer.cs">
       <DependentUpon>wfrInicioSesion.aspx</DependentUpon>
     </Compile>
+    <Compile Include="wfrListarAsistencias.aspx.cs">
+      <DependentUpon>wfrListarAsistencias.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="wfrListarAsistencias.aspx.designer.cs">
+      <DependentUpon>wfrListarAsistencias.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="wfrListarCalificaciones.aspx.cs">
+      <DependentUpon>wfrListarCalificaciones.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="wfrListarCalificaciones.aspx.designer.cs">
+      <DependentUpon>wfrListarCalificaciones.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="wfrListarEncargados.aspx.cs">
+      <DependentUpon>wfrListarEncargados.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="wfrListarEncargados.aspx.designer.cs">
+      <DependentUpon>wfrListarEncargados.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="wfrListarEstudiantes.aspx.cs">
+      <DependentUpon>wfrListarEstudiantes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="wfrListarEstudiantes.aspx.designer.cs">
+      <DependentUpon>wfrListarEstudiantes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="wfrListarMaterias.aspx.cs">
+      <DependentUpon>wfrListarMaterias.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="wfrListarMaterias.aspx.designer.cs">
+      <DependentUpon>wfrListarMaterias.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="wfrListarProfesores.aspx.cs">
+      <DependentUpon>wfrListarProfesores.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="wfrListarProfesores.aspx.designer.cs">
+      <DependentUpon>wfrListarProfesores.aspx</DependentUpon>
+    </Compile>
     <Compile Include="wfrPlantilla.Master.cs">
       <DependentUpon>wfrPlantilla.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -147,12 +203,12 @@
     <Compile Include="wfrProfesores.aspx.designer.cs">
       <DependentUpon>wfrProfesores.aspx</DependentUpon>
     </Compile>
-    <Compile Include="wfrSinPermiso.aspx.cs">
-      <DependentUpon>wfrSinPermiso.aspx</DependentUpon>
+    <Compile Include="wfrSesion.aspx.cs">
+      <DependentUpon>wfrSesion.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="wfrSinPermiso.aspx.designer.cs">
-      <DependentUpon>wfrSinPermiso.aspx</DependentUpon>
+    <Compile Include="wfrSesion.aspx.designer.cs">
+      <DependentUpon>wfrSesion.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

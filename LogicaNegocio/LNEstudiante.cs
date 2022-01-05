@@ -19,12 +19,12 @@ namespace LogicaNegocio
         {
             CadConexion = cad;
         }
-        public EEstudiante existeCedUsuario(string ced)
+        public bool existe(string condicion)
         {
             ADEstudiante ade = new ADEstudiante(CadConexion);
             try
             {
-                return ade.existeCedUsuario(ced);
+                return ade.existe(condicion);
             }
             catch (Exception ex)
             {

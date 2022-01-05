@@ -21,29 +21,24 @@ namespace AccesoDatos
             CadConexion = cad;
         }
 
-        public EEstudiante existeCedUsuario(string ced)
+        public bool existe(string condicion)
         {
-           
-            long cedula = long.Parse(ced);
+            bool result = false;
             SqlDataReader reader;
             EEstudiante est = new EEstudiante();
             SqlConnection conexion = new SqlConnection(CadConexion);
-            string sentencia = "Select nombre,apellido1,apellido2,estudianteId from Estudiantes where " +
-                "numIdentificacion = @num";
+            string sentencia = "Select estudianteId " +
+                "from Estudiantes where " +
+                condicion;
             SqlCommand comando = new SqlCommand(sentencia, conexion);
-            comando.Parameters.AddWithValue("@num", cedula);
-            
+         
             try
             {
                 conexion.Open();
                 reader = comando.ExecuteReader();
                 if(reader.HasRows)
                 {
-                    reader.Read();
-                    est.Nombre = reader.GetString(0);
-                    est.Apellido1 = reader.GetString(1);
-                    est.Apellido2 = reader.GetString(2);
-                    est.Id = reader.GetInt16(3);
+                    result = true;
                 }
                 conexion.Close();
             }
@@ -57,10 +52,7 @@ namespace AccesoDatos
                 conexion.Dispose();
                 comando.Dispose();
             }
-
-
-
-            return est;
+            return result;
         }
     }
 }

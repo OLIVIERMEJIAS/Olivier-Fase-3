@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
+
 namespace Entidades
 {
     public class EProfesor : EPersona
@@ -38,9 +39,6 @@ namespace Entidades
         }
 
 
-        public  void listar()
-        {
-            
-        }
+        
     }
 }

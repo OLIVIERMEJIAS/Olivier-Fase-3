@@ -15,28 +15,78 @@
 </head>
 <body>
      <ul class="container nav justify-content-center bg-dark">
-  <li class="nav-item">
-    <a class="nav-link active" aria-current="page" href="wfrInicio.aspx">Inicio</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="wfrListaLibros.aspx">Horarios</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="wfrListarEditoriales.aspx">Asistencias</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="wfrListarEditoriales.aspx">Calificaciones</a>
-  </li>
-<li class="nav-item">
-    <a class="nav-link" href="wfrListarEditoriales.aspx">Estudiantes</a>
-  </li>
-<li class="nav-item">
-    <a class="nav-link" href="wfrListarEditoriales.aspx">Encargados</a>
-  </li>
- <li class="nav-item">
-    <a class="nav-link" href="wfrListarEditoriales.aspx">Profesores</a>
- </li>
-</ul>
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="wfrInicio.aspx">Inicio</a>
+        </li>
+          <% if (Session["_profesor"] != null) { %>
+            <li class="nav-item">
+            <a class="nav-link" href="wfrListarAsistencias.aspx">Asistencias</a>
+            </li>
+            <li class="nav-item">
+               <a class="nav-link" href="wfrListarCalificaciones.aspx">Calificaciones</a>
+            </li>
+        <% 
+            }%>
+        
+         <% if (Session["_asistente"] != null || Session["_director"] != null) { %>
+            <li class="nav-item">
+              <a class="nav-link" href="wfrHorarios.aspx">Horarios</a>
+            </li>
+        <% 
+            }%>
+         
+         <% if (Session["_asistente"] != null) { %>
+            <li class="nav-item">
+                <a class="nav-link" href="wfrListarEstudiantes.aspx">Estudiantes</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="wfrListarEncargados.aspx">Encargados</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="wfrListarProfesores.aspx">Profesores</a>
+            </li>
+             <li class="nav-item">
+                <a class="nav-link" href="wfrListarMaterias.aspx">Materias</a>
+            </li>
+        <% 
+            }%>
+
+        <% if (Session["_profesor"] != null || Session["_director"] != null) { %>
+            <li class="nav-item">
+               <a class="nav-link" href="wfrBuzon.aspx">Buzón</a>
+            </li>
+        <% 
+            }%>
+         
+         <li class="nav-item">
+            <a class="nav-link" href="wfrSesion.aspx">Salir</a>
+        </li>
+     </ul>
+
+     <%--alerts--%>
+        <% if (Session["_exito"] != null) { %>
+            <div class="alert alert-success" role="alert">
+                <%= Session["_exito"]%>
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        <% Session["_exito"] = null;
+          }%>
+
+        <% if (Session["_wrn"] != null) { %>
+            <div class="alert alert-warning" role="alert">
+                <%= Session["_wrn"]%>
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        <% Session["_wrn"] = null;
+          }%>
+
+        <% if (Session["_err"] != null) { %>
+            <div class="alert alert-danger" role="alert">
+                <%= Session["_err"]%>
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        <% Session["_err"] = null;
+          }%>
 
     <form id="form1" runat="server">
         <div>

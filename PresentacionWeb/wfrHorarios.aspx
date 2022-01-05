@@ -8,30 +8,7 @@
         </div>
     </div>
         <br />
-        <%--alerts--%>
-        <% if (Session["_exito"] != null) { %>
-            <div class="alert alert-success" role="alert">
-                <%= Session["_exito"]%>
-                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        <% Session["_exito"] = null;
-          }%>
-
-        <% if (Session["_wrn"] != null) { %>
-            <div class="alert alert-warning" role="alert">
-                <%= Session["_wrn"]%>
-                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        <% Session["_wrn"] = null;
-          }%>
-
-        <% if (Session["_err"] != null) { %>
-            <div class="alert alert-danger" role="alert">
-                <%= Session["_err"]%>
-                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        <% Session["_err"] = null;
-          }%>
+       
         <div class="container" style="width: fit-content">
             <asp:Button CssClass="btn btn-outline-primary container" ID="btnGenerar" runat="server" Text="Generar Horarios Nuevos" OnClick="btnGenerar_Click" />
         </div>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Entidades;
 using AccesoDatos;
+using System.Data;
 namespace LogicaNegocio
 {
     public class LNProfesor
@@ -33,6 +34,21 @@ namespace LogicaNegocio
                 throw ex;
             }
             return result;
+        }
+
+        public DataTable listar()
+        {
+            ADProfesor adp = new ADProfesor(CadConexion);
+
+            try
+            {
+                return adp.listar();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
         public byte numLecciones(int profId)
