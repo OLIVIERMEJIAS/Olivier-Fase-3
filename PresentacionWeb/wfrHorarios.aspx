@@ -18,7 +18,7 @@
         <br />
         <div class="container">
             <div class="card-header text-center">   
-                <h2>Para Ver Horarios: Seleccione una Sección, para ver Horarios</h2>
+                <h2>Seleccione una Sección, para ver sus Horarios:</h2>
             </div>
         </div>
         <br />
