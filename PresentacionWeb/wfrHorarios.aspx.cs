@@ -55,7 +55,7 @@ namespace PresentacionWeb
         protected void btnGenerar_Click(object sender, EventArgs e)
         {
 
-            List<int> horariosId = new List<int> {5,6,8};
+            List<int> horariosId = new List<int> {6,8};
             char[] diasGrupInf = new char[5] { 'L', 'K', 'M', 'J', 'V' };
             char[] diasGrupSup = new char[5] { 'M', 'J', 'V', 'L', 'K' };
             char[] dias;
@@ -157,7 +157,10 @@ namespace PresentacionWeb
                         if(!segundoProfe)
                             asignaciondeProfe(materias[materia], ref haySegundProf,
                             ref profeId, ref segundoProfe);
-                        
+
+                        if (haySegundProf && segundoProfe)
+                            segundoProfe = false;
+
                         asignarHoras(iHoraI, iHoraF,
                                     ref horI, ref horF,
                                     horasInicio, horasFin, horasFinEduFinan, materias[materia]);
@@ -321,11 +324,11 @@ namespace PresentacionWeb
                                     else
                                     {
                                     
-                                        if (materias[materia] != 10 && (disponibleProfe.Substring(0, 5) == "08:00" ||
+                                        if (disponibleProfe.Substring(0, 5) == "08:00" ||
                                             disponibleProfe.Substring(0, 5) == "09:40"
                                             || disponibleProfe.Substring(0, 5) == "11:20" ||
                                             disponibleProfe.Substring(0, 5) == "13:40" ||
-                                            disponibleProfe.Substring(0, 5) == "15:20"))
+                                            disponibleProfe.Substring(0, 5) == "15:20")
                                         {
 
                                             buscarIndiceHoraFinal(disponibleProfe, horasFinEduFinan,
@@ -344,19 +347,19 @@ namespace PresentacionWeb
                             }
                             else
                             {
-                                if (materias[materia] != 10 && (disponibleAula.Substring(0, 5) == "08:00" ||
+                                if (disponibleAula.Substring(0, 5) == "08:00" ||
                                 disponibleAula.Substring(0, 5) == "09:40"
                                 || disponibleAula.Substring(0, 5) == "11:20" ||
                                 disponibleAula.Substring(0, 5) == "13:40" ||
-                                disponibleAula.Substring(0, 5) == "15:20"))
+                                disponibleAula.Substring(0, 5) == "15:20")
                                 {
-                                    buscarIndiceHoraFinal(disponibleAula, horasFinEduFinan,
+                                    buscarIndiceHoraFinal(horI, horasInicio,
                                     materias[materia], ref iHoraI, ref iHoraF, ref dia,
                                     ref diaSem, dias, true, false, ref limInfAula,
                                     ref limSupAula, haySegundProf, ref segundoProfe, ref profeId);
                                 }
                                 else
-                                    buscarIndiceHoraFinal(disponibleAula, horasFin,
+                                    buscarIndiceHoraFinal(horI, horasInicio,
                                     materias[materia], ref iHoraI, ref iHoraF, ref dia,
                                     ref diaSem, dias, true, false, ref limInfAula,
                                     ref limSupAula, haySegundProf, ref segundoProfe, ref profeId);
@@ -364,11 +367,11 @@ namespace PresentacionWeb
                         }
                         else
                         {
-                            if (materias[materia] != 10 && (disponibleGrupo.Substring(0, 5) == "08:00" ||
+                            if (disponibleGrupo.Substring(0, 5) == "08:00" ||
                                 disponibleGrupo.Substring(0, 5) == "09:40"
                                 || disponibleGrupo.Substring(0, 5) == "11:20" ||
                                 disponibleGrupo.Substring(0, 5) == "13:40" ||
-                                disponibleGrupo.Substring(0, 5) == "15:20"))
+                                disponibleGrupo.Substring(0, 5) == "15:20")
                             {
                                 buscarIndiceHoraFinal(disponibleGrupo, horasFinEduFinan,
                                 materias[materia], ref iHoraI, ref iHoraF, ref dia,

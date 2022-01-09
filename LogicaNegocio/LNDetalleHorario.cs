@@ -30,10 +30,10 @@ namespace LogicaNegocio
             {
                 return add.agregar(det);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                throw;
+                throw ex;
             }
         }
 
