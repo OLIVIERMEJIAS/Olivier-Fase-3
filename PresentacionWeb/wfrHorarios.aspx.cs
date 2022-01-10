@@ -589,6 +589,44 @@ namespace PresentacionWeb
                                                 break;
                                         }
                                     }
+                                    if (aulas2)
+                                    {
+                                        if ((diaAula2Otros == diaSemAux) && (auxHoraI == horI))
+                                        {
+
+                                            if (materias[materia] != 6 && materias[materia] != 7)
+                                            {
+                                                materiaAgregada = true;
+                                            }
+                                            else
+                                            {
+                                                reiniciarAulas = true;
+                                                if (!asignacionDos)
+                                                    asignacionDos = true;
+                                                segundoProfe = false;
+                                            }
+
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if ((diaAula8 == diaSemAux) && (auxHoraI == horI))
+                                        {
+
+                                            if (materias[materia] != 6 && materias[materia] != 7)
+                                            {
+                                                materiaAgregada = true;
+                                            }
+                                            else
+                                            {
+                                                reiniciarAulas = true;
+                                                if (!asignacionDos)
+                                                    asignacionDos = true;
+                                                segundoProfe = false;
+                                            }
+
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -653,7 +691,7 @@ namespace PresentacionWeb
                                         asignacionDos = true;
                                     segundoProfe = false;
                                 }
-                                materia++;
+                                
                             }
                         }
                     }
