@@ -55,7 +55,7 @@ namespace PresentacionWeb
         protected void btnGenerar_Click(object sender, EventArgs e)
         {
 
-            List<int> horariosId = new List<int> {1,2,3,4,5,6,7,8,9,10,11,12,13};
+            List<int> horariosId = new List<int> {10};
             char[] diasGrupInf = new char[5] { 'L', 'K', 'M', 'J', 'V' };
             char[] diasGrupSup = new char[5] { 'M', 'J', 'V', 'L', 'K' };
             char[] dias;
@@ -134,431 +134,349 @@ namespace PresentacionWeb
             //si los se borran para crear nuevos desde cero
             //try
             //{
-            //    if (lnDH.hayRegistros())
-            //    {
-            //        lnDH.eliminarRegistros();
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
+                //if (lnDH.hayRegistros())
+                //{
+                //    lnDH.eliminarRegistros();
+                //}
 
-            //    Session["_err"] = ex.Message;
-            //}
-
-            //instrucciones
-            while (horariosId.Count != 0)
-            {
-                ranNum = ran.Next(horariosId.Count);
-                horId = horariosId[ranNum];
-                horariosId.Remove(horId);
-
-                //validación para abordar el orden de días de la semana
-                //de asignación de horarios según sección
-                if (horId <= 9)
+                while (horariosId.Count != 0)
                 {
-                    dias = diasGrupInf;
-                    materias = materiasInf;
-                }
-                else
-                {
-                    dias = diasGrupSup;
-                    materias = materiasSup;
-                }
-                materia = 0;
-                segundoDiaEsp = false;
-                asignacionDos = false;
-                dia = 0;
-                diaSem = dias[dia];
-                aulas2 = false;
-                aulas8 = false;
-                iHoraI = 0;
-                iHoraF = 0;
-                compEspAgregada = false;
-                while (materia < materias.Count())
-                {
-                    materiaAgregada = false;
-                    segundoDiaEsp = false;
+                    ranNum = ran.Next(horariosId.Count);
+                    horId = horariosId[ranNum];
+                    horariosId.Remove(horId);
 
-                    fijarLimitesAulas(ref limInfAula, ref limSupAula, 
-                        materias[materia],ref aulas2, ref aulas8);
-                    segundoProfe = false;
-                    inicio = true;
-                    inicioProfes = true;
-                    diaSemAux = diaSem;
-                    auxHoraI = "";
-                    auxHorIGrupo = "";
-                    auxHorIProfe = "";
-                    primeraRondaProfesores = true;
-                    primeraRondaAulas = true;
-                    while (limInfAula <= limSupAula && !materiaAgregada)
+                    //validación para abordar el orden de días de la semana
+                    //de asignación de horarios según sección
+                    if (horId <= 9)
                     {
+                        dias = diasGrupInf;
+                        materias = materiasInf;
+                    }
+                    else
+                    {
+                        dias = diasGrupSup;
+                        materias = materiasSup;
+                    }
+                    materia = 0;
+                    segundoDiaEsp = false;
+                    asignacionDos = false;
+                    dia = 0;
+                    diaSem = dias[dia];
+                    aulas2 = false;
+                    aulas8 = false;
+                    iHoraI = 0;
+                    iHoraF = 0;
+                    compEspAgregada = false;
+                    while (materia < materias.Count())
+                    {
+                        materiaAgregada = false;
+                        segundoDiaEsp = false;
 
-                        if ((materias[materia] == 7 && reiniciarAulas == true) || (materias[materia] == 6 && asignacionDos == true && reiniciarAulas == true))
+                        fijarLimitesAulas(ref limInfAula, ref limSupAula,
+                            materias[materia], ref aulas2, ref aulas8);
+                        segundoProfe = false;
+                        inicio = true;
+                        inicioProfes = true;
+                        diaSemAux = diaSem;
+                        auxHoraI = "";
+                        auxHorIGrupo = "";
+                        auxHorIProfe = "";
+                        primeraRondaProfesores = true;
+                        primeraRondaAulas = true;
+                        while (limInfAula <= limSupAula && !materiaAgregada)
                         {
-                            fijarLimitesAulas(ref limInfAula, 
-                                ref limSupAula, materias[materia], ref aulas2, 
-                                ref aulas8);
-                            reiniciarAulas = false;
-                            auxHoraI = horI;
-                            diaSemAux = diaSem;
-                        }
-                        if (!segundoProfe)
-                            asignaciondeProfe(materias[materia], ref haySegundProf,
-                            ref profeId, ref segundoProfe, ref usoDeTercerProfe);
 
-                        
-
-                        asignarHoras(iHoraI, iHoraF,
-                                    ref horI, ref horF,
-                                    horasInicio, horasFin, horasFinEduFinan, materias[materia]);
-                        if (auxHorIGrupo == "")
-                        {
-                            auxHorIGrupo = horI;
-                            
-                        }
-                        disponibleGrupo = lnDH.disponibleHoraI(horI, diaSem, horId);
-                        if (materias[materia] == 7 && compEspAgregada == true)
-                            disponibleGrupo = "";
-                        if (disponibleGrupo == "")
-                        {
-                            if (inicio || !primeraRondaProfesores)
+                            if ((materias[materia] == 7 && reiniciarAulas == true) || (materias[materia] == 6 && asignacionDos == true && reiniciarAulas == true))
                             {
+                                fijarLimitesAulas(ref limInfAula,
+                                    ref limSupAula, materias[materia], ref aulas2,
+                                    ref aulas8);
+                                reiniciarAulas = false;
+                                auxHoraI = horI;
                                 diaSemAux = diaSem;
-                                auxHoraI = horFAula2Otros;
-                                inicio = false;
                             }
-                            disponibleAula = lnA.disponibleHoraI(horI, diaSem, limInfAula);
+                            if (!segundoProfe)
+                                asignaciondeProfe(materias[materia], ref haySegundProf,
+                                ref profeId, ref segundoProfe, ref usoDeTercerProfe);
 
-                            respaldoHorasFinalesAulas(primeraRondaAulas,
-                            aulas2, limInfAula, disponibleAula,
-                            ref horFAula1Otros, ref horFAula2Otros,
-                            ref horFAula1, ref horFAula2, ref horFAula3,
-                            ref horFAula4, ref horFAula5, ref horFAula6,
-                            ref horFAula7,
-                            ref horFAula8,ref diaAula1Otros, ref diaAula2Otros,
-                            ref diaAula1, ref diaAula2, ref diaAula3, ref diaAula4,
-                            ref diaAula5, ref diaAula6, ref diaAula7, ref diaAula8,
-                            dia
-                            );
 
-                            if (disponibleAula == "")
+
+                            asignarHoras(iHoraI, iHoraF,
+                                        ref horI, ref horF,
+                                        horasInicio, horasFin, horasFinEduFinan, materias[materia]);
+                            if (auxHorIGrupo == "")
                             {
-                                if (inicioProfes)
+                                auxHorIGrupo = horI;
+
+                            }
+                            disponibleGrupo = lnDH.disponibleHoraI(horI, diaSem, horId);
+                            if (materias[materia] == 7 && compEspAgregada == true)
+                                disponibleGrupo = "";
+                            if (disponibleGrupo == "")
+                            {
+                                if (inicio || !primeraRondaProfesores)
                                 {
                                     diaSemAux = diaSem;
-                                    auxHorIProfe = horI;
-                                    inicioProfes = false;
+                                    auxHoraI = horFAula2Otros;
+                                    inicio = false;
                                 }
-                                disponibleProfe = lnP.disponibleHoraI(horI, diaSem, profeId);
-                                
-                                if (haySegundProf && !segundoProfe)
-                                {
-                                    horF1Profe = disponibleProfe;
-                                    diaProfe1 = dia;
-                                }
-                                else if (haySegundProf && segundoProfe && !usoDeTercerProfe)
-                                {
-                                    horF2Profe = disponibleProfe;
-                                    diaProfe2 = dia;
-                                   
-                                }
-                                else if (haySegundProf && segundoProfe && usoDeTercerProfe)
-                                {
-                                    horF3Profe = disponibleProfe;
-                                    diaProfe3 = dia;
-                                    
-                                }
+                                disponibleAula = lnA.disponibleHoraI(horI, diaSem, limInfAula);
 
-                                if (disponibleProfe == "")
-                                {
+                                respaldoHorasFinalesAulas(primeraRondaAulas,
+                                aulas2, limInfAula, disponibleAula,
+                                ref horFAula1Otros, ref horFAula2Otros,
+                                ref horFAula1, ref horFAula2, ref horFAula3,
+                                ref horFAula4, ref horFAula5, ref horFAula6,
+                                ref horFAula7,
+                                ref horFAula8, ref diaAula1Otros, ref diaAula2Otros,
+                                ref diaAula1, ref diaAula2, ref diaAula3, ref diaAula4,
+                                ref diaAula5, ref diaAula6, ref diaAula7, ref diaAula8,
+                                dia
+                                );
 
-                                    //try
-                                    //{
-                                    switch (materias[materia])
+                                if (disponibleAula == "")
+                                {
+                                    if (inicioProfes)
                                     {
-                                        case 1:
-                                        case 6:
-                                        case 7:
-                                            if (materias[materia] == 1)
-                                                espMaxLecciones = 6;
-                                            else
-                                                espMaxLecciones = 4;
-                                            if (lnP.numLecciones(profeId) <= espMaxLecciones)
-                                            {
+                                        diaSemAux = diaSem;
+                                        auxHorIProfe = horI;
+                                        inicioProfes = false;
+                                    }
+                                    disponibleProfe = lnP.disponibleHoraI(horI, diaSem, profeId);
 
-                                                EDetalleHorario det = new EDetalleHorario(horId, profeId, limInfAula, diaSem, horI, horF);
-                                                lnDH.agregar(det);
-                                                if (materias[materia] != 1 &&
-                                                    !segundoDiaEsp && segundaEsp)
+                                    if (haySegundProf && !segundoProfe)
+                                    {
+                                        horF1Profe = disponibleProfe;
+                                        diaProfe1 = dia;
+                                    }
+                                    else if (haySegundProf && segundoProfe && !usoDeTercerProfe)
+                                    {
+                                        horF2Profe = disponibleProfe;
+                                        diaProfe2 = dia;
+
+                                    }
+                                    else if (haySegundProf && segundoProfe && usoDeTercerProfe)
+                                    {
+                                        horF3Profe = disponibleProfe;
+                                        diaProfe3 = dia;
+
+                                    }
+
+                                    if (disponibleProfe == "")
+                                    {
+
+                                        //try
+                                        //{
+                                        switch (materias[materia])
+                                        {
+                                            case 1:
+                                            case 6:
+                                            case 7:
+                                                if (materias[materia] == 1)
+                                                    espMaxLecciones = 6;
+                                                else
+                                                    espMaxLecciones = 4;
+                                                if (lnP.numLecciones(profeId) <= espMaxLecciones)
                                                 {
 
-                                                    dia++;
-                                                    if (dia > 4)
-                                                        dia = 0;
-                                                    diaSem = dias[dia];
-                                                    iHoraI = 0;
-                                                    iHoraF = 0;
-                                                    materia--;
-                                                    segundaEsp = false;
-                                                    asignacionDos = true;
-                                                    reiniciarAulas = true;
-                                                    segundoProfe = false;
-                                                    compEspAgregada = false;
-                                                }
-                                                else if (materias[materia] != 1 && !segundoDiaEsp && !segundaEsp)
-                                                {
-                                                    if (!asignacionDos)
+                                                    EDetalleHorario det = new EDetalleHorario(horId, profeId, limInfAula, diaSem, horI, horF);
+                                                    lnDH.agregar(det);
+                                                    if (materias[materia] != 1 &&
+                                                        !segundoDiaEsp && segundaEsp)
                                                     {
 
-                                                        materia++;
-                                                        segundaEsp = true;
+                                                        dia++;
+                                                        if (dia > 4)
+                                                            dia = 0;
+                                                        diaSem = dias[dia];
+                                                        iHoraI = 0;
+                                                        iHoraF = 0;
+                                                        materia--;
+                                                        segundaEsp = false;
+                                                        asignacionDos = true;
                                                         reiniciarAulas = true;
                                                         segundoProfe = false;
-                                                        compEspAgregada = true;
+                                                        compEspAgregada = false;
+                                                    }
+                                                    else if (materias[materia] != 1 && !segundoDiaEsp && !segundaEsp)
+                                                    {
+                                                        if (!asignacionDos)
+                                                        {
+
+                                                            materia++;
+                                                            segundaEsp = true;
+                                                            reiniciarAulas = true;
+                                                            segundoProfe = false;
+                                                            compEspAgregada = true;
+                                                        }
+                                                        else
+                                                        {
+
+                                                            materia++;
+                                                            segundaEsp = true;
+                                                            segundoDiaEsp = true;
+                                                            segundoProfe = false;
+                                                            reiniciarAulas = true;
+                                                            compEspAgregada = true;
+
+
+                                                        }
                                                     }
                                                     else
                                                     {
-
-                                                        materia++;
-                                                        segundaEsp = true;
-                                                        segundoDiaEsp = true;
-                                                        segundoProfe = false;
-                                                        reiniciarAulas = true;
-                                                        compEspAgregada = true;
-                                                        
+                                                        materiaAgregada = true;
 
                                                     }
+                                                }
+                                                else if (segundoProfe && materias[materia] != 1)
+                                                {
+                                                    materiaAgregada = true;
+                                                }
+                                                else
+                                                {
+                                                    if (haySegundProf && !segundoProfe)
+                                                    {
+                                                        profeId++;
+                                                        segundoProfe = true;
+                                                    }
+                                                    else if (haySegundProf && segundoProfe)
+                                                    {
+                                                        if (materias[materia] == 1 && !usoDeTercerProfe)
+                                                        {
+                                                            profeId++;
+                                                            usoDeTercerProfe = true;
+                                                            segundoProfe = true;
+                                                        }
+                                                        else
+                                                            materiaAgregada = true;
+                                                    }
+                                                }
+                                                break;
+
+                                            case 2:
+                                            case 3:
+                                            case 4:
+                                            case 5:
+                                                if (lnP.numLecciones(profeId) <= 10)
+                                                {
+                                                    EDetalleHorario det = new EDetalleHorario(horId, profeId, limInfAula, diaSem, horI, horF);
+                                                    lnDH.agregar(det);
+                                                    materiaAgregada = true;
+                                                }
+                                                else if (segundoProfe)
+                                                {
+                                                    materiaAgregada = true;
+                                                }
+                                                else
+                                                {
+                                                    if (haySegundProf && !segundoProfe)
+                                                    {
+                                                        profeId++;
+                                                        segundoProfe = true;
+                                                    }
+                                                    else if (haySegundProf && segundoProfe)
+                                                    {
+                                                        materiaAgregada = true;
+                                                    }
+                                                }
+                                                break;
+                                            case 8:
+                                            case 9:
+                                            case 11:
+                                            case 12:
+
+                                                if (lnP.numLecciones(profeId) <= 20)
+                                                {
+                                                    EDetalleHorario det = new EDetalleHorario(horId, profeId, limInfAula, diaSem, horI, horF);
+                                                    lnDH.agregar(det);
+                                                    materiaAgregada = true;
+
                                                 }
                                                 else
                                                 {
                                                     materiaAgregada = true;
 
                                                 }
-                                            }
-                                            else if (segundoProfe && materias[materia] != 1)
-                                            {
-                                                materiaAgregada = true;
-                                            }
-                                            else
-                                            {
-                                                if (haySegundProf && !segundoProfe)
-                                                {
-                                                    profeId++;
-                                                    segundoProfe = true;
-                                                }
-                                                else if (haySegundProf && segundoProfe)
-                                                {
-                                                    if (materias[materia] == 1 && !usoDeTercerProfe)
-                                                    {
-                                                        profeId++;
-                                                        usoDeTercerProfe = true;
-                                                        segundoProfe = true;
-                                                    }
-                                                    else
-                                                        materiaAgregada = true;
-                                                }
-                                            }
-                                            break;
+                                                break;
+                                            case 10:
 
-                                        case 2:
-                                        case 3:
-                                        case 4:
-                                        case 5:
-                                            if (lnP.numLecciones(profeId) <= 10)
-                                            {
-                                                EDetalleHorario det = new EDetalleHorario(horId, profeId, limInfAula, diaSem, horI, horF);
-                                                lnDH.agregar(det);
-                                                materiaAgregada = true;
-                                            }
-                                            else if (segundoProfe)
-                                            {
-                                                materiaAgregada = true;
-                                            }
-                                            else
-                                            {
-                                                if (haySegundProf && !segundoProfe)
+                                                if (lnP.numLecciones(profeId) <= 40)
                                                 {
-                                                    profeId++;
-                                                    segundoProfe = true;
+                                                    EDetalleHorario det = new EDetalleHorario(horId, profeId, limInfAula, diaSem, horI, horF);
+                                                    lnDH.agregar(det);
+                                                    materiaAgregada = true;
+
                                                 }
-                                                else if (haySegundProf && segundoProfe)
+                                                else
                                                 {
                                                     materiaAgregada = true;
+
                                                 }
-                                            }
-                                            break;
-                                        case 8:
-                                        case 9:
-                                        case 11:
-                                        case 12:
+                                                break;
+                                        }
 
-                                            if (lnP.numLecciones(profeId) <= 20)
-                                            {
-                                                EDetalleHorario det = new EDetalleHorario(horId, profeId, limInfAula, diaSem, horI, horF);
-                                                lnDH.agregar(det);
-                                                materiaAgregada = true;
-
-                                            }
-                                            else
-                                            {
-                                                materiaAgregada = true;
-
-                                            }
-                                            break;
-                                        case 10:
-
-                                            if (lnP.numLecciones(profeId) <= 40)
-                                            {
-                                                EDetalleHorario det = new EDetalleHorario(horId, profeId, limInfAula, diaSem, horI, horF);
-                                                lnDH.agregar(det);
-                                                materiaAgregada = true;
-
-                                            }
-                                            else
-                                            {
-                                                materiaAgregada = true;
-
-                                            }
-                                            break;
                                     }
-                                    //}
-                                    //catch (Exception ex)
-                                    //{
-                                    //    Session["_err"] = ex.Message;
-                                    //}
-                                }
-                                else
-                                {
-                                    if (!haySegundProf)
+                                    else
                                     {
-                                        if (disponibleProfe.Substring(0, 5) == "08:00" ||
-                                        disponibleProfe.Substring(0, 5) == "09:40"
-                                        || disponibleProfe.Substring(0, 5) == "11:20" ||
-                                        disponibleProfe.Substring(0, 5) == "13:40" ||
-                                        disponibleProfe.Substring(0, 5) == "15:20")
+                                        if (!haySegundProf)
                                         {
-                                            buscarIndiceHoraFinal(disponibleProfe, horasFinEduFinan,
+                                            if (disponibleProfe.Substring(0, 5) == "08:00" ||
+                                            disponibleProfe.Substring(0, 5) == "09:40"
+                                            || disponibleProfe.Substring(0, 5) == "11:20" ||
+                                            disponibleProfe.Substring(0, 5) == "13:40" ||
+                                            disponibleProfe.Substring(0, 5) == "15:20")
+                                            {
+                                                buscarIndiceHoraFinal(disponibleProfe, horasFinEduFinan,
+                                                materias[materia], ref iHoraI, ref iHoraF, ref dia,
+                                                ref diaSem, dias, false, true, ref limInfAula,
+                                                ref limSupAula, haySegundProf, ref segundoProfe, ref profeId,
+                                                ref usoDeTercerProfe, ref reiniciarAulas,
+                                                ref primeraRondaProfesores, ref primeraRondaAulas,
+                                                ref aulas2, ref aulas8);
+                                            }
+                                            else
+                                                buscarIndiceHoraFinal(disponibleProfe, horasFin,
+                                                materias[materia], ref iHoraI, ref iHoraF, ref dia,
+                                                ref diaSem, dias, false, true, ref limInfAula,
+                                                ref limSupAula, haySegundProf, ref segundoProfe, ref profeId,
+                                                ref usoDeTercerProfe, ref reiniciarAulas,
+                                                ref primeraRondaProfesores, ref primeraRondaAulas,
+                                                ref aulas2, ref aulas8);
+                                                asignarHoras(iHoraI, iHoraF,
+                                                ref horI, ref horF,
+                                                horasInicio, horasFin, horasFinEduFinan, materias[materia]);
+                                                siNoHayDisponiblilidad(ref diaSem, diaSemAux,
+                                                auxHorIProfe, horI, materias[materia], ref materiaAgregada,
+                                                ref materia, ref reiniciarAulas, ref segundoProfe,
+                                                ref asignacionDos, ref segundaEsp, ref segundoDiaEsp,
+                                                ref compEspAgregada, ref dia, dias, ref iHoraI,
+                                                ref iHoraF);
+                                        }
+                                        else if (primeraRondaProfesores)
+
+                                        {
+                                            buscarIndiceHoraFinal(horI, horasInicio,
                                             materias[materia], ref iHoraI, ref iHoraF, ref dia,
                                             ref diaSem, dias, false, true, ref limInfAula,
-                                            ref limSupAula, haySegundProf, ref segundoProfe, ref profeId,
-                                            ref usoDeTercerProfe, ref reiniciarAulas,
+                                            ref limSupAula, haySegundProf, ref segundoProfe,
+                                            ref profeId, ref usoDeTercerProfe, ref reiniciarAulas,
                                             ref primeraRondaProfesores, ref primeraRondaAulas,
                                             ref aulas2, ref aulas8);
                                         }
-                                        else
-                                            buscarIndiceHoraFinal(disponibleProfe, horasFin,
-                                            materias[materia], ref iHoraI, ref iHoraF, ref dia,
-                                            ref diaSem, dias, false, true, ref limInfAula,
-                                            ref limSupAula, haySegundProf, ref segundoProfe, ref profeId,
-                                            ref usoDeTercerProfe, ref reiniciarAulas,
-                                            ref primeraRondaProfesores, ref primeraRondaAulas,
-                                            ref aulas2, ref aulas8);
-                                            asignarHoras(iHoraI, iHoraF,
-                                            ref horI, ref horF,
-                                            horasInicio, horasFin, horasFinEduFinan, materias[materia]);
-                                            siNoHayDisponiblilidad(diaSem, diaSemAux,
-                                            auxHorIProfe, horI, materias[materia], ref materiaAgregada,
-                                            materia, ref reiniciarAulas, ref segundoProfe,
-                                            ref asignacionDos);
-                                    }
-                                    else if(primeraRondaProfesores)
-
-                                    {
-                                        buscarIndiceHoraFinal(horI, horasInicio,
-                                        materias[materia], ref iHoraI, ref iHoraF, ref dia,
-                                        ref diaSem, dias, false, true, ref limInfAula,
-                                        ref limSupAula, haySegundProf, ref segundoProfe,
-                                        ref profeId, ref usoDeTercerProfe, ref reiniciarAulas,
-                                        ref primeraRondaProfesores, ref primeraRondaAulas,
-                                        ref aulas2, ref aulas8);
-                                    }
-                                    else if (!primeraRondaProfesores && !segundoProfe)
-                                    {
-                                        valorarHorasYAvanzar(horF2Profe, horasFinEduFinan,
-                                        horasFin, ref iHoraI, ref iHoraF, ref diaProfe2,
-                                        ref diaSem, dias, false, true, ref limInfAula,
-                                        ref limSupAula, haySegundProf, ref segundoProfe,
-                                        ref profeId, ref usoDeTercerProfe, ref reiniciarAulas,
-                                        ref primeraRondaProfesores,
-                                        ref primeraRondaAulas, materias[materia],
-                                        ref aulas2, ref aulas8);
-                                    }
-                                    else if(!primeraRondaProfesores && segundoProfe && materias[materia] != 1)
-                                    {
-                                        valorarHorasYAvanzar(horF1Profe, horasFinEduFinan,
-                                        horasFin, ref iHoraI, ref iHoraF, ref diaAula8,
-                                        ref diaSem, dias, true, false, ref limInfAula,
-                                        ref limSupAula, haySegundProf, ref segundoProfe,
-                                        ref profeId, ref usoDeTercerProfe, ref reiniciarAulas,
-                                        ref primeraRondaProfesores,
-                                        ref primeraRondaAulas, materias[materia],
-                                        ref aulas2, ref aulas8);
-                                        asignarHoras(iHoraI, iHoraF,
-                                        ref horI, ref horF,
-                                        horasInicio, horasFin, horasFinEduFinan, materias[materia]);
-                                        siNoHayDisponiblilidad(diaSem, diaSemAux,
-                                        auxHorIProfe, horI, materias[materia], ref materiaAgregada,
-                                        materia, ref reiniciarAulas, ref segundoProfe,
-                                        ref asignacionDos);
-                                    }
-                                    else if (!primeraRondaProfesores && segundoProfe && materias[materia] == 1 && !usoDeTercerProfe)
-                                    {
-                                        valorarHorasYAvanzar(horF3Profe, horasFinEduFinan,
-                                        horasFin, ref iHoraI, ref iHoraF, ref diaAula8,
-                                        ref diaSem, dias, true, false, ref limInfAula,
-                                        ref limSupAula, haySegundProf, ref segundoProfe,
-                                        ref profeId, ref usoDeTercerProfe, ref reiniciarAulas,
-                                        ref primeraRondaProfesores,
-                                        ref primeraRondaAulas, materias[materia],
-                                        ref aulas2, ref aulas8);
-                                        asignarHoras(iHoraI, iHoraF,
-                                        ref horI, ref horF,
-                                        horasInicio, horasFin, horasFinEduFinan, materias[materia]);
-                                        siNoHayDisponiblilidad(diaSem, diaSemAux,
-                                        auxHorIProfe, horI, materias[materia], ref materiaAgregada,
-                                        materia, ref reiniciarAulas, ref segundoProfe,
-                                        ref asignacionDos);
-                                    }
-                                    else if( !primeraRondaProfesores && segundoProfe && usoDeTercerProfe)
-                                    {
-                                        valorarHorasYAvanzar(horF1Profe, horasFinEduFinan,
-                                        horasFin, ref iHoraI, ref iHoraF, ref diaAula8,
-                                        ref diaSem, dias, true, false, ref limInfAula,
-                                        ref limSupAula, haySegundProf, ref segundoProfe,
-                                        ref profeId, ref usoDeTercerProfe, ref reiniciarAulas,
-                                        ref primeraRondaProfesores,
-                                        ref primeraRondaAulas, materias[materia],
-                                        ref aulas2, ref aulas8);
-                                        asignarHoras(iHoraI, iHoraF,
-                                        ref horI, ref horF,
-                                        horasInicio, horasFin, horasFinEduFinan, materias[materia]);
-                                        siNoHayDisponiblilidad(diaSem, diaSemAux,
-                                        auxHorIProfe, horI, materias[materia], ref materiaAgregada,
-                                        materia, ref reiniciarAulas, ref segundoProfe,
-                                        ref asignacionDos);
-                                    }
-                                    
-                                        
-                                }
-
-                            }
-                            else
-                            {
-                                if(primeraRondaAulas)
-                                    buscarIndiceHoraFinal(horI, horasInicio,
-                                materias[materia], ref iHoraI, ref iHoraF, ref dia,
-                                ref diaSem, dias, true, false, ref limInfAula,
-                                ref limSupAula, haySegundProf, ref segundoProfe, ref profeId,
-                                ref usoDeTercerProfe, ref reiniciarAulas,
-                                ref primeraRondaProfesores, ref primeraRondaAulas, 
-                                ref aulas2, ref aulas8);
-                                else
-                                {
-                                    if (aulas2)
-                                    {
-                                        if(limInfAula == 9 || limInfAula == 11)
+                                        else if (!primeraRondaProfesores && !segundoProfe)
                                         {
-                                            valorarHorasYAvanzar(horFAula2Otros, horasFinEduFinan,
+                                            valorarHorasYAvanzar(horF2Profe, horasFinEduFinan,
+                                            horasFin, ref iHoraI, ref iHoraF, ref diaProfe2,
+                                            ref diaSem, dias, false, true, ref limInfAula,
+                                            ref limSupAula, haySegundProf, ref segundoProfe,
+                                            ref profeId, ref usoDeTercerProfe, ref reiniciarAulas,
+                                            ref primeraRondaProfesores,
+                                            ref primeraRondaAulas, materias[materia],
+                                            ref aulas2, ref aulas8);
+                                        }
+                                        else if (!primeraRondaProfesores && segundoProfe && materias[materia] != 1)
+                                        {
+                                            valorarHorasYAvanzar(horF1Profe, horasFinEduFinan,
                                             horasFin, ref iHoraI, ref iHoraF, ref diaAula8,
                                             ref diaSem, dias, true, false, ref limInfAula,
                                             ref limSupAula, haySegundProf, ref segundoProfe,
@@ -569,87 +487,75 @@ namespace PresentacionWeb
                                             asignarHoras(iHoraI, iHoraF,
                                             ref horI, ref horF,
                                             horasInicio, horasFin, horasFinEduFinan, materias[materia]);
-                                            siNoHayDisponiblilidad(diaSem, diaSemAux,
-                                            auxHoraI, horI, materias[materia], ref materiaAgregada,
-                                            materia, ref reiniciarAulas, ref segundoProfe,
-                                            ref asignacionDos);
+                                            siNoHayDisponiblilidad(ref diaSem, diaSemAux,
+                                            auxHorIProfe, horI, materias[materia], ref materiaAgregada,
+                                            ref materia, ref reiniciarAulas, ref segundoProfe,
+                                            ref asignacionDos, ref segundaEsp, ref segundoDiaEsp,
+                                            ref compEspAgregada, ref dia, dias, ref iHoraI,
+                                            ref iHoraF);
                                         }
-                                        else
-                                            valorarHorasYAvanzar(horFAula1Otros, horasFinEduFinan,
-                                                horasFin, ref iHoraI, ref iHoraF, ref diaAula8,
-                                                ref diaSem, dias, true, false, ref limInfAula,
-                                                ref limSupAula, haySegundProf, ref segundoProfe,
-                                                ref profeId, ref usoDeTercerProfe, ref reiniciarAulas,
-                                                ref primeraRondaProfesores,
-                                                ref primeraRondaAulas, materias[materia],
-                                                ref aulas2, ref aulas8);
+                                        else if (!primeraRondaProfesores && segundoProfe && materias[materia] == 1 && !usoDeTercerProfe)
+                                        {
+                                            valorarHorasYAvanzar(horF3Profe, horasFinEduFinan,
+                                            horasFin, ref iHoraI, ref iHoraF, ref diaAula8,
+                                            ref diaSem, dias, true, false, ref limInfAula,
+                                            ref limSupAula, haySegundProf, ref segundoProfe,
+                                            ref profeId, ref usoDeTercerProfe, ref reiniciarAulas,
+                                            ref primeraRondaProfesores,
+                                            ref primeraRondaAulas, materias[materia],
+                                            ref aulas2, ref aulas8);
+                                            asignarHoras(iHoraI, iHoraF,
+                                            ref horI, ref horF,
+                                            horasInicio, horasFin, horasFinEduFinan, materias[materia]);
+                                            siNoHayDisponiblilidad(ref diaSem, diaSemAux,
+                                            auxHorIProfe, horI, materias[materia], ref materiaAgregada,
+                                            ref materia, ref reiniciarAulas, ref segundoProfe,
+                                            ref asignacionDos, ref segundaEsp, ref segundoDiaEsp,
+                                            ref compEspAgregada, ref dia, dias, ref iHoraI,
+                                            ref iHoraF);
+                                        }
+                                        else if (!primeraRondaProfesores && segundoProfe && usoDeTercerProfe)
+                                        {
+                                            valorarHorasYAvanzar(horF1Profe, horasFinEduFinan,
+                                            horasFin, ref iHoraI, ref iHoraF, ref diaAula8,
+                                            ref diaSem, dias, true, false, ref limInfAula,
+                                            ref limSupAula, haySegundProf, ref segundoProfe,
+                                            ref profeId, ref usoDeTercerProfe, ref reiniciarAulas,
+                                            ref primeraRondaProfesores,
+                                            ref primeraRondaAulas, materias[materia],
+                                            ref aulas2, ref aulas8);
+                                            asignarHoras(iHoraI, iHoraF,
+                                            ref horI, ref horF,
+                                            horasInicio, horasFin, horasFinEduFinan, materias[materia]);
+                                            siNoHayDisponiblilidad(ref diaSem, diaSemAux,
+                                            auxHorIProfe, horI, materias[materia], ref materiaAgregada,
+                                            ref materia, ref reiniciarAulas, ref segundoProfe,
+                                            ref asignacionDos, ref segundaEsp, ref segundoDiaEsp,
+                                            ref compEspAgregada, ref dia, dias, ref iHoraI,
+                                            ref iHoraF);
+                                        }
+
+
                                     }
+
+                                }
+                                else
+                                {
+                                    if (primeraRondaAulas)
+                                        buscarIndiceHoraFinal(horI, horasInicio,
+                                    materias[materia], ref iHoraI, ref iHoraF, ref dia,
+                                    ref diaSem, dias, true, false, ref limInfAula,
+                                    ref limSupAula, haySegundProf, ref segundoProfe, ref profeId,
+                                    ref usoDeTercerProfe, ref reiniciarAulas,
+                                    ref primeraRondaProfesores, ref primeraRondaAulas,
+                                    ref aulas2, ref aulas8);
                                     else
                                     {
-                                        switch (limInfAula)
+                                        if (aulas2)
                                         {
-                                            case 1:
-                                                valorarHorasYAvanzar(horFAula2, horasFinEduFinan,
-                                                horasFin, ref iHoraI, ref iHoraF, ref diaAula8,
-                                                ref diaSem, dias, true, false, ref limInfAula,
-                                                ref limSupAula, haySegundProf, ref segundoProfe,
-                                                ref profeId, ref usoDeTercerProfe, ref reiniciarAulas,
-                                                ref primeraRondaProfesores,
-                                                ref primeraRondaAulas, materias[materia],
-                                                ref aulas2, ref aulas8);
-                                                break;
-                                            case 2:
-                                                valorarHorasYAvanzar(horFAula3, horasFinEduFinan,
-                                                horasFin, ref iHoraI, ref iHoraF, ref diaAula8,
-                                                ref diaSem, dias, true, false, ref limInfAula,
-                                                ref limSupAula, haySegundProf, ref segundoProfe,
-                                                ref profeId, ref usoDeTercerProfe, ref reiniciarAulas,
-                                                ref primeraRondaProfesores,
-                                                ref primeraRondaAulas, materias[materia],
-                                                ref aulas2, ref aulas8);
-                                                break;
-                                            case 3:
-                                                valorarHorasYAvanzar(horFAula4, horasFinEduFinan,
-                                                horasFin, ref iHoraI, ref iHoraF, ref diaAula8,
-                                                ref diaSem, dias, true, false, ref limInfAula,
-                                                ref limSupAula, haySegundProf, ref segundoProfe,
-                                                ref profeId, ref usoDeTercerProfe, ref reiniciarAulas,
-                                                ref primeraRondaProfesores,
-                                                ref primeraRondaAulas, materias[materia],
-                                                ref aulas2, ref aulas8);
-                                                break;
-                                            case 4:
-                                                valorarHorasYAvanzar(horFAula5, horasFinEduFinan,
-                                                horasFin, ref iHoraI, ref iHoraF, ref diaAula8,
-                                                ref diaSem, dias, true, false, ref limInfAula,
-                                                ref limSupAula, haySegundProf, ref segundoProfe,
-                                                ref profeId, ref usoDeTercerProfe, ref reiniciarAulas,
-                                                ref primeraRondaProfesores,
-                                                ref primeraRondaAulas, materias[materia],
-                                                ref aulas2, ref aulas8);
-                                                break;
-                                            case 5:
-                                                valorarHorasYAvanzar(horFAula6, horasFinEduFinan,
-                                                horasFin, ref iHoraI, ref iHoraF, ref diaAula8,
-                                                ref diaSem, dias, true, false, ref limInfAula,
-                                                ref limSupAula, haySegundProf, ref segundoProfe,
-                                                ref profeId, ref usoDeTercerProfe, ref reiniciarAulas,
-                                                ref primeraRondaProfesores,
-                                                ref primeraRondaAulas, materias[materia],
-                                                ref aulas2, ref aulas8);
-                                                break;
-                                            case 6:
-                                                valorarHorasYAvanzar(horFAula7, horasFinEduFinan,
-                                                horasFin, ref iHoraI, ref iHoraF, ref diaAula8,
-                                                ref diaSem, dias, true, false, ref limInfAula,
-                                                ref limSupAula, haySegundProf, ref segundoProfe,
-                                                ref profeId, ref usoDeTercerProfe, ref reiniciarAulas,
-                                                ref primeraRondaProfesores,
-                                                ref primeraRondaAulas, materias[materia],
-                                                ref aulas2, ref aulas8);
-                                                break;
-                                            case 7:
-                                                valorarHorasYAvanzar(horFAula8, horasFinEduFinan,
+                                            if (limInfAula == 9 || limInfAula == 11)
+                                            {
+                                                valorarHorasYAvanzar(horFAula2Otros, horasFinEduFinan,
                                                 horasFin, ref iHoraI, ref iHoraF, ref diaAula8,
                                                 ref diaSem, dias, true, false, ref limInfAula,
                                                 ref limSupAula, haySegundProf, ref segundoProfe,
@@ -660,80 +566,186 @@ namespace PresentacionWeb
                                                 asignarHoras(iHoraI, iHoraF,
                                                 ref horI, ref horF,
                                                 horasInicio, horasFin, horasFinEduFinan, materias[materia]);
-                                                siNoHayDisponiblilidad(diaSem, diaSemAux,
+                                                siNoHayDisponiblilidad(ref diaSem, diaSemAux,
                                                 auxHoraI, horI, materias[materia], ref materiaAgregada,
-                                                materia, ref reiniciarAulas, ref segundoProfe,
-                                                ref asignacionDos);
-                                                break;
-                                            case 8:
-                                                valorarHorasYAvanzar(horFAula1, horasFinEduFinan,
-                                                horasFin, ref iHoraI, ref iHoraF, ref diaAula8,
-                                                ref diaSem, dias, true, false, ref limInfAula,
-                                                ref limSupAula, haySegundProf, ref segundoProfe,
-                                                ref profeId, ref usoDeTercerProfe, ref reiniciarAulas,
-                                                ref primeraRondaProfesores,
-                                                ref primeraRondaAulas, materias[materia],
-                                                ref aulas2, ref aulas8);
-
-                                                break;
+                                                ref materia, ref reiniciarAulas, ref segundoProfe,
+                                                ref asignacionDos, ref segundaEsp, ref segundoDiaEsp,
+                                                ref compEspAgregada, ref dia, dias, ref iHoraI,
+                                                ref iHoraF);
+                                            }
+                                            else
+                                                valorarHorasYAvanzar(horFAula1Otros, horasFinEduFinan,
+                                                    horasFin, ref iHoraI, ref iHoraF, ref diaAula8,
+                                                    ref diaSem, dias, true, false, ref limInfAula,
+                                                    ref limSupAula, haySegundProf, ref segundoProfe,
+                                                    ref profeId, ref usoDeTercerProfe, ref reiniciarAulas,
+                                                    ref primeraRondaProfesores,
+                                                    ref primeraRondaAulas, materias[materia],
+                                                    ref aulas2, ref aulas8);
                                         }
+                                        else
+                                        {
+                                            switch (limInfAula)
+                                            {
+                                                case 1:
+                                                    valorarHorasYAvanzar(horFAula2, horasFinEduFinan,
+                                                    horasFin, ref iHoraI, ref iHoraF, ref diaAula8,
+                                                    ref diaSem, dias, true, false, ref limInfAula,
+                                                    ref limSupAula, haySegundProf, ref segundoProfe,
+                                                    ref profeId, ref usoDeTercerProfe, ref reiniciarAulas,
+                                                    ref primeraRondaProfesores,
+                                                    ref primeraRondaAulas, materias[materia],
+                                                    ref aulas2, ref aulas8);
+                                                    break;
+                                                case 2:
+                                                    valorarHorasYAvanzar(horFAula3, horasFinEduFinan,
+                                                    horasFin, ref iHoraI, ref iHoraF, ref diaAula8,
+                                                    ref diaSem, dias, true, false, ref limInfAula,
+                                                    ref limSupAula, haySegundProf, ref segundoProfe,
+                                                    ref profeId, ref usoDeTercerProfe, ref reiniciarAulas,
+                                                    ref primeraRondaProfesores,
+                                                    ref primeraRondaAulas, materias[materia],
+                                                    ref aulas2, ref aulas8);
+                                                    break;
+                                                case 3:
+                                                    valorarHorasYAvanzar(horFAula4, horasFinEduFinan,
+                                                    horasFin, ref iHoraI, ref iHoraF, ref diaAula8,
+                                                    ref diaSem, dias, true, false, ref limInfAula,
+                                                    ref limSupAula, haySegundProf, ref segundoProfe,
+                                                    ref profeId, ref usoDeTercerProfe, ref reiniciarAulas,
+                                                    ref primeraRondaProfesores,
+                                                    ref primeraRondaAulas, materias[materia],
+                                                    ref aulas2, ref aulas8);
+                                                    break;
+                                                case 4:
+                                                    valorarHorasYAvanzar(horFAula5, horasFinEduFinan,
+                                                    horasFin, ref iHoraI, ref iHoraF, ref diaAula8,
+                                                    ref diaSem, dias, true, false, ref limInfAula,
+                                                    ref limSupAula, haySegundProf, ref segundoProfe,
+                                                    ref profeId, ref usoDeTercerProfe, ref reiniciarAulas,
+                                                    ref primeraRondaProfesores,
+                                                    ref primeraRondaAulas, materias[materia],
+                                                    ref aulas2, ref aulas8);
+                                                    break;
+                                                case 5:
+                                                    valorarHorasYAvanzar(horFAula6, horasFinEduFinan,
+                                                    horasFin, ref iHoraI, ref iHoraF, ref diaAula8,
+                                                    ref diaSem, dias, true, false, ref limInfAula,
+                                                    ref limSupAula, haySegundProf, ref segundoProfe,
+                                                    ref profeId, ref usoDeTercerProfe, ref reiniciarAulas,
+                                                    ref primeraRondaProfesores,
+                                                    ref primeraRondaAulas, materias[materia],
+                                                    ref aulas2, ref aulas8);
+                                                    break;
+                                                case 6:
+                                                    valorarHorasYAvanzar(horFAula7, horasFinEduFinan,
+                                                    horasFin, ref iHoraI, ref iHoraF, ref diaAula8,
+                                                    ref diaSem, dias, true, false, ref limInfAula,
+                                                    ref limSupAula, haySegundProf, ref segundoProfe,
+                                                    ref profeId, ref usoDeTercerProfe, ref reiniciarAulas,
+                                                    ref primeraRondaProfesores,
+                                                    ref primeraRondaAulas, materias[materia],
+                                                    ref aulas2, ref aulas8);
+                                                    break;
+                                                case 7:
+                                                    valorarHorasYAvanzar(horFAula8, horasFinEduFinan,
+                                                    horasFin, ref iHoraI, ref iHoraF, ref diaAula8,
+                                                    ref diaSem, dias, true, false, ref limInfAula,
+                                                    ref limSupAula, haySegundProf, ref segundoProfe,
+                                                    ref profeId, ref usoDeTercerProfe, ref reiniciarAulas,
+                                                    ref primeraRondaProfesores,
+                                                    ref primeraRondaAulas, materias[materia],
+                                                    ref aulas2, ref aulas8);
+                                                    asignarHoras(iHoraI, iHoraF,
+                                                    ref horI, ref horF,
+                                                    horasInicio, horasFin, horasFinEduFinan, materias[materia]);
+                                                    siNoHayDisponiblilidad(ref diaSem, diaSemAux,
+                                                    auxHoraI, horI, materias[materia], ref materiaAgregada,
+                                                    ref materia, ref reiniciarAulas, ref segundoProfe,
+                                                    ref asignacionDos, ref segundaEsp, ref segundoDiaEsp,
+                                                    ref compEspAgregada, ref dia, dias, ref iHoraI,
+                                                    ref iHoraF);
+                                                    break;
+                                                case 8:
+                                                    valorarHorasYAvanzar(horFAula1, horasFinEduFinan,
+                                                    horasFin, ref iHoraI, ref iHoraF, ref diaAula8,
+                                                    ref diaSem, dias, true, false, ref limInfAula,
+                                                    ref limSupAula, haySegundProf, ref segundoProfe,
+                                                    ref profeId, ref usoDeTercerProfe, ref reiniciarAulas,
+                                                    ref primeraRondaProfesores,
+                                                    ref primeraRondaAulas, materias[materia],
+                                                    ref aulas2, ref aulas8);
+
+                                                    break;
+                                            }
+                                        }
+
                                     }
-                                    
                                 }
                             }
-                        }
-                        else
-                        {
-                            if (disponibleGrupo.Substring(0, 5) == "08:00" ||
-                                disponibleGrupo.Substring(0, 5) == "09:40"
-                                || disponibleGrupo.Substring(0, 5) == "11:20" ||
-                                disponibleGrupo.Substring(0, 5) == "13:40" ||
-                                disponibleGrupo.Substring(0, 5) == "15:20")
-                            {
-                                buscarIndiceHoraFinal(disponibleGrupo, horasFinEduFinan,
-                                materias[materia], ref iHoraI, ref iHoraF, ref dia,
-                                ref diaSem, dias, false, false, ref limInfAula,
-                                ref limSupAula, haySegundProf, ref segundoProfe, ref profeId,
-                                ref usoDeTercerProfe, ref reiniciarAulas,
-                                ref primeraRondaProfesores, ref primeraRondaAulas,
-                                ref aulas2, ref aulas8);
-                                asignarHoras(iHoraI, iHoraF,
-                                ref horI, ref horF,
-                                horasInicio, horasFin, horasFinEduFinan, materias[materia]);
-                                siNoHayDisponiblilidad(diaSem, diaSemAux,
-                                auxHorIGrupo, horI, materias[materia], ref materiaAgregada,
-                                materia, ref reiniciarAulas, ref segundoProfe,
-                                ref asignacionDos);
-                            }
                             else
-                                buscarIndiceHoraFinal(disponibleGrupo, horasFin,
-                                materias[materia], ref iHoraI, ref iHoraF, ref dia,
-                                ref diaSem, dias, false, false, ref limInfAula,
-                                ref limSupAula, haySegundProf, ref segundoProfe, ref profeId,
-                                ref usoDeTercerProfe, ref reiniciarAulas,
-                                ref primeraRondaProfesores, ref primeraRondaAulas, 
-                                ref aulas2, ref aulas8);
+                            {
+                                if (disponibleGrupo.Substring(0, 5) == "08:00" ||
+                                    disponibleGrupo.Substring(0, 5) == "09:40"
+                                    || disponibleGrupo.Substring(0, 5) == "11:20" ||
+                                    disponibleGrupo.Substring(0, 5) == "13:40" ||
+                                    disponibleGrupo.Substring(0, 5) == "15:20")
+                                {
+                                    buscarIndiceHoraFinal(disponibleGrupo, horasFinEduFinan,
+                                    materias[materia], ref iHoraI, ref iHoraF, ref dia,
+                                    ref diaSem, dias, false, false, ref limInfAula,
+                                    ref limSupAula, haySegundProf, ref segundoProfe, ref profeId,
+                                    ref usoDeTercerProfe, ref reiniciarAulas,
+                                    ref primeraRondaProfesores, ref primeraRondaAulas,
+                                    ref aulas2, ref aulas8);
+                                    asignarHoras(iHoraI, iHoraF,
+                                    ref horI, ref horF,
+                                    horasInicio, horasFin, horasFinEduFinan, materias[materia]);
+                                    siNoHayDisponiblilidad(ref diaSem, diaSemAux,
+                                    auxHorIGrupo, horI, materias[materia], ref materiaAgregada,
+                                    ref materia, ref reiniciarAulas, ref segundoProfe,
+                                    ref asignacionDos, ref segundaEsp, ref segundoDiaEsp,
+                                    ref compEspAgregada, ref dia, dias, ref iHoraI,
+                                    ref iHoraF);
+                                }
+                                else
+                                    buscarIndiceHoraFinal(disponibleGrupo, horasFin,
+                                    materias[materia], ref iHoraI, ref iHoraF, ref dia,
+                                    ref diaSem, dias, false, false, ref limInfAula,
+                                    ref limSupAula, haySegundProf, ref segundoProfe, ref profeId,
+                                    ref usoDeTercerProfe, ref reiniciarAulas,
+                                    ref primeraRondaProfesores, ref primeraRondaAulas,
+                                    ref aulas2, ref aulas8);
                                 asignarHoras(iHoraI, iHoraF,
                                         ref horI, ref horF,
                                         horasInicio, horasFin, horasFinEduFinan, materias[materia]);
-                                siNoHayDisponiblilidad(diaSem, diaSemAux,
+                                siNoHayDisponiblilidad(ref diaSem, diaSemAux,
                                 auxHorIGrupo, horI, materias[materia], ref materiaAgregada,
-                                materia, ref reiniciarAulas, ref segundoProfe,
-                                ref asignacionDos);
+                                ref materia, ref reiniciarAulas, ref segundoProfe,
+                                ref asignacionDos, ref segundaEsp, ref segundoDiaEsp,
+                                ref compEspAgregada, ref dia, dias, ref iHoraI,
+                                ref iHoraF);
+                            }
                         }
-                    }
-                    materia++;
+                        materia++;
 
+                    }
                 }
-            }
-            cargarDatos();
+                cargarDatos();
+            //}
+            //catch (Exception ex)
+            //{
+
+            //    Session["_err"] = ex.Message;
+            //}
         }
 
-        private void siNoHayDisponiblilidad(char diaSem, char diaSemAux,
+        private void siNoHayDisponiblilidad(ref char diaSem, char diaSemAux,
             string auxHorI, string horI, byte materia, ref bool materiaAgregada,
-            byte indiceMateria, ref bool reiniciarAulas, ref bool segundoProfe,
+            ref byte indiceMateria, ref bool reiniciarAulas, ref bool segundoProfe,
             ref bool asignacionDos, ref bool segundaEsp, ref bool segundoDiaEsp,
-            ref bool compEspAgregada)
+            ref bool compEspAgregada, ref byte dia, char[] dias, ref int iHoraI, 
+            ref int iHoraF)
         {
             if ((diaSem == diaSemAux) && (auxHorI == horI))
             {
@@ -744,43 +756,45 @@ namespace PresentacionWeb
                 }
                 else
                 {
-                    if (materia == 6)
+                    if (!segundoDiaEsp && segundaEsp)
                     {
-                        indiceMateria++;
+                        dia++;
+                        if (dia > 4)
+                            dia = 0;
+                        diaSem = dias[dia];
+                        iHoraI = 0;
+                        iHoraF = 0;
+                        indiceMateria--;
+                        segundaEsp = false;
+                        asignacionDos = true;
                         reiniciarAulas = true;
-                        if (!asignacionDos)
-                        {
-                            segundaEsp = true;
-                            compEspAgregada = true;
-                        }
-                        else
-                        {
-                            segundoDiaEsp = true;
-                            segundaEsp = true;
-                            compEspAgregada = true;
-                        }
                         segundoProfe = false;
+                        compEspAgregada = false;
                     }
-                    else
+                    else if (!segundoDiaEsp && !segundaEsp)
                     {
-
                         if (!asignacionDos)
                         {
-                            indiceMateria--;
+
+                            indiceMateria++;
+                            segundaEsp = true;
                             reiniciarAulas = true;
                             segundoProfe = false;
-                            asignacionDos = true;
-                            segundaEsp = false;
+                            compEspAgregada = true;
                         }
                         else
                         {
                             indiceMateria++;
-                            materiaAgregada = true;
+                            segundaEsp = true;
+                            segundoDiaEsp = true;
+                            segundoProfe = false;
+                            reiniciarAulas = true;
+                            compEspAgregada = true;
                         }
-
                     }
+                    else
+                        materiaAgregada = true;
                 }
-
             }
         }
 
