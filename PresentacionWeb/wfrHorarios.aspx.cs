@@ -119,6 +119,7 @@ namespace PresentacionWeb
             bool aulas8 = false;
             bool inicio = true;
             bool inicioProfes = true;
+            bool compEspAgregada = false;
             char diaSemAux = ' ';
             string auxHoraI = "";
             string auxHorIProfe = "";
@@ -172,7 +173,7 @@ namespace PresentacionWeb
                 aulas8 = false;
                 iHoraI = 0;
                 iHoraF = 0;
-
+                compEspAgregada = false;
                 while (materia < materias.Count())
                 {
                     materiaAgregada = false;
@@ -216,7 +217,7 @@ namespace PresentacionWeb
                             
                         }
                         disponibleGrupo = lnDH.disponibleHoraI(horI, diaSem, horId);
-                        if (materias[materia] == 7)
+                        if (materias[materia] == 7 && compEspAgregada == true)
                             disponibleGrupo = "";
                         if (disponibleGrupo == "")
                         {
@@ -302,6 +303,7 @@ namespace PresentacionWeb
                                                     asignacionDos = true;
                                                     reiniciarAulas = true;
                                                     segundoProfe = false;
+                                                    compEspAgregada = false;
                                                 }
                                                 else if (materias[materia] != 1 && !segundoDiaEsp && !segundaEsp)
                                                 {
@@ -312,6 +314,7 @@ namespace PresentacionWeb
                                                         segundaEsp = true;
                                                         reiniciarAulas = true;
                                                         segundoProfe = false;
+                                                        compEspAgregada = true;
                                                     }
                                                     else
                                                     {
@@ -321,6 +324,8 @@ namespace PresentacionWeb
                                                         segundoDiaEsp = true;
                                                         segundoProfe = false;
                                                         reiniciarAulas = true;
+                                                        compEspAgregada = true;
+                                                        
 
                                                     }
                                                 }
@@ -727,7 +732,8 @@ namespace PresentacionWeb
         private void siNoHayDisponiblilidad(char diaSem, char diaSemAux,
             string auxHorI, string horI, byte materia, ref bool materiaAgregada,
             byte indiceMateria, ref bool reiniciarAulas, ref bool segundoProfe,
-            ref bool asignacionDos)
+            ref bool asignacionDos, ref bool segundaEsp, ref bool segundoDiaEsp,
+            ref bool compEspAgregada)
         {
             if ((diaSem == diaSemAux) && (auxHorI == horI))
             {
@@ -743,34 +749,35 @@ namespace PresentacionWeb
                         indiceMateria++;
                         reiniciarAulas = true;
                         if (!asignacionDos)
-                            asignacionDos = true;
+                        {
+                            segundaEsp = true;
+                            compEspAgregada = true;
+                        }
+                        else
+                        {
+                            segundoDiaEsp = true;
+                            segundaEsp = true;
+                            compEspAgregada = true;
+                        }
                         segundoProfe = false;
                     }
                     else
                     {
-                        if (materia == 6)
+
+                        if (!asignacionDos)
                         {
-                            indiceMateria++;
+                            indiceMateria--;
                             reiniciarAulas = true;
-                            if (!asignacionDos)
-                                asignacionDos = true;
                             segundoProfe = false;
+                            asignacionDos = true;
+                            segundaEsp = false;
                         }
                         else
                         {
-                            if (!asignacionDos)
-                            {
-                                indiceMateria--;
-                                reiniciarAulas = true;
-                                segundoProfe = false;
-                                asignacionDos = true;
-                            }
-                            else
-                            {
-                                indiceMateria++;
-                                materiaAgregada = true;
-                            }
+                            indiceMateria++;
+                            materiaAgregada = true;
                         }
+
                     }
                 }
 
