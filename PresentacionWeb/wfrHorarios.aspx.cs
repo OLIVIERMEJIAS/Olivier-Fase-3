@@ -55,7 +55,7 @@ namespace PresentacionWeb
         protected void btnGenerar_Click(object sender, EventArgs e)
         {
 
-            List<int> horariosId = new List<int> {10};
+            List<int> horariosId = new List<int> {12};
             char[] diasGrupInf = new char[5] { 'L', 'K', 'M', 'J', 'V' };
             char[] diasGrupSup = new char[5] { 'M', 'J', 'V', 'L', 'K' };
             char[] dias;
@@ -120,6 +120,7 @@ namespace PresentacionWeb
             bool inicio = true;
             bool inicioProfes = true;
             bool compEspAgregada = false;
+            bool hayTresProfes = false;
             char diaSemAux = ' ';
             string auxHoraI = "";
             string auxHorIProfe = "";
@@ -167,6 +168,7 @@ namespace PresentacionWeb
                     iHoraI = 0;
                     iHoraF = 0;
                     compEspAgregada = false;
+                    
                     while (materia < materias.Count())
                     {
                         materiaAgregada = false;
@@ -175,6 +177,7 @@ namespace PresentacionWeb
                         fijarLimitesAulas(ref limInfAula, ref limSupAula,
                             materias[materia], ref aulas2, ref aulas8);
                         segundoProfe = false;
+                        hayTresProfes = false;
                         inicio = true;
                         inicioProfes = true;
                         diaSemAux = diaSem;
@@ -183,23 +186,24 @@ namespace PresentacionWeb
                         auxHorIProfe = "";
                         primeraRondaProfesores = true;
                         primeraRondaAulas = true;
-                        while (limInfAula <= limSupAula && !materiaAgregada)
-                        {
+                    while (limInfAula <= limSupAula && !materiaAgregada)
+                    {
 
-                            if ((materias[materia] == 7 && reiniciarAulas == true) || (materias[materia] == 6 && asignacionDos == true && reiniciarAulas == true))
+                        if ((materias[materia] == 7 && reiniciarAulas == true) || (materias[materia] == 6 && asignacionDos == true && reiniciarAulas == true))
+                        {
+                            fijarLimitesAulas(ref limInfAula,
+                                ref limSupAula, materias[materia], ref aulas2,
+                                ref aulas8);
+                            reiniciarAulas = false;
+                            if (auxHoraI == "")
                             {
-                                fijarLimitesAulas(ref limInfAula,
-                                    ref limSupAula, materias[materia], ref aulas2,
-                                    ref aulas8);
-                                reiniciarAulas = false;
                                 auxHoraI = horI;
                                 diaSemAux = diaSem;
                             }
-                            if (!segundoProfe)
-                                asignaciondeProfe(materias[materia], ref haySegundProf,
-                                ref profeId, ref segundoProfe, ref usoDeTercerProfe);
-
-
+                        }
+                        if (!segundoProfe)
+                            asignaciondeProfe(materias[materia], ref haySegundProf,
+                            ref profeId, ref segundoProfe, ref usoDeTercerProfe, ref hayTresProfes);
 
                             asignarHoras(iHoraI, iHoraF,
                                         ref horI, ref horF,
@@ -214,10 +218,10 @@ namespace PresentacionWeb
                                 disponibleGrupo = "";
                             if (disponibleGrupo == "")
                             {
-                                if (inicio || !primeraRondaProfesores)
+                                if (inicio)
                                 {
                                     diaSemAux = diaSem;
-                                    auxHoraI = horFAula2Otros;
+                                    auxHoraI = horI;
                                     inicio = false;
                                 }
                                 disponibleAula = lnA.disponibleHoraI(horI, diaSem, limInfAula);
@@ -281,6 +285,7 @@ namespace PresentacionWeb
 
                                                     EDetalleHorario det = new EDetalleHorario(horId, profeId, limInfAula, diaSem, horI, horF);
                                                     lnDH.agregar(det);
+                                                    auxHoraI = "";
                                                     if (materias[materia] != 1 &&
                                                         !segundoDiaEsp && segundaEsp)
                                                     {
@@ -477,7 +482,7 @@ namespace PresentacionWeb
                                         else if (!primeraRondaProfesores && segundoProfe && materias[materia] != 1)
                                         {
                                             valorarHorasYAvanzar(horF1Profe, horasFinEduFinan,
-                                            horasFin, ref iHoraI, ref iHoraF, ref diaAula8,
+                                            horasFin, ref iHoraI, ref iHoraF, ref diaProfe1,
                                             ref diaSem, dias, true, false, ref limInfAula,
                                             ref limSupAula, haySegundProf, ref segundoProfe,
                                             ref profeId, ref usoDeTercerProfe, ref reiniciarAulas,
@@ -497,7 +502,7 @@ namespace PresentacionWeb
                                         else if (!primeraRondaProfesores && segundoProfe && materias[materia] == 1 && !usoDeTercerProfe)
                                         {
                                             valorarHorasYAvanzar(horF3Profe, horasFinEduFinan,
-                                            horasFin, ref iHoraI, ref iHoraF, ref diaAula8,
+                                            horasFin, ref iHoraI, ref iHoraF, ref diaProfe3,
                                             ref diaSem, dias, true, false, ref limInfAula,
                                             ref limSupAula, haySegundProf, ref segundoProfe,
                                             ref profeId, ref usoDeTercerProfe, ref reiniciarAulas,
@@ -517,7 +522,7 @@ namespace PresentacionWeb
                                         else if (!primeraRondaProfesores && segundoProfe && usoDeTercerProfe)
                                         {
                                             valorarHorasYAvanzar(horF1Profe, horasFinEduFinan,
-                                            horasFin, ref iHoraI, ref iHoraF, ref diaAula8,
+                                            horasFin, ref iHoraI, ref iHoraF, ref diaProfe1,
                                             ref diaSem, dias, true, false, ref limInfAula,
                                             ref limSupAula, haySegundProf, ref segundoProfe,
                                             ref profeId, ref usoDeTercerProfe, ref reiniciarAulas,
@@ -556,7 +561,7 @@ namespace PresentacionWeb
                                             if (limInfAula == 9 || limInfAula == 11)
                                             {
                                                 valorarHorasYAvanzar(horFAula2Otros, horasFinEduFinan,
-                                                horasFin, ref iHoraI, ref iHoraF, ref diaAula8,
+                                                horasFin, ref iHoraI, ref iHoraF, ref diaAula2Otros,
                                                 ref diaSem, dias, true, false, ref limInfAula,
                                                 ref limSupAula, haySegundProf, ref segundoProfe,
                                                 ref profeId, ref usoDeTercerProfe, ref reiniciarAulas,
@@ -575,7 +580,7 @@ namespace PresentacionWeb
                                             }
                                             else
                                                 valorarHorasYAvanzar(horFAula1Otros, horasFinEduFinan,
-                                                    horasFin, ref iHoraI, ref iHoraF, ref diaAula8,
+                                                    horasFin, ref iHoraI, ref iHoraF, ref diaAula1Otros,
                                                     ref diaSem, dias, true, false, ref limInfAula,
                                                     ref limSupAula, haySegundProf, ref segundoProfe,
                                                     ref profeId, ref usoDeTercerProfe, ref reiniciarAulas,
@@ -589,7 +594,7 @@ namespace PresentacionWeb
                                             {
                                                 case 1:
                                                     valorarHorasYAvanzar(horFAula2, horasFinEduFinan,
-                                                    horasFin, ref iHoraI, ref iHoraF, ref diaAula8,
+                                                    horasFin, ref iHoraI, ref iHoraF, ref diaAula2,
                                                     ref diaSem, dias, true, false, ref limInfAula,
                                                     ref limSupAula, haySegundProf, ref segundoProfe,
                                                     ref profeId, ref usoDeTercerProfe, ref reiniciarAulas,
@@ -599,7 +604,7 @@ namespace PresentacionWeb
                                                     break;
                                                 case 2:
                                                     valorarHorasYAvanzar(horFAula3, horasFinEduFinan,
-                                                    horasFin, ref iHoraI, ref iHoraF, ref diaAula8,
+                                                    horasFin, ref iHoraI, ref iHoraF, ref diaAula3,
                                                     ref diaSem, dias, true, false, ref limInfAula,
                                                     ref limSupAula, haySegundProf, ref segundoProfe,
                                                     ref profeId, ref usoDeTercerProfe, ref reiniciarAulas,
@@ -609,7 +614,7 @@ namespace PresentacionWeb
                                                     break;
                                                 case 3:
                                                     valorarHorasYAvanzar(horFAula4, horasFinEduFinan,
-                                                    horasFin, ref iHoraI, ref iHoraF, ref diaAula8,
+                                                    horasFin, ref iHoraI, ref iHoraF, ref diaAula4,
                                                     ref diaSem, dias, true, false, ref limInfAula,
                                                     ref limSupAula, haySegundProf, ref segundoProfe,
                                                     ref profeId, ref usoDeTercerProfe, ref reiniciarAulas,
@@ -619,7 +624,7 @@ namespace PresentacionWeb
                                                     break;
                                                 case 4:
                                                     valorarHorasYAvanzar(horFAula5, horasFinEduFinan,
-                                                    horasFin, ref iHoraI, ref iHoraF, ref diaAula8,
+                                                    horasFin, ref iHoraI, ref iHoraF, ref diaAula5,
                                                     ref diaSem, dias, true, false, ref limInfAula,
                                                     ref limSupAula, haySegundProf, ref segundoProfe,
                                                     ref profeId, ref usoDeTercerProfe, ref reiniciarAulas,
@@ -629,7 +634,7 @@ namespace PresentacionWeb
                                                     break;
                                                 case 5:
                                                     valorarHorasYAvanzar(horFAula6, horasFinEduFinan,
-                                                    horasFin, ref iHoraI, ref iHoraF, ref diaAula8,
+                                                    horasFin, ref iHoraI, ref iHoraF, ref diaAula6,
                                                     ref diaSem, dias, true, false, ref limInfAula,
                                                     ref limSupAula, haySegundProf, ref segundoProfe,
                                                     ref profeId, ref usoDeTercerProfe, ref reiniciarAulas,
@@ -639,7 +644,7 @@ namespace PresentacionWeb
                                                     break;
                                                 case 6:
                                                     valorarHorasYAvanzar(horFAula7, horasFinEduFinan,
-                                                    horasFin, ref iHoraI, ref iHoraF, ref diaAula8,
+                                                    horasFin, ref iHoraI, ref iHoraF, ref diaAula7,
                                                     ref diaSem, dias, true, false, ref limInfAula,
                                                     ref limSupAula, haySegundProf, ref segundoProfe,
                                                     ref profeId, ref usoDeTercerProfe, ref reiniciarAulas,
@@ -668,7 +673,7 @@ namespace PresentacionWeb
                                                     break;
                                                 case 8:
                                                     valorarHorasYAvanzar(horFAula1, horasFinEduFinan,
-                                                    horasFin, ref iHoraI, ref iHoraF, ref diaAula8,
+                                                    horasFin, ref iHoraI, ref iHoraF, ref diaAula1,
                                                     ref diaSem, dias, true, false, ref limInfAula,
                                                     ref limSupAula, haySegundProf, ref segundoProfe,
                                                     ref profeId, ref usoDeTercerProfe, ref reiniciarAulas,
@@ -869,7 +874,8 @@ namespace PresentacionWeb
         }
 
         private void asignaciondeProfe(byte materia, ref bool haySegundProf,
-            ref int profeId, ref bool segundoProfe, ref bool usoDeTercerProfe)
+            ref int profeId, ref bool segundoProfe, ref bool usoDeTercerProfe, ref bool
+            hayTresProfes)
         {
             if (materia <= 5 || materia == 7 || materia == 6)
             {
@@ -877,6 +883,9 @@ namespace PresentacionWeb
                 segundoProfe = false;
                 profeId = lnP.accederAProfesor(materia);
                 usoDeTercerProfe = false;
+                if(materia == 1){
+                    hayTresProfes = true;
+                }
             }
             else
             {
@@ -1010,7 +1019,14 @@ namespace PresentacionWeb
             if (evalAulas && !evalProfe)
             {
                 if (limInfAula != limSupAula)
+                {
                     limInfAula++;
+                    if (!primeraRondaAulas)
+                        avanzarHoras(horasFin, materia, ref iHoraI,
+                        ref iHoraF, horaFinal, ref dia, ref diaSem, dias);
+                        reiniciarAulas = true;
+                }
+
                 else
                 {
                     primeraRondaAulas = false;
@@ -1028,6 +1044,12 @@ namespace PresentacionWeb
                 {
                     profeId++;
                     segundoProfe = true;
+                    if(!primeraRondaProfesores)
+                    {
+                        avanzarHoras(horasFin, materia, ref iHoraI,
+                        ref iHoraF, horaFinal, ref dia, ref diaSem, dias);
+                        reiniciarAulas = true;
+                    }
                 }
                 else if(haySegundProf && segundoProfe)
                 {
@@ -1036,13 +1058,21 @@ namespace PresentacionWeb
                         profeId++;
                         usoDeTercerProfe = true;
                         segundoProfe = true;
+                        if (!primeraRondaProfesores)
+                        {
+                            avanzarHoras(horasFin, materia, ref iHoraI,
+                            ref iHoraF, horaFinal, ref dia, ref diaSem, dias);
+                            reiniciarAulas = true;
+                        }
                     }
                     else
                     {
+
                         avanzarHoras(horasFin, materia, ref iHoraI,
                         ref iHoraF, horaFinal, ref dia, ref diaSem, dias);
+                        reiniciarAulas = true;
+
                         segundoProfe = false;
-                        primeraRondaProfesores = false;
                     }
                     
                 }
