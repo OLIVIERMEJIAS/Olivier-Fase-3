@@ -17,6 +17,10 @@ namespace PresentacionWeb
         LNProfesor lnP = new LNProfesor(Config.getCadConec);
         protected void Page_Load(object sender, EventArgs e)
         {
+            if(Session["_director"] != null)
+            {
+                btnGenerar.Enabled = false;
+            }
             if (!IsPostBack)
             {
                 cargarDatos();
@@ -55,7 +59,7 @@ namespace PresentacionWeb
         protected void btnGenerar_Click(object sender, EventArgs e)
         {
 
-            List<int> horariosId = new List<int> {13};
+            List<int> horariosId = new List<int> {1,2,3,4,5,6,7,8,9,10,11,12,13};
             char[] diasGrupInf = new char[5] { 'L', 'K', 'M', 'J', 'V' };
             char[] diasGrupSup = new char[5] { 'M', 'J', 'V', 'L', 'K' };
             char[] dias;
@@ -133,12 +137,12 @@ namespace PresentacionWeb
 
             //valoración si ya existen registros en la entidad DetallesHorario
             //si los se borran para crear nuevos desde cero
-            //try
-            //{
-                //if (lnDH.hayRegistros())
-                //{
-                //    lnDH.eliminarRegistros();
-                //}
+            try
+            {
+                if (lnDH.hayRegistros())
+                {
+                    lnDH.eliminarRegistros();
+                }
 
                 while (horariosId.Count != 0)
                 {
@@ -743,12 +747,13 @@ namespace PresentacionWeb
                     }
                 }
                 cargarDatos();
-            //}
-            //catch (Exception ex)
-            //{
+                Session["_exito"] = "Horarios creados con éxito!";
+            }
+            catch (Exception ex)
+            {
 
-            //    Session["_err"] = ex.Message;
-            //}
+                Session["_err"] = ex.Message;
+            }
         }
 
         private void siNoHayDisponiblilidad(ref char diaSem, char diaSemAux,
