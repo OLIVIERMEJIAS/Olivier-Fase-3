@@ -78,7 +78,6 @@
     <Content Include="wfrEstudiantes.aspx" />
     <Content Include="wfrHorarios.aspx" />
     <Content Include="wfrInicio.aspx" />
-    <Content Include="wfrInicioSesion.aspx" />
     <Content Include="wfrListarAsistencias.aspx" />
     <Content Include="wfrListarCalificaciones.aspx" />
     <Content Include="wfrListarEncargados.aspx" />
@@ -139,13 +138,6 @@
     </Compile>
     <Compile Include="wfrInicio.aspx.designer.cs">
       <DependentUpon>wfrInicio.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="wfrInicioSesion.aspx.cs">
-      <DependentUpon>wfrInicioSesion.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="wfrInicioSesion.aspx.designer.cs">
-      <DependentUpon>wfrInicioSesion.aspx</DependentUpon>
     </Compile>
     <Compile Include="wfrListarAsistencias.aspx.cs">
       <DependentUpon>wfrListarAsistencias.aspx</DependentUpon>

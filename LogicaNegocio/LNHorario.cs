@@ -47,5 +47,19 @@ namespace LogicaNegocio
             }
         }
 
+        public DataTable secciones(int profesorId)
+        {
+            ADHorario adH = new ADHorario(CadConexion);
+            try
+            {
+                return adH.secciones(profesorId);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
     }
 }

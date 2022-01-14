@@ -54,5 +54,29 @@ namespace AccesoDatos
             }
             return result;
         }
+
+        public DataTable listarPorSeccion(string seccion)
+        {
+            DataTable datos = new DataTable();
+            SqlDataAdapter adapter;
+            SqlConnection conexion = new SqlConnection(CadConexion);
+            string sentencia = "Select estudianteId, carnet, cedula," +
+                " nombre + ' ' + apellido1 + ' ' + apellido2 as nombre, email" +
+                $" From Estudiantes Where seccion = '{seccion}'";
+           
+
+            try
+            {
+                adapter = new SqlDataAdapter(sentencia, conexion);
+                adapter.Fill(datos);
+                
+            }
+            catch (Exception)
+            {
+                throw new Exception("No se pudo realizar búsqueda de estudiantes");
+            }
+            
+            return datos;
+        }
     }
 }

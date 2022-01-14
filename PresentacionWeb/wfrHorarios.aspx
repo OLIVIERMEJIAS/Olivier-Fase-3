@@ -18,7 +18,7 @@
         <br />
         <div class="container">
             <div class="card-header text-center">   
-                <h2>Seleccione una Sección, para ver sus Horarios:</h2>
+                <h2>Seleccione una sección, para ver sus horarios:</h2>
             </div>
         </div>
         <br />
@@ -129,7 +129,7 @@
         <br />
     </div>    
 
-     <%--modal autor--%>
+     <%--modal secciones--%>
 <div class="modal" tabindex="-1" id="secModal">
   <div class="modal-dialog">
     <div class="modal-content">

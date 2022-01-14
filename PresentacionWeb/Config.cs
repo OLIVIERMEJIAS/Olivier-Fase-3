@@ -16,10 +16,8 @@ namespace PresentacionWeb
             }
         }
 
-        public static bool Profesor { get; set; }
+        public static int Profesor { get; set; }
 
-        public static bool Director { get; set; }
-
-        public static bool Asistente { get; set; }
+        
     }
 }

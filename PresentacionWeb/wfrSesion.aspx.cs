@@ -67,11 +67,14 @@ namespace PresentacionWeb
         {
             try
             {
+
                 EProfesor prof = new EProfesor('P',txtUsuario.Text,
                     txtContrasena.Text);
-                if (lnp.accesoUsuario(prof) != -1)
+                int profesorId = lnp.accesoUsuario(prof);
+                if (profesorId != -1)
                 {
                     Session["_profesor"] = "Acceso";
+                    Config.Profesor = profesorId;
                     Response.Redirect("wfrInicio.aspx",false);
                 }
                 else
