@@ -47,5 +47,20 @@ namespace LogicaNegocio
                 throw ex;
             }
         }
+
+        public string existe(int estudianteId)
+        {
+            ADEstudiante ade = new ADEstudiante(CadConexion);
+
+            try
+            {
+                return ade.existe(estudianteId);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
     }
 }

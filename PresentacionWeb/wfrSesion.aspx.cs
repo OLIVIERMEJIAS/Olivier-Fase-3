@@ -14,6 +14,7 @@ namespace PresentacionWeb
         LNDirector lnd = new LNDirector(Config.getCadConec);
         LNProfesor lnp = new LNProfesor(Config.getCadConec);
         LNAsistente lna = new LNAsistente(Config.getCadConec);
+        LNMateria lnM = new LNMateria(Config.getCadConec);
         protected void Page_Load(object sender, EventArgs e)
         {
             Session["_director"] = null;
@@ -71,10 +72,13 @@ namespace PresentacionWeb
                 EProfesor prof = new EProfesor('P',txtUsuario.Text,
                     txtContrasena.Text);
                 int profesorId = lnp.accesoUsuario(prof);
+                EMateria mate = lnM.accederAMateria(profesorId);
                 if (profesorId != -1)
                 {
                     Session["_profesor"] = "Acceso";
                     Config.Profesor = profesorId;
+                    Config.MateriaNombre = mate.Nombre;
+                    Config.MateriaId = mate.MateriaId;
                     Response.Redirect("wfrInicio.aspx",false);
                 }
                 else

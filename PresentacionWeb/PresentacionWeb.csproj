@@ -74,6 +74,7 @@
     <Content Include="wfrAsistencias.aspx" />
     <Content Include="wfrBuzon.aspx" />
     <Content Include="wfrCalificaciones.aspx" />
+    <Content Include="wfrEliminarAsistencia.aspx" />
     <Content Include="wfrEncargados.aspx" />
     <Content Include="wfrEstudiantes.aspx" />
     <Content Include="wfrHorarios.aspx" />
@@ -84,6 +85,7 @@
     <Content Include="wfrListarEstudiantes.aspx" />
     <Content Include="wfrListarMaterias.aspx" />
     <Content Include="wfrListarProfesores.aspx" />
+    <Content Include="wfrNuevaAsistencia.aspx" />
     <Content Include="wfrProfesores.aspx" />
     <Content Include="wfrSesion.aspx" />
   </ItemGroup>
@@ -110,6 +112,13 @@
     </Compile>
     <Compile Include="wfrCalificaciones.aspx.designer.cs">
       <DependentUpon>wfrCalificaciones.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="wfrEliminarAsistencia.aspx.cs">
+      <DependentUpon>wfrEliminarAsistencia.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="wfrEliminarAsistencia.aspx.designer.cs">
+      <DependentUpon>wfrEliminarAsistencia.aspx</DependentUpon>
     </Compile>
     <Compile Include="wfrEncargados.aspx.cs">
       <DependentUpon>wfrEncargados.aspx</DependentUpon>
@@ -180,6 +189,13 @@
     </Compile>
     <Compile Include="wfrListarProfesores.aspx.designer.cs">
       <DependentUpon>wfrListarProfesores.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="wfrNuevaAsistencia.aspx.cs">
+      <DependentUpon>wfrNuevaAsistencia.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="wfrNuevaAsistencia.aspx.designer.cs">
+      <DependentUpon>wfrNuevaAsistencia.aspx</DependentUpon>
     </Compile>
     <Compile Include="wfrPlantilla.Master.cs">
       <DependentUpon>wfrPlantilla.Master</DependentUpon>

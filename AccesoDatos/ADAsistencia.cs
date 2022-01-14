@@ -21,14 +21,51 @@ namespace AccesoDatos
             CadConexion = cad;
         }
 
-        public DataTable listarPorSeccion(string sec)
+        public EAsistencia listar(int asistenciaId)
+        {
+            EAsistencia asist = new EAsistencia();
+            SqlDataReader datos;
+            SqlConnection conexion = new SqlConnection(CadConexion);
+            string sentencia = "Select e.estudianteId, a.fecha as fecha, a.estado as estado" +
+                " From Asistencias a inner join Estudiantes e On e.estudianteId" +
+                " = a.estudianteId" +
+                $" Where a.estudianteId = {asistenciaId}";
+            SqlCommand comando = new SqlCommand(sentencia, conexion);
+
+            try
+            {
+                conexion.Open();
+                datos = comando.ExecuteReader();
+                if (datos.HasRows)
+                {
+                    datos.Read();
+                    asist.EstudianteId = datos.GetInt32(0);
+                    asist.FechaHora = datos.GetString(1);
+                    asist.Estado = datos.GetString(2);
+                }
+                conexion.Close();
+            }
+            catch (Exception)
+            {
+                conexion.Close();
+                throw new Exception("No se pudo realizar conexión de datos");
+            }
+
+            return asist;
+        }
+
+
+        public DataTable listarPorEstudiante(int estudianteId)
         {
 
             DataTable datos = new DataTable();
             SqlConnection conexion = new SqlConnection(CadConexion);
-            string sentencia = "Select a.estudianteId, a.materiaId, a.fecha, a.estado from Asistencias a" +
-            " inner join Estudiantes e On  a.estudianteId = e.estudianteId Where";
-            sentencia = $"{sentencia} e.seccion = '{sec}'";
+            string sentencia = "Select a.asistenciaId as asistenciaId," +
+                " m.nombre as materia, e.nombre + ' ' + e.apellido1 + ' ' +" +
+                " e.apellido2 as nombre, a.fecha as fecha, a.estado as estado" +
+                " From Asistencias a inner join Estudiantes e On e.estudianteId" +
+                " = a.estudianteId inner join materias m On a.materiaId = m.materiaId" +
+                $" Where a.estudianteId = {estudianteId}";
             SqlDataAdapter adaptador = new SqlDataAdapter(sentencia, conexion);
 
             try
@@ -45,36 +82,15 @@ namespace AccesoDatos
             return datos;
         }
 
-        public DataTable listarPorEstudiante(int estId,int matId)
-        {
-
-            DataTable datos = new DataTable();
-            SqlConnection conexion = new SqlConnection(CadConexion);
-            string sentencia = "Select estudianteId, materiaId, fecha, estado from Asistencias" +
-                " where estudianteId = ";
-            sentencia = $"{sentencia}{estId} and materiaId = {matId}";
-            SqlDataAdapter adaptador = new SqlDataAdapter(sentencia, conexion);
-         
-            try
-            {
-                adaptador.Fill(datos);
-                adaptador.Dispose();
-            }
-            catch (Exception)
-            {
-                adaptador.Dispose();
-                throw new Exception("No se pudo realizar conexión de datos");
-            }
- 
-            return datos;
-        }
+        
 
         public bool agregarAsistencia(EAsistencia asist)
         {
 
             bool result = false;
             SqlConnection conexion = new SqlConnection(CadConexion);
-            string sentencia = "Insert Into Asistencias Values(@estId,@matId,getdate(),@estado)";
+            string sentencia = "Insert Into Asistencias(estudianteId," +
+                "materiaId, fecha, estado) Values(@estId,@matId,getdate(),@estado)";
             SqlCommand comando = new SqlCommand(sentencia, conexion);
             comando.Parameters.AddWithValue("@estId", asist.EstudianteId);
             comando.Parameters.AddWithValue("@matId", asist.MateriaId);
@@ -102,18 +118,14 @@ namespace AccesoDatos
             return result;
         }
 
-        public bool actualizarAsistencia(EAsistencia asist)
+        public bool actualizarAsistencia(int asistenciaId)
         {
 
             bool result = false;
             SqlConnection conexion = new SqlConnection(CadConexion);
             string sentencia = "Update Asistencias Set estado = @estado " +
-                "Where estudianteId = @estId and materiaId = @matId and fecha = @fecha";
+                $"Where asistenciaId = {asistenciaId}";
             SqlCommand comando = new SqlCommand(sentencia, conexion);
-            comando.Parameters.AddWithValue("@estId", asist.EstudianteId);
-            comando.Parameters.AddWithValue("@matId", asist.MateriaId);
-            comando.Parameters.AddWithValue("@estado", asist.Estado);
-            comando.Parameters.AddWithValue("@fecha", asist.FechaHora);
 
             try
             {
@@ -137,27 +149,57 @@ namespace AccesoDatos
             return result;
         }
 
-        public bool eliminarAsistencia(EAsistencia asist)
+        public bool eliminarAsistencia(int asistenciaId)
         {
 
             bool result = false;
             SqlConnection conexion = new SqlConnection(CadConexion);
             string sentencia = "Delete From Asistencias " +
-                "Where estudianteId = @estId and materiaId = @matId and fecha = @fecha";
+                $"Where asistenciaId = {asistenciaId}";
             SqlCommand comando = new SqlCommand(sentencia, conexion);
-            comando.Parameters.AddWithValue("@estId", asist.EstudianteId);
-            comando.Parameters.AddWithValue("@matId", asist.MateriaId);
-            comando.Parameters.AddWithValue("@estado", asist.Estado);
-            comando.Parameters.AddWithValue("@fecha", asist.FechaHora);
-conexion.Open();
+       
+
+            try
+            {
+                
+                conexion.Open();
                 if (comando.ExecuteNonQuery() != 0)
                 {
                     result = true;
                 }
+            }
+            catch (Exception)
+            {
+                conexion.Close();
+                throw new Exception("No se pudo realizar conexión de datos");
+            }
+            finally
+            {
+                conexion.Dispose();
+                comando.Dispose();
+            }
+            return result;
+        }
+
+        public bool existe(int asistenciaId)
+        {
+            Object scalar;
+            bool result = false;
+            SqlConnection conexion = new SqlConnection(CadConexion);
+            string sentencia = "Select 1 From Asistencias " +
+                $"Where asistenciaId = {asistenciaId}";
+            SqlCommand comando = new SqlCommand(sentencia, conexion);
+
+
             try
             {
-                
 
+                conexion.Open();
+                scalar = comando.ExecuteScalar();
+                if (scalar != null)
+                {
+                    result = true;
+                }
             }
             catch (Exception)
             {

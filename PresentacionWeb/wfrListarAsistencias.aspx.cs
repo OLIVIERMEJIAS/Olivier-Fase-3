@@ -59,5 +59,30 @@ namespace PresentacionWeb
         {
             cargarEstudiantes(e.CommandArgument.ToString());
         }
+
+        protected void lnkVerAsistencias_Command(object sender, CommandEventArgs e)
+        {
+            int estuId = int.Parse(e.CommandArgument.ToString());
+            if (lnE.existe($"estudianteId = {estuId}")){
+                Session["_estudiante"] = e.CommandArgument.ToString();
+                Response.Redirect("wfrAsistencias.aspx", false);
+            }
+            else
+                Session["_wrn"] = "Este estudiante ya no existe, fue borrado!";
+        }
+
+        protected void lnkAsignar_Command(object sender, CommandEventArgs e)
+        {
+           
+            int estuId = int.Parse(e.CommandArgument.ToString());
+            if (lnE.existe($"estudianteId = {estuId}"))
+            {
+                Session["_nuevaAsistencia"] = e.CommandArgument.ToString();
+                Response.Redirect("wfrNuevaAsistencia.aspx", false);
+            }
+            else
+                Session["_wrn"] = "Este estudiante ya no existe, fue borrado!";
+        }
+    }
     }
 }

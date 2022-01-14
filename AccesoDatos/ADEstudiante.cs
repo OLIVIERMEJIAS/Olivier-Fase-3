@@ -55,12 +55,47 @@ namespace AccesoDatos
             return result;
         }
 
+        public string existe(int estudianteId)
+        {
+            string result = "";
+            SqlDataReader reader;
+            EEstudiante est = new EEstudiante();
+            SqlConnection conexion = new SqlConnection(CadConexion);
+            string sentencia = "Select nombre + ' ' + apellido1 + ' ' + apellido2 as nombre " +
+                $"from Estudiantes where estudianteId = {estudianteId}";
+                
+            SqlCommand comando = new SqlCommand(sentencia, conexion);
+
+            try
+            {
+                conexion.Open();
+                reader = comando.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    reader.Read();
+                    result = reader.GetString(0);
+                }
+                conexion.Close();
+            }
+            catch (Exception)
+            {
+                conexion.Close();
+                throw new Exception("No se pudo realizar búsqueda de estudiante");
+            }
+            finally
+            {
+                conexion.Dispose();
+                comando.Dispose();
+            }
+            return result;
+        }
+
         public DataTable listarPorSeccion(string seccion)
         {
             DataTable datos = new DataTable();
             SqlDataAdapter adapter;
             SqlConnection conexion = new SqlConnection(CadConexion);
-            string sentencia = "Select estudianteId, carnet, cedula," +
+            string sentencia = "Select estudianteId, carnet, numIdentificacion as cedula," +
                 " nombre + ' ' + apellido1 + ' ' + apellido2 as nombre, email" +
                 $" From Estudiantes Where seccion = '{seccion}'";
            

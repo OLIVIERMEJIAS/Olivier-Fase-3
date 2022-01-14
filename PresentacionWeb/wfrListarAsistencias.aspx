@@ -34,12 +34,12 @@
             <Columns>
                 <asp:TemplateField>
                     <ItemTemplate>
-                        <asp:LinkButton ID="LinkButton1" runat="server" CommandArgument='<%# Eval("estudianteId").ToString() %>' ForeColor="Green">Ver Asistencias</asp:LinkButton>
+                        <asp:LinkButton ID="lnkVerAsistencias" runat="server" CommandArgument='<%# Eval("estudianteId").ToString() %>' ForeColor="Green" OnCommand="lnkVerAsistencias_Command">Ver Asistencias</asp:LinkButton>
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField>
                     <ItemTemplate>
-                        <asp:LinkButton ID="LinkButton2" runat="server" CommandArgument='<%# Eval("estudianteId").ToString() %>' ForeColor="#0099CC">Asignar Asistencia</asp:LinkButton>
+                        <asp:LinkButton ID="lnkAsignar" runat="server" CommandArgument='<%# Eval("estudianteId").ToString() %>' ForeColor="#0099CC" OnCommand="lnkAsignar_Command">Asignar Asistencia</asp:LinkButton>
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:BoundField DataField="estudianteId" HeaderText="Estudiante Id" Visible="False" />

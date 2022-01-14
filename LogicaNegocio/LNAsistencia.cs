@@ -22,25 +22,13 @@ namespace LogicaNegocio
             CadConexion = cad;
         }
 
-        public DataTable listarPorSeccion(string sec)
-        {
-            try
-            {
-                ADAsistencia ada = new ADAsistencia(CadConexion);
-                return ada.listarPorSeccion(sec);
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-        public DataTable listarPorEstudiante(int estId,int matId)
+        
+        public DataTable listarPorEstudiante(int estudianteId)
         {
             ADAsistencia ada = new ADAsistencia(CadConexion);
             try
             {
-                return ada.listarPorEstudiante(estId,matId);
+                return ada.listarPorEstudiante(estudianteId);
             }
             catch (Exception ex)
             {
@@ -63,12 +51,12 @@ namespace LogicaNegocio
             }
         }
 
-        public bool actualizarAsistencia(EAsistencia asist)
+        public bool actualizarAsistencia(int asistenciaId)
         {
             ADAsistencia ada = new ADAsistencia(CadConexion);
             try
             {
-                return ada.actualizarAsistencia(asist);
+                return ada.actualizarAsistencia(asistenciaId);
             }
             catch (Exception ex)
             {
@@ -77,12 +65,42 @@ namespace LogicaNegocio
             }
         }
 
-        public bool eliminarAsistencia(EAsistencia asist)
+        public bool eliminarAsistencia(int asistenciaId)
         {
             ADAsistencia ada = new ADAsistencia(CadConexion);
             try
             {
-                return ada.eliminarAsistencia(asist);
+                return ada.eliminarAsistencia(asistenciaId);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        public EAsistencia listar(int asistenciaId)
+        {
+            ADAsistencia ada = new ADAsistencia(CadConexion);
+
+            try
+            {
+                return ada.listar(asistenciaId);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        public bool existe(int asistenciaId)
+        {
+            ADAsistencia ada = new ADAsistencia(CadConexion);
+
+            try
+            {
+                return ada.existe(asistenciaId);
             }
             catch (Exception ex)
             {

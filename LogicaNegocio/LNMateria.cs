@@ -20,7 +20,7 @@ namespace LogicaNegocio
             CadConexion = cad;
         }
 
-        public EMateria accederANombre(int profeId)
+        public EMateria accederAMateria(int profeId)
         {
             
             ADMateria adm = new ADMateria(CadConexion);
