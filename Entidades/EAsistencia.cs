@@ -6,6 +6,7 @@ namespace Entidades
 {
    public class EAsistencia
     {
+        public int AsistenciaId { get; set; }
         public int EstudianteId { get; set; }
         public int MateriaId { get; set; }
         public string FechaHora { get; set; }
@@ -13,28 +14,23 @@ namespace Entidades
 
         public EAsistencia()
         {
+            AsistenciaId = 0;
             EstudianteId = 0;
             MateriaId = 0;
             FechaHora = "";
             Estado = "";
         }
 
-        public EAsistencia(int estu,
+        public EAsistencia(int asistId, int estu,
             int mat, string estad)
         {
+            AsistenciaId = asistId;
             EstudianteId = estu;
             MateriaId = mat;
             FechaHora = "";
             Estado = estad;
         }
 
-        public EAsistencia(int estu,
-            int mat, string fech, string estad)
-        {
-            EstudianteId = estu;
-            MateriaId = mat;
-            FechaHora = fech;
-            Estado = estad;
-        }
+        
     }
 }

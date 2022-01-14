@@ -15,21 +15,24 @@ namespace PresentacionWeb
         LNEstudiante lnE = new LNEstudiante(Config.getCadConec);
         protected void Page_Load(object sender, EventArgs e)
         {
-            try
+            if (!IsPostBack)
             {
-                int asistenciaId = int.Parse(Session["_eliminarAsistencia"].ToString());
-                EAsistencia asist;
-                asist = lnA.listar(asistenciaId);
-                lblFecha.Text += asist.FechaHora;
-                lblEstado.Text += asist.Estado;
-                string nombreEst = lnE.existe(asist.EstudianteId);
-                if (nombreEst != "")
-                    lblEstudiante.Text += nombreEst; 
-            }
-            catch (Exception ex)
-            {
+                try
+                {
+                    int asistenciaId = int.Parse(Session["_eliminarAsistencia"].ToString());
+                    EAsistencia asist;
+                    asist = lnA.listar(asistenciaId);
+                    lblFecha.Text += asist.FechaHora;
+                    lblEstado.Text += asist.Estado;
+                    string nombreEst = lnE.existe(asist.EstudianteId);
+                    if (nombreEst != "")
+                        lblEstudiante.Text += nombreEst;
+                }
+                catch (Exception ex)
+                {
 
-                Session["_err"] = ex.Message;
+                    Session["_err"] = ex.Message;
+                }
             }
         }
 
@@ -41,7 +44,7 @@ namespace PresentacionWeb
                 if (lnA.eliminarAsistencia(asistenciaId))
                 {
                     Session["_exito"] = "Asistencia Eliminada con Éxito!";
-                    Response.Redirect("wfrListarAsistencia.aspx", false);
+                    Response.Redirect("wfrAsistencias.aspx", false);
                 }
             }
             catch (Exception ex)
@@ -53,7 +56,7 @@ namespace PresentacionWeb
 
         protected void btnCancelar_Click(object sender, EventArgs e)
         {
-            Response.Redirect("wfrListarAsistencias.aspx", false);
+            Response.Redirect("wfrAsistencias.aspx", false);
         }
     }
 }

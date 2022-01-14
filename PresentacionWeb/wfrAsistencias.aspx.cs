@@ -12,9 +12,9 @@ namespace PresentacionWeb
         LNAsistencia lnA = new LNAsistencia(Config.getCadConec);
         protected void Page_Load(object sender, EventArgs e)
         {
-            if(IsPostBack){
-                cargarAsistencias();
-            }
+            
+            cargarAsistencias();
+            
         }
 
         protected void cargarAsistencias()
@@ -75,6 +75,9 @@ namespace PresentacionWeb
             }
         }
 
-       
+        protected void btnVolver_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("wfrListarAsistencias.aspx", false);
+        }
     }
 }

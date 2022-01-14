@@ -51,12 +51,12 @@ namespace LogicaNegocio
             }
         }
 
-        public bool actualizarAsistencia(int asistenciaId)
+        public bool actualizarAsistencia(EAsistencia asist)
         {
             ADAsistencia ada = new ADAsistencia(CadConexion);
             try
             {
-                return ada.actualizarAsistencia(asistenciaId);
+                return ada.actualizarAsistencia(asist);
             }
             catch (Exception ex)
             {

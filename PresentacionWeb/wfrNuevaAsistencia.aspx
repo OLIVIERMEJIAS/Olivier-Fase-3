@@ -11,7 +11,8 @@
         <asp:TextBox CssClass="form" ID="txtEstudiante" runat="server" ReadOnly="True"></asp:TextBox>
         <asp:TextBox CssClass="form" ID="txtIdMateria" runat="server" Visible="False" ReadOnly="True"></asp:TextBox>
         <asp:Label CssClass="form" ID="lblMateria" runat="server" Text="Nombre de la Materia"></asp:Label>
-        <asp:TextBox CssClass="form" ID="txtMateria" runat="server"></asp:TextBox>
+        <asp:TextBox CssClass="form" ID="txtMateria" runat="server" ReadOnly="True"></asp:TextBox>
+        <asp:TextBox CssClass="form" ID="txtFecha" ReadOnly="True" runat="server"></asp:TextBox>
         <asp:DropDownList ID="ddlEstados" runat="server">
             <asp:ListItem Selected="True">PR</asp:ListItem>
             <asp:ListItem>TA</asp:ListItem>

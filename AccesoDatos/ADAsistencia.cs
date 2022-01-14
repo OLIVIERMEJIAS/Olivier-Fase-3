@@ -26,10 +26,8 @@ namespace AccesoDatos
             EAsistencia asist = new EAsistencia();
             SqlDataReader datos;
             SqlConnection conexion = new SqlConnection(CadConexion);
-            string sentencia = "Select e.estudianteId, a.fecha as fecha, a.estado as estado" +
-                " From Asistencias a inner join Estudiantes e On e.estudianteId" +
-                " = a.estudianteId" +
-                $" Where a.estudianteId = {asistenciaId}";
+            string sentencia = "Select asistenciaId, estudianteId, fecha, estado" +
+                $" From Asistencias Where asistenciaId = {asistenciaId}";
             SqlCommand comando = new SqlCommand(sentencia, conexion);
 
             try
@@ -39,9 +37,10 @@ namespace AccesoDatos
                 if (datos.HasRows)
                 {
                     datos.Read();
-                    asist.EstudianteId = datos.GetInt32(0);
-                    asist.FechaHora = datos.GetString(1);
-                    asist.Estado = datos.GetString(2);
+                    asist.AsistenciaId = datos.GetInt32(0);
+                    asist.EstudianteId = datos.GetInt32(1);
+                    asist.FechaHora = datos.GetDateTime(2).ToString();
+                    asist.Estado = datos.GetString(3);
                 }
                 conexion.Close();
             }
@@ -118,15 +117,15 @@ namespace AccesoDatos
             return result;
         }
 
-        public bool actualizarAsistencia(int asistenciaId)
+        public bool actualizarAsistencia(EAsistencia asist)
         {
 
             bool result = false;
             SqlConnection conexion = new SqlConnection(CadConexion);
             string sentencia = "Update Asistencias Set estado = @estado " +
-                $"Where asistenciaId = {asistenciaId}";
+                $"Where asistenciaId = {asist.AsistenciaId}";
             SqlCommand comando = new SqlCommand(sentencia, conexion);
-
+            comando.Parameters.AddWithValue("@estado", asist.Estado);
             try
             {
                 conexion.Open();

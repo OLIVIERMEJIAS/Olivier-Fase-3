@@ -16,11 +16,8 @@ namespace PresentacionWeb
         protected void Page_Load(object sender, EventArgs e)
         {
             cargarSecciones();
-            if (IsPostBack)
-            {
-                cargarSecciones();
-                cargarEstudiantes(txtSeccion.Text);
-            }
+            cargarEstudiantes(txtSeccion.Text);
+            
         }
 
         protected void cargarSecciones()
@@ -84,5 +81,5 @@ namespace PresentacionWeb
                 Session["_wrn"] = "Este estudiante ya no existe, fue borrado!";
         }
     }
-    }
+    
 }
