@@ -53,6 +53,7 @@ namespace PresentacionWeb
                         txtCalificacion.Text = cali.Calificacion.ToString();
                         ddlEstados.Text = cali.Estado;
                         ddlTrimestre.Text = cali.TrimestreID.ToString();
+                        ddlTrimestre.Enabled = false;
 
                     }
                     catch (Exception ex)

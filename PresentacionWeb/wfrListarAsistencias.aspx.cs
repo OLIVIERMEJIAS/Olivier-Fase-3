@@ -75,6 +75,7 @@ namespace PresentacionWeb
             int estuId = int.Parse(e.CommandArgument.ToString());
             if (lnE.existe($"estudianteId = {estuId}"))
             {
+                Session["_estudiante"] = e.CommandArgument.ToString();
                 Session["_nuevaAsistencia"] = e.CommandArgument.ToString();
                 Response.Redirect("wfrNuevaAsistencia.aspx", false);
             }

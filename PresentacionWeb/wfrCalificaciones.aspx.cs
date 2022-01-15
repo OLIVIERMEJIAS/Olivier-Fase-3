@@ -43,7 +43,7 @@ namespace PresentacionWeb
             {
                 if (lnC.existe(calificacionId))
                 {
-                    Response.Redirect("wfrEliminarCalificacion.aspx", false);
+                    Response.Redirect("wfrEliminarCalificaciones.aspx", false);
                     Session["_eliminarCalificacion"] = calificacionId;
                 }
                 else
@@ -65,8 +65,8 @@ namespace PresentacionWeb
             {
                 if (lnC.existe(calificacionId))
                 {
-                    Session["_modificarAsistencia"] = calificacionId;
-                    Response.Redirect("wfrNuevaCalificacion.aspx", false);
+                    Session["_modificarCalificacion"] = calificacionId;
+                    Response.Redirect("wfrNuevaCalificaciones.aspx", false);
                 }
                 else
                     Session["_wrn"] = "Esta calificación ya no existe, fue borrada!";

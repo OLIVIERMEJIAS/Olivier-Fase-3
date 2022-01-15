@@ -14,12 +14,12 @@
                 <Columns>
                     <asp:TemplateField>
                         <ItemTemplate>
-                            <asp:LinkButton ID="lnkEliminar" runat="server" CommandArgument='<%# Eval("asistenciaId").ToString() %>' ForeColor="Red" OnCommand="lnkEliminar_Command">Eliminar</asp:LinkButton>
+                            <asp:LinkButton ID="lnkEliminar" runat="server" CommandArgument='<%# Eval("calificacionId").ToString() %>' ForeColor="Red" OnCommand="lnkEliminar_Command">Eliminar</asp:LinkButton>
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField>
                         <ItemTemplate>
-                            <asp:LinkButton ID="lnkModificar" runat="server" CausesValidation="False" CommandArgument='<%# Eval("asistenciaId").ToString() %>' ForeColor="Green" OnCommand="lnkModificar_Command">Modificar</asp:LinkButton>
+                            <asp:LinkButton ID="lnkModificar" runat="server" CausesValidation="False" CommandArgument='<%# Eval("calificacionId").ToString() %>' ForeColor="Green" OnCommand="lnkModificar_Command">Modificar</asp:LinkButton>
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:BoundField DataField="calificacionId" HeaderText="aistenciaId" Visible="False" />

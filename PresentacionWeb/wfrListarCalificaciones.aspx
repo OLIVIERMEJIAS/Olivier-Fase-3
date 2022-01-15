@@ -34,7 +34,7 @@
             <Columns>
                 <asp:TemplateField>
                     <ItemTemplate>
-                        <asp:LinkButton ID="lnkVerCalificaciones" runat="server" CommandArgument='<%# Eval("estudianteId").ToString() %>' ForeColor="Green" OnCommand="lnkVerCalificaciones_Command">Ver Asistencias</asp:LinkButton>
+                        <asp:LinkButton ID="lnkVerCalificaciones" runat="server" CommandArgument='<%# Eval("estudianteId").ToString() %>' ForeColor="Green" OnCommand="lnkVerCalificaciones_Command">Ver Calificaciones</asp:LinkButton>
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField>

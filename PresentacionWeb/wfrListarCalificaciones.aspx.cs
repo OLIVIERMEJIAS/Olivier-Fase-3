@@ -76,8 +76,9 @@ namespace PresentacionWeb
             int estuId = int.Parse(e.CommandArgument.ToString());
             if (lnE.existe($"estudianteId = {estuId}"))
             {
+                Session["_estudiante"] = e.CommandArgument.ToString();
                 Session["_nuevaCalificacion"] = e.CommandArgument.ToString();
-                Response.Redirect("wfrNuevaCalificacion.aspx", false);
+                Response.Redirect("wfrNuevaCalificaciones.aspx", false);
             }
             else
                 Session["_wrn"] = "Este estudiante ya no existe, fue borrado!";

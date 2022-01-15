@@ -56,17 +56,19 @@
             <br />
             <asp:ValidationSummary ID="ValidationSummary1" runat="server" ValidationGroup="1" ForeColor="Red" />
             <br />
-            <h2>Accede Como:</h2>
-            <br />
-            <asp:Button ID="btnAccesoDirector" runat="server" Text="Director" CssClass="btn btn-outline-primary" ValidationGroup="1" OnClick="btnAccesoDirector_Click" />
-            <br />
-            <br />
-            <asp:Button ID="btnAccesoAsistente" runat="server" Text="Asistente" CssClass="btn btn-outline-primary" ValidationGroup="1" OnClick="btnAccesoAsistente_Click" />
-            <br />
-            <br />
-            <asp:Button ID="btnAccesoProfesor" runat="server" Text="Profesor" CssClass="btn btn-outline-primary" ValidationGroup="1" OnClick="btnAccesoProfesor_Click" />
-            <br />
-            <br />
+            <div class="container bg-dark" style="width: fit-content">
+                <h2 class="text-white">Accede Como:</h2>
+                <br />
+                <asp:Button ID="btnAccesoDirector" runat="server" Text="Director" CssClass="btn btn-outline-info" ValidationGroup="1" OnClick="btnAccesoDirector_Click" />
+                <br />
+                <br />
+                <asp:Button ID="btnAccesoAsistente" runat="server" Text="Asistente" CssClass="btn btn-outline-info" ValidationGroup="1" OnClick="btnAccesoAsistente_Click" />
+                <br />
+                <br />
+                <asp:Button ID="btnAccesoProfesor" runat="server" Text="Profesor" CssClass="btn btn-outline-info" ValidationGroup="1" OnClick="btnAccesoProfesor_Click" />
+                <br />
+                <br />
+            </div>
 
         </div>
     </form>
