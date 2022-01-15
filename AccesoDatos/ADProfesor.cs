@@ -25,7 +25,9 @@ namespace AccesoDatos
             int result = -1;
             SqlDataReader reader;
             SqlConnection conexion = new SqlConnection(CadConexion);
-            string sentencia = "Select empleadoId from Empleados where puesto =" +
+            string sentencia = "Select empleadoId," +
+                " nombre, apellido1, apellido2 " +
+                "from Empleados where puesto =" +
                 " @puesto and contrasena = @contrasena and nombreUsuario = @nombreU";
             SqlCommand comando = new SqlCommand(sentencia, conexion);
             comando.Parameters.AddWithValue("@puesto", prof.Puesto);
@@ -40,6 +42,9 @@ namespace AccesoDatos
                 {
                     reader.Read();
                     result = reader.GetInt32(0);
+                    prof.Nombre = reader.GetString(1);
+                    prof.Apellido1 = reader.GetString(2);
+                    prof.Apellido2 = reader.GetString(3);
                 }
                 conexion.Close();
             }
@@ -159,57 +164,6 @@ namespace AccesoDatos
             return result;
         }
 
-        public DataTable listar()
-        {
-            DataTable datos = new DataTable();
-            SqlConnection conexion = new SqlConnection(CadConexion);
-            string sentencia = "Select e.empleadoId, e.numIdentificacion," +
-                " e.fechaIngreso, e.fechaNacimiento, m.nombre, e.nombre, " +
-                "e.apellido1, e.apellido2, e.genero, e.email, e.nombreUsuario," +
-                " e.contrasena, d.distrito, e.dirExact," +
-                 " e.activo, e.borrado from Empleados e inner join MateriasProfesores mp" +
-                 " On e.empleadoId = mp.profesorId inner join Materias m " +
-                 "On mp.materiaId = m.materiaId inner join Distritos d " +
-                 "On d.distritoId = e.distritoId";
-            SqlDataAdapter adapter;
-            try
-            {
-                adapter = new SqlDataAdapter(sentencia, conexion);
-                adapter.Fill(datos);
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
-            return datos;
-        }
-
-        public DataTable listar(string condicion)
-        {
-            DataTable datos = new DataTable();
-            SqlConnection conexion = new SqlConnection(CadConexion);
-            string sentencia = "Select e.empleadoId, e.numIdentificacion," +
-                " e.fechaIngreso, e.fechaNacimiento, m.nombre, e.nombre, " +
-                "e.apellido1, e.apellido2, e.genero, e.email, e.nombreUsuario," +
-                " e.contrasena, d.distrito, e.dirExact," +
-                 " e.activo, e.borrado from Empleados e inner join MateriasProfesores mp" +
-                 " On e.empleadoId = mp.profesorId inner join Materias m " +
-                 "On mp.materiaId = m.materiaId inner join Distritos d " +
-                 "On d.distritoId = e.distritoId " +
-                 $"where m.nombre = {condicion}";
-            SqlDataAdapter adapter;
-            try
-            {
-                adapter = new SqlDataAdapter(sentencia, conexion);
-                adapter.Fill(datos);
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
-            return datos;
-        }
+        
     }
 }

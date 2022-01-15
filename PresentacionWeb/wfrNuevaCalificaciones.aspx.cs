@@ -11,6 +11,8 @@ namespace PresentacionWeb
     public partial class wfrNuevaCalificaciones : System.Web.UI.Page
     {
         LNCalificacion lnC = new LNCalificacion(Config.getCadConec);
+        LNTrimestre lnT = new LNTrimestre(Config.getCadConec);
+        LNPermiso lnP = new LNPermiso(Config.getCadConec);
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -27,7 +29,7 @@ namespace PresentacionWeb
                         txtIdMateria.Text = Config.MateriaId.ToString();
                         txtMateria.Text = Config.MateriaNombre;
                         txtFecha.Text = DateTime.Today.ToString();
-                        
+
 
                     }
                     catch (Exception ex)
@@ -79,7 +81,7 @@ namespace PresentacionWeb
 
                 int estudianteId = int.Parse(Session["_nuevaCalificacion"].ToString());
 
-                ECalificacion cali = new ECalificacion(0, estudianteId, Config.MateriaId, decimal.Parse(txtCalificacion.Text), ddlEstados.Text,byte.Parse(ddlTrimestre.Text));
+                ECalificacion cali = new ECalificacion(0, estudianteId, Config.MateriaId, decimal.Parse(txtCalificacion.Text), ddlEstados.Text, byte.Parse(ddlTrimestre.Text));
                 try
                 {
                     if (lnC.agregar(cali))
@@ -101,33 +103,46 @@ namespace PresentacionWeb
                 int calificacionId = int.Parse(Session["_modificarCalificacion"].ToString());
                 try
                 {
-                    ECalificacion cali;
-                    cali = lnC.listar(calificacionId);
-                    if (cali.Estado != ddlEstados.Text || 
-                        cali.Calificacion != decimal.Parse(txtCalificacion.Text))
+                    byte trimId = byte.Parse(ddlTrimestre.Text);
+                    DateTime fechaFin = lnT.listar(trimId).FechaFin;
+                    if (DateTime.Compare(fechaFin, DateTime.Today) > 0)
                     {
-                        if(cali.Estado != ddlEstados.Text)
-                            cali.Estado = ddlEstados.Text;
-                        if (cali.Calificacion != decimal.Parse(txtCalificacion.Text))
-                            cali.Calificacion = decimal.Parse(txtCalificacion.Text);
-                        if (lnC.actualizar(cali))
+                        ECalificacion cali;
+                        cali = lnC.listar(calificacionId);
+                        if (cali.Estado != ddlEstados.Text ||
+                            cali.Calificacion != decimal.Parse(txtCalificacion.Text))
                         {
-                            Session["_exito"] = "Se ha modificado la calificacion con éxito!!";
-                            Session["_modificarCalificacion"] = null;
-                            Response.Redirect("wfrCalificaciones.aspx", false);
+                            if (cali.Estado != ddlEstados.Text)
+                                cali.Estado = ddlEstados.Text;
+                            if (cali.Calificacion != decimal.Parse(txtCalificacion.Text))
+                                cali.Calificacion = decimal.Parse(txtCalificacion.Text);
+                            if (lnC.actualizar(cali))
+                            {
+                                Session["_exito"] = "Se ha modificado la calificacion con éxito!!";
+                                Session["_modificarCalificacion"] = null;
+                                Response.Redirect("wfrCalificaciones.aspx", false);
+                            }
+                            else
+                            {
+                                Session["_err"] = "No se ha podido modificar la calificación!!";
+                                Session["_modificarCalificacion"] = null;
+                                Response.Redirect("wfrCalificaciones.aspx", false);
+                            }
                         }
                         else
                         {
-                            Session["_err"] = "No se ha podido modificar la calificación!!";
-                            Session["_modificarCalificacion"] = null;
-                            Response.Redirect("wfrCalificaciones.aspx", false);
+                            Session["_wrn"] = "No existen cambios que modificar!";
                         }
+
                     }
                     else
                     {
-                        Session["_wrn"] = "No existen cambios que modificar!";
+                        Session["_err"] = "No puede modificar esta calificación debido" +
+                            "a que ya terminó este trimestre!! Desea enviar una" +
+                            "solicitud de permiso al director??";
+                        Session["_permiso"] = Session["_modificarCalificacion"].ToString();
+                        Response.Redirect("wfrPermiso.aspx", false);
                     }
-
                 }
                 catch (Exception ex)
                 {
@@ -135,6 +150,8 @@ namespace PresentacionWeb
                     Session["_err"] = ex.Message;
                 }
             }
+
         }
-        }
+    }
 }
+        

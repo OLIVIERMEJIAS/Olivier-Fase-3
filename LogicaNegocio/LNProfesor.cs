@@ -36,20 +36,7 @@ namespace LogicaNegocio
             return result;
         }
 
-        public DataTable listar()
-        {
-            ADProfesor adp = new ADProfesor(CadConexion);
-
-            try
-            {
-                return adp.listar();
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
-        }
+        
 
         public byte numLecciones(int profId)
         {

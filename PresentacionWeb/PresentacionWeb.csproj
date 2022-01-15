@@ -88,6 +88,7 @@
     <Content Include="wfrListarProfesores.aspx" />
     <Content Include="wfrNuevaAsistencia.aspx" />
     <Content Include="wfrNuevaCalificaciones.aspx" />
+    <Content Include="wfrPermiso.aspx" />
     <Content Include="wfrProfesores.aspx" />
     <Content Include="wfrSesion.aspx" />
   </ItemGroup>
@@ -212,6 +213,13 @@
     </Compile>
     <Compile Include="wfrNuevaCalificaciones.aspx.designer.cs">
       <DependentUpon>wfrNuevaCalificaciones.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="wfrPermiso.aspx.cs">
+      <DependentUpon>wfrPermiso.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="wfrPermiso.aspx.designer.cs">
+      <DependentUpon>wfrPermiso.aspx</DependentUpon>
     </Compile>
     <Compile Include="wfrPlantilla.Master.cs">
       <DependentUpon>wfrPlantilla.Master</DependentUpon>

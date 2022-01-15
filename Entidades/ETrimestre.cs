@@ -4,12 +4,12 @@ using System.Text;
 
 namespace Entidades
 {
-    class ETrimestre
+    public class ETrimestre
     {
-        private byte TrimestreId { get; set; }
-        private string Numero { get; set; }
-        private DateTime FechaInicio { get; set; }
-        private DateTime FechaFin { get; set; }
+        public byte TrimestreId { get; set; }
+        public string Numero { get; set; }
+        public DateTime FechaInicio { get; set; }
+        public DateTime FechaFin { get; set; }
 
         public ETrimestre()
         {

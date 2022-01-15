@@ -4,7 +4,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
      <div class="container card-body">
         <div class="card-header">
-            <h1 class="bg-success text-center">Calificaciones por estudiante</h1>
+            <h1 class="bg-info text-center">Calificaciones por estudiante</h1>
         </div>
         <br />
         <br />

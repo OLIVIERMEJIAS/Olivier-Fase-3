@@ -18,9 +18,11 @@ namespace PresentacionWeb
 
         public static int Profesor { get; set; }
 
-        public static int MateriaId { get; set; }
+        public static byte MateriaId { get; set; }
 
         public static string MateriaNombre { get; set; }
+
+        public static string NombreProfesor { get; set; }
 
 
     }

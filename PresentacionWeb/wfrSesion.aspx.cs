@@ -79,6 +79,7 @@ namespace PresentacionWeb
                     Config.Profesor = profesorId;
                     Config.MateriaNombre = mate.Nombre;
                     Config.MateriaId = mate.MateriaId;
+                    Config.NombreProfesor = $"{prof.Nombre} {prof.Apellido1} {prof.Apellido2}";
                     Response.Redirect("wfrInicio.aspx",false);
                 }
                 else
