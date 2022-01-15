@@ -6,15 +6,17 @@ namespace Entidades
 {
     public class ECalificacion
     {
+        public int CalificacionId { get; set; }
         public int EstudianteID { get; set; }
         public int MateriaID { get; set; }
         public string FechaIngreso { get; set; }
         public string Estado { get; set; }
         public decimal Calificacion { get; set; }
-        public int TrimestreID { get; set; }
+        public byte TrimestreID { get; set; }
 
         public ECalificacion()
         {
+            CalificacionId = 0;
             EstudianteID = 0;
             MateriaID = 0;
             FechaIngreso = "";
@@ -23,10 +25,11 @@ namespace Entidades
             TrimestreID = 0;
         }
 
-        public ECalificacion(int estu,
+        public ECalificacion(int cali, int estu,
              int mat, decimal calif, string estad
-             , int trim)
+             , byte trim)
         {
+            CalificacionId = cali;
             EstudianteID = estu;
             MateriaID = mat;
             Estado = estad;
@@ -34,16 +37,6 @@ namespace Entidades
             TrimestreID = trim;
         }
 
-        public ECalificacion(int estu,
-            int mat, decimal calif,string fech,string estad
-            ,int trim)
-        {
-            EstudianteID = estu;
-            MateriaID = mat;
-            Estado = estad;
-            FechaIngreso = fech;
-            Calificacion = calif;
-            TrimestreID = trim;
-        }
+        
     }
 }

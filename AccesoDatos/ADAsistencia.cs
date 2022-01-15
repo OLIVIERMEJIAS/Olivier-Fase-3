@@ -83,7 +83,7 @@ namespace AccesoDatos
 
         
 
-        public bool agregarAsistencia(EAsistencia asist)
+        public bool agregar(EAsistencia asist)
         {
 
             bool result = false;
@@ -117,7 +117,7 @@ namespace AccesoDatos
             return result;
         }
 
-        public bool actualizarAsistencia(EAsistencia asist)
+        public bool actualizar(EAsistencia asist)
         {
 
             bool result = false;
@@ -148,7 +148,7 @@ namespace AccesoDatos
             return result;
         }
 
-        public bool eliminarAsistencia(int asistenciaId)
+        public bool eliminar(int asistenciaId)
         {
 
             bool result = false;

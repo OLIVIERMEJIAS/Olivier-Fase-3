@@ -79,7 +79,7 @@ namespace PresentacionWeb
                 EAsistencia asist = new EAsistencia(0,estudianteId, Config.MateriaId, ddlEstados.Text);
                 try
                 {
-                    if (lnA.agregarAsistencia(asist))
+                    if (lnA.agregar(asist))
                     {
                         Session["_exito"] = "Asistencia Agregada Exitosamente!!";
                         Response.Redirect("wfrAsistencias.aspx", false);
@@ -103,7 +103,7 @@ namespace PresentacionWeb
                     if(asist.Estado != ddlEstados.Text)
                     {
                         asist.Estado = ddlEstados.Text;
-                        if (lnA.actualizarAsistencia(asist))
+                        if (lnA.actualizar(asist))
                         {
                             Session["_exito"] = "Se ha modificado la asistencia con éxito!!";
                             Session["_modificarAsistencia"] = null;
@@ -111,7 +111,7 @@ namespace PresentacionWeb
                         }
                         else
                         {
-                            Session["_exito"] = "No se ha podido modificar la asistencia!!";
+                            Session["_err"] = "No se ha podido modificar la asistencia!!";
                             Session["_modificarAsistencia"] = null;
                             Response.Redirect("wfrAsistencias.aspx", false);
                         }

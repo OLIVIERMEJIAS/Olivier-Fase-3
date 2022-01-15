@@ -21,15 +21,55 @@ namespace AccesoDatos
             CadConexion = cad;
         }
 
-        public DataTable listarPorSeccion(string sec)
+        public ECalificacion listar(int calificacionId)
+        {
+            ECalificacion cali = new ECalificacion();
+            SqlDataReader datos;
+            SqlConnection conexion = new SqlConnection(CadConexion);
+            string sentencia = "Select calificacionId, estudianteId, fechaIngreso," +
+                " calificacion, estado, trimestreId" +
+                $" From Calificaciones Where calificacionId = {calificacionId}";
+            SqlCommand comando = new SqlCommand(sentencia, conexion);
+
+            try
+            {
+                conexion.Open();
+                datos = comando.ExecuteReader();
+                if (datos.HasRows)
+                {
+                    datos.Read();
+                    cali.CalificacionId = datos.GetInt32(0);
+                    cali.EstudianteID = datos.GetInt32(1);
+                    cali.FechaIngreso = datos.GetDateTime(2).ToString();
+                    cali.Calificacion = datos.GetDecimal(3);
+                    cali.Estado = datos.GetString(4);
+                    cali.TrimestreID = datos.GetByte(5);
+                }
+                conexion.Close();
+            }
+            catch (Exception)
+            {
+                conexion.Close();
+                throw new Exception("No se pudo realizar conexión de datos");
+            }
+
+            return cali;
+        }
+
+
+        public DataTable listarPorEstudiante(int estudianteId)
         {
 
             DataTable datos = new DataTable();
             SqlConnection conexion = new SqlConnection(CadConexion);
-            string sentencia = "Select c.estudianteId, c.materiaId," +
-                " c.calificacion, c.fechaIngreso, c.estado, c.trimestreId " +
-                "from Calificaciones c inner join Estudiantes e On c.estudianteId = e.estudianteId Where";
-            sentencia = $"{sentencia} e.seccion = '{sec}'";
+            string sentencia = "Select c.calificacionId as calificacionId," +
+                " m.nombre as materia, e.nombre + ' ' + e.apellido1 + ' ' +" +
+                " e.apellido2 as nombre, c.fechaIngreso as fecha, " +
+                " c.calificacion as calificacion, c.estado as estado," +
+                " c.trimestreId as trimestre" +
+                " From Calificaciones c inner join Estudiantes e On e.estudianteId" +
+                " = c.estudianteId inner join materias m On c.materiaId = m.materiaId" +
+                $" Where c.estudianteId = {estudianteId}";
             SqlDataAdapter adaptador = new SqlDataAdapter(sentencia, conexion);
 
             try
@@ -46,43 +86,22 @@ namespace AccesoDatos
             return datos;
         }
 
-        public DataTable listarPorEstudiante(int estId, int matId)
-        {
 
-            DataTable datos = new DataTable();
-            SqlConnection conexion = new SqlConnection(CadConexion);
-            string sentencia = "Select estudianteId, materiaId," +
-                " calificacion, fechaIngreso, estado, trimestreId " +
-                "from Calificaciones where estudianteId = ";
-            sentencia = $"{sentencia}{estId} and materiaId = {matId}";
-            SqlDataAdapter adaptador = new SqlDataAdapter(sentencia, conexion);
 
-            try
-            {
-                adaptador.Fill(datos);
-                adaptador.Dispose();
-            }
-            catch (Exception)
-            {
-                adaptador.Dispose();
-                throw new Exception("No se pudo realizar conexión de datos");
-            }
-
-            return datos;
-        }
-
-        public bool agregarCalificacion(ECalificacion calif)
+        public bool agregar(ECalificacion cali)
         {
 
             bool result = false;
             SqlConnection conexion = new SqlConnection(CadConexion);
-            string sentencia = "Insert Into Calificaciones Values(@estId,@matId,getdate(),@calif,@estado,@trimId)";
+            string sentencia = "Insert Into Calificaciones(estudianteId," +
+                "materiaId, fechaIngreso, calificacion, estado, trimestreId) " +
+                "Values(@estId,@matId,getdate(),@cali, @estado, @trimestre)";
             SqlCommand comando = new SqlCommand(sentencia, conexion);
-            comando.Parameters.AddWithValue("@estId", calif.EstudianteID);
-            comando.Parameters.AddWithValue("@matId", calif.MateriaID);
-            comando.Parameters.AddWithValue("@calif", calif.Calificacion);
-            comando.Parameters.AddWithValue("@estado", calif.Estado);
-            comando.Parameters.AddWithValue("@trimId", calif.TrimestreID);
+            comando.Parameters.AddWithValue("@estId", cali.EstudianteID);
+            comando.Parameters.AddWithValue("@matId", cali.MateriaID);
+            comando.Parameters.AddWithValue("@cali", cali.Calificacion);
+            comando.Parameters.AddWithValue("@estado", cali.Estado);
+            comando.Parameters.AddWithValue("@trimestre", cali.TrimestreID);
 
             try
             {
@@ -96,7 +115,7 @@ namespace AccesoDatos
             catch (Exception)
             {
                 conexion.Close();
-                throw new Exception("No se pudo realizar conexión de datos, o la calificación del día de hoy ya existe");
+                throw new Exception("No se pudo realizar conexión de datos, o la asistencia del día de hoy ya existe");
             }
             finally
             {
@@ -106,23 +125,20 @@ namespace AccesoDatos
             return result;
         }
 
-        public bool actualizarCalificacion(ECalificacion calif)
+        public bool actualizar(ECalificacion cali)
         {
 
             bool result = false;
             SqlConnection conexion = new SqlConnection(CadConexion);
-            string sentencia = "Update Calificaciones Set estado = @estado, calificacion = @calif " +
-                "Where estudianteId = @estId and materiaId = @matId and fechaIngreso = @fecha";
+            string sentencia = "Update Calificaciones Set calificacion = @cali," +
+                " estado = @estado " +
+                $"Where calificacionId = {cali.CalificacionId}";
             SqlCommand comando = new SqlCommand(sentencia, conexion);
-            comando.Parameters.AddWithValue("@estId", calif.EstudianteID);
-            comando.Parameters.AddWithValue("@matId", calif.MateriaID);
-            comando.Parameters.AddWithValue("@estado", calif.Estado);
-            comando.Parameters.AddWithValue("@fecha", calif.FechaIngreso);
-            comando.Parameters.AddWithValue("@calif", calif.Calificacion);
-           
+            comando.Parameters.AddWithValue("@cali", cali.Calificacion);
+            comando.Parameters.AddWithValue("@estado", cali.Estado);
             try
             {
-                 conexion.Open();
+                conexion.Open();
                 if (comando.ExecuteNonQuery() != 0)
                 {
                     result = true;
@@ -142,27 +158,57 @@ namespace AccesoDatos
             return result;
         }
 
-        public bool eliminarCalificacion(ECalificacion calif)
+        public bool eliminar(int calificacionId)
         {
 
             bool result = false;
             SqlConnection conexion = new SqlConnection(CadConexion);
             string sentencia = "Delete From Calificaciones " +
-                "Where estudianteId = @estId and materiaId = @matId and fechaIngreso = @fecha";
+                $"Where calificacionId = {calificacionId}";
             SqlCommand comando = new SqlCommand(sentencia, conexion);
-            comando.Parameters.AddWithValue("@estId", calif.EstudianteID);
-            comando.Parameters.AddWithValue("@matId", calif.MateriaID);
-            comando.Parameters.AddWithValue("@estado", calif.Estado);
-            comando.Parameters.AddWithValue("@fecha", calif.FechaIngreso);
-            conexion.Open();
-            if (comando.ExecuteNonQuery() != 0)
-            {
-                result = true;
-            }
+
+
             try
             {
 
+                conexion.Open();
+                if (comando.ExecuteNonQuery() != 0)
+                {
+                    result = true;
+                }
+            }
+            catch (Exception)
+            {
+                conexion.Close();
+                throw new Exception("No se pudo realizar conexión de datos");
+            }
+            finally
+            {
+                conexion.Dispose();
+                comando.Dispose();
+            }
+            return result;
+        }
 
+        public bool existe(int calificacionId)
+        {
+            Object scalar;
+            bool result = false;
+            SqlConnection conexion = new SqlConnection(CadConexion);
+            string sentencia = "Select 1 From Calificaciones " +
+                $"Where calificacionId = {calificacionId}";
+            SqlCommand comando = new SqlCommand(sentencia, conexion);
+
+
+            try
+            {
+
+                conexion.Open();
+                scalar = comando.ExecuteScalar();
+                if (scalar != null)
+                {
+                    result = true;
+                }
             }
             catch (Exception)
             {

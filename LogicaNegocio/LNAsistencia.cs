@@ -37,12 +37,12 @@ namespace LogicaNegocio
             }
         }
 
-        public bool agregarAsistencia(EAsistencia asist)
+        public bool agregar(EAsistencia asist)
         {
             ADAsistencia ada = new ADAsistencia(CadConexion);
             try
             {
-                return ada.agregarAsistencia(asist);
+                return ada.agregar(asist);
             }
             catch ( Exception ex)
             {
@@ -51,12 +51,12 @@ namespace LogicaNegocio
             }
         }
 
-        public bool actualizarAsistencia(EAsistencia asist)
+        public bool actualizar(EAsistencia asist)
         {
             ADAsistencia ada = new ADAsistencia(CadConexion);
             try
             {
-                return ada.actualizarAsistencia(asist);
+                return ada.actualizar(asist);
             }
             catch (Exception ex)
             {
@@ -65,12 +65,12 @@ namespace LogicaNegocio
             }
         }
 
-        public bool eliminarAsistencia(int asistenciaId)
+        public bool eliminar(int asistenciaId)
         {
             ADAsistencia ada = new ADAsistencia(CadConexion);
             try
             {
-                return ada.eliminarAsistencia(asistenciaId);
+                return ada.eliminar(asistenciaId);
             }
             catch (Exception ex)
             {

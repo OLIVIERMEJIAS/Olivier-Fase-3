@@ -9,9 +9,9 @@ using Entidades;
 
 namespace PresentacionWeb
 {
-    public partial class wfrEliminarAsistencia : System.Web.UI.Page
+    public partial class wfrEliminarCalificaciones : System.Web.UI.Page
     {
-        LNAsistencia lnA = new LNAsistencia(Config.getCadConec);
+        LNCalificacion lnC = new LNCalificacion(Config.getCadConec);
         LNEstudiante lnE = new LNEstudiante(Config.getCadConec);
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -19,12 +19,14 @@ namespace PresentacionWeb
             {
                 try
                 {
-                    int asistenciaId = int.Parse(Session["_eliminarAsistencia"].ToString());
-                    EAsistencia asist;
-                    asist = lnA.listar(asistenciaId);
-                    lblFecha.Text += asist.FechaHora;
-                    lblEstado.Text += asist.Estado;
-                    string nombreEst = lnE.existe(asist.EstudianteId);
+                    int calificacionId = int.Parse(Session["_eliminarCalificacion"].ToString());
+                    ECalificacion cali;
+                    cali = lnC.listar(calificacionId);
+                    lblFecha.Text += cali.FechaIngreso;
+                    lblCalificacion.Text += cali.Calificacion;
+                    lblEstado.Text += cali.Estado;
+                    lblTrimestre.Text += cali.TrimestreID;
+                    string nombreEst = lnE.existe(cali.EstudianteID);
                     if (nombreEst != "")
                         lblEstudiante.Text += nombreEst;
                 }
@@ -38,13 +40,13 @@ namespace PresentacionWeb
 
         protected void btnConfirmar_Click(object sender, EventArgs e)
         {
-            int asistenciaId = int.Parse(Session["_eliminarAsistencia"].ToString());
+            int calificacionId = int.Parse(Session["_eliminarCalificacion"].ToString());
             try
             {
-                if (lnA.eliminar(asistenciaId))
+                if (lnC.eliminar(calificacionId))
                 {
-                    Session["_exito"] = "Asistencia Eliminada con Éxito!";
-                    Response.Redirect("wfrAsistencias.aspx", false);
+                    Session["_exito"] = "Calificación Eliminada con Éxito!";
+                    Response.Redirect("wfrCalificaciones.aspx", false);
                 }
             }
             catch (Exception ex)
@@ -56,7 +58,7 @@ namespace PresentacionWeb
 
         protected void btnCancelar_Click(object sender, EventArgs e)
         {
-            Response.Redirect("wfrAsistencias.aspx", false);
+            Response.Redirect("wfrCalificaciones.aspx", false);
         }
     }
 }

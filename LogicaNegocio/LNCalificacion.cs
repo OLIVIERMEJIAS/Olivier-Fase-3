@@ -22,25 +22,12 @@ namespace LogicaNegocio
             CadConexion = cad;
         }
 
-        public DataTable listarPorSeccion(string sec)
+        public DataTable listarPorEstudiante(int estudianteId)
         {
+            ADCalificacion adC = new ADCalificacion(CadConexion);
             try
             {
-                ADCalificacion adc = new ADCalificacion(CadConexion);
-                return adc.listarPorSeccion(sec);
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-        public DataTable listarPorEstudiante(int estId, int matId)
-        {
-            ADCalificacion adc = new ADCalificacion(CadConexion);
-            try
-            {
-                return adc.listarPorEstudiante(estId, matId);
+                return adC.listarPorEstudiante(estudianteId);
             }
             catch (Exception ex)
             {
@@ -49,12 +36,12 @@ namespace LogicaNegocio
             }
         }
 
-        public bool agregarCalificacion(ECalificacion calif)
+        public bool agregar(ECalificacion cali)
         {
-            ADCalificacion adc = new ADCalificacion(CadConexion);
+            ADCalificacion adC = new ADCalificacion(CadConexion); 
             try
             {
-                return adc.agregarCalificacion(calif);
+                return adC.agregar(cali);
             }
             catch (Exception ex)
             {
@@ -63,12 +50,12 @@ namespace LogicaNegocio
             }
         }
 
-        public bool actualizarCalificacion(ECalificacion calif)
+        public bool actualizar(ECalificacion cali)
         {
-            ADCalificacion adc = new ADCalificacion(CadConexion);
+            ADCalificacion adC = new ADCalificacion(CadConexion);
             try
             {
-                return adc.actualizarCalificacion(calif);
+                return adC.actualizar(cali);
             }
             catch (Exception ex)
             {
@@ -77,12 +64,40 @@ namespace LogicaNegocio
             }
         }
 
-        public bool eliminarCalificacion(ECalificacion calif)
+        public bool eliminar(int calificacionId)
         {
-            ADCalificacion adc = new ADCalificacion(CadConexion);
+            ADCalificacion adC = new ADCalificacion(CadConexion); 
             try
             {
-                return adc.eliminarCalificacion(calif);
+                return adC.eliminar(calificacionId);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        public ECalificacion listar(int calificacionId)
+        {
+            ADCalificacion adC = new ADCalificacion(CadConexion);
+            try
+            {
+                return adC.listar(calificacionId);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        public bool existe(int calificacionId)
+        {
+            ADCalificacion adC = new ADCalificacion(CadConexion);
+            try
+            {
+                return adC.existe(calificacionId);
             }
             catch (Exception ex)
             {

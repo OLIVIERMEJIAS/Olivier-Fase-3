@@ -16,7 +16,8 @@ namespace PresentacionWeb
         protected void Page_Load(object sender, EventArgs e)
         {
             cargarSecciones();
-            cargarEstudiantes(txtSeccion.Text);
+            if(!IsPostBack)
+                cargarEstudiantes(txtSeccion.Text);
             
         }
 
