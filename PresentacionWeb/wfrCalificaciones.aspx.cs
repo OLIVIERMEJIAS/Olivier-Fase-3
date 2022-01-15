@@ -42,9 +42,10 @@ namespace PresentacionWeb
             try
             {
                 if (lnC.existe(calificacionId))
-                {
-                    Response.Redirect("wfrEliminarCalificaciones.aspx", false);
+                {   
                     Session["_eliminarCalificacion"] = calificacionId;
+                    Response.Redirect("wfrEliminarCalificaciones.aspx", false);
+                    
                 }
                 else
                     Session["_wrn"] = "Esta calificación ya no existe, fue borrada!";

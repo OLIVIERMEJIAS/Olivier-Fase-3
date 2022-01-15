@@ -80,7 +80,7 @@ namespace AccesoDatos
                     result = true;
                 conexion.Close();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 conexion.Close();
                 throw new Exception("No se pudo realizar conexión de datos");
