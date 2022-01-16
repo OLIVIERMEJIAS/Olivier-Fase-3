@@ -107,7 +107,7 @@ namespace AccesoDatos
             catch (Exception)
             {
                 conexion.Close();
-                throw new Exception("No se pudo realizar conexión de datos, o la asistencia del día de hoy ya existe");
+                throw new Exception("No se pudo realizar conexión de datos");
             }
             finally
             {

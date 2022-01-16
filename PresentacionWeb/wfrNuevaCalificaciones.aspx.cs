@@ -141,6 +141,10 @@ namespace PresentacionWeb
                             "a que ya terminó este trimestre!! Desea enviar una" +
                             "solicitud de permiso al director??";
                         Session["_permiso"] = Session["_modificarCalificacion"].ToString();
+                        HttpCookie cookie = new HttpCookie("MyCookie");
+                        cookie["_calificacion"] = txtCalificacion.Text;
+                        cookie["_estadoR"] = ddlEstados.Text;
+                        Response.Cookies.Add(cookie);
                         Response.Redirect("wfrPermiso.aspx", false);
                     }
                 }

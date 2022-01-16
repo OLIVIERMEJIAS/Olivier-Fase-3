@@ -23,8 +23,12 @@ namespace PresentacionWeb
                 lblEstudiante.Text += lnE.existe(int.Parse(Session["_estudiante"].ToString()));
                 ECalificacion cali;
                 cali = lnC.listar(int.Parse(Session["_modificarCalificacion"].ToString()));
-                lblNotaA.Text = cali.Calificacion.ToString();
-                lblEstadoA.Text = cali.Estado;
+                lblNotaA.Text += cali.Calificacion.ToString();
+                lblEstadoA.Text += cali.Estado;
+                txtEstadoR.Text = Request.Cookies["MyCookie"]["_estadoR"];
+                txtNotaR.Text = Request.Cookies["MyCookie"]["_calificacion"];
+                
+
             }
             catch(Exception ex)
             {
@@ -41,7 +45,7 @@ namespace PresentacionWeb
                 EPermiso permi = new EPermiso(0, Config.Profesor, Config.MateriaId,
                     int.Parse(Session["_estudiante"].ToString()),
                     int.Parse(Session["_modificarCalificacion"].ToString()), cali.Calificacion,
-                    decimal.Parse(txtNotaR.Text), cali.Estado, ddlEstados.Text, cali.FechaIngreso,
+                    decimal.Parse(txtNotaR.Text), cali.Estado, txtEstadoR.Text, cali.FechaIngreso,
                     'P', txtMotivo.Text);
                 if (lnP.insertar(permi))
                 {

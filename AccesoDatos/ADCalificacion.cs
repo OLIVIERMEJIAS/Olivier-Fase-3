@@ -115,7 +115,7 @@ namespace AccesoDatos
             catch (Exception)
             {
                 conexion.Close();
-                throw new Exception("No se pudo realizar conexión de datos, o la asistencia del día de hoy ya existe");
+                throw new Exception("No se pudo realizar conexión de datos");
             }
             finally
             {
@@ -180,7 +180,7 @@ namespace AccesoDatos
             catch (Exception)
             {
                 conexion.Close();
-                throw new Exception("No se pudo realizar conexión de datos o no se puede borrar, ya que hay permisos de cambio de calificación asociados");
+                throw new Exception("No se pudo realizar conexión de datos");
             }
             finally
             {
@@ -222,5 +222,40 @@ namespace AccesoDatos
             }
             return result;
         }
+
+        public bool asociados(int caliId)
+        {
+
+            bool result = false;
+            SqlDataReader reader;
+            SqlConnection conexion = new SqlConnection(CadConexion);
+            string sentencia = $"Select 1 From Permisos Where calificacionId = {caliId}";
+            SqlCommand comando = new SqlCommand(sentencia, conexion);
+
+
+            try
+            {
+                conexion.Open();
+                reader = comando.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    result = true;
+                }
+                conexion.Close();
+            }
+            catch (Exception)
+            {
+                conexion.Close();
+                throw new Exception("No se pudo realizar conexión de datos");
+            }
+            finally
+            {
+                conexion.Dispose();
+                comando.Dispose();
+            }
+            return result;
+        }
+
+
     }
 }

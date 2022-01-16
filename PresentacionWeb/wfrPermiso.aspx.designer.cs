@@ -105,13 +105,13 @@ namespace PresentacionWeb
         protected global::System.Web.UI.WebControls.Label lblEstadoR;
 
         /// <summary>
-        /// Control ddlEstados.
+        /// Control txtEstadoR.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlEstados;
+        protected global::System.Web.UI.WebControls.TextBox txtEstadoR;
 
         /// <summary>
         /// Control Label1.

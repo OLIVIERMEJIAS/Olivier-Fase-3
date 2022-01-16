@@ -15,18 +15,14 @@
         <asp:Label ID="lblNotaA" runat="server" Text="Nota Actual: "></asp:Label>
         <br />
         <asp:Label ID="lblNotaR" runat="server" Text="Ingrese Calificación de Reemplazo: "></asp:Label>
-        <asp:TextBox ID="txtNotaR" runat="server"></asp:TextBox>
+        <asp:TextBox ID="txtNotaR" runat="server" ReadOnly="True"></asp:TextBox>
         <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ErrorMessage="Debe ingresar una calificación de reemplazo" ControlToValidate="txtNotaR" ValidationGroup="1" ForeColor="Red">*</asp:RequiredFieldValidator>
         <asp:RangeValidator ID="RangeValidator1" runat="server" ErrorMessage="Valores Permitidos solo: 0-100" ControlToValidate="txtNotaR" ValidationGroup="1" Type="Double" MaximumValue="100" MinimumValue="0" ForeColor="Red">*</asp:RangeValidator>
          <br />
         <asp:Label ID="lblEstadoA" runat="server" Text="Estado Actual de la Calificación: "></asp:Label>
          <br />
-        <asp:Label ID="lblEstadoR" runat="server" Text="Seleccione Estado de Reemplazo de la Calificación: "></asp:Label>
-        <asp:DropDownList ID="ddlEstados" runat="server">
-            <asp:ListItem Selected="True">APR</asp:ListItem>
-            <asp:ListItem>APL</asp:ListItem>
-            <asp:ListItem>REP</asp:ListItem>
-        </asp:DropDownList>
+        <asp:Label ID="lblEstadoR" runat="server" Text="Estado de Reemplazo de la Calificación: "></asp:Label>
+        <asp:TextBox ID="txtEstadoR" runat="server" ReadOnly="True"></asp:TextBox>
         <br />
         <asp:Label ID="Label1" runat="server" Text="Ingrese el motivo de Cambio: "></asp:Label>
         <asp:TextBox ID="txtMotivo" runat="server"></asp:TextBox>

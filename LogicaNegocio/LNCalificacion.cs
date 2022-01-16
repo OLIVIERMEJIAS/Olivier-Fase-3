@@ -22,6 +22,21 @@ namespace LogicaNegocio
             CadConexion = cad;
         }
 
+        public bool asociados(int caliId)
+        {
+            ADCalificacion adC = new ADCalificacion(CadConexion);
+
+            try
+            {
+                return adC.asociados(caliId);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
         public DataTable listarPorEstudiante(int estudianteId)
         {
             ADCalificacion adC = new ADCalificacion(CadConexion);

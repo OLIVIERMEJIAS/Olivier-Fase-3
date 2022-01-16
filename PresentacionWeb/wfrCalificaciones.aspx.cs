@@ -41,14 +41,22 @@ namespace PresentacionWeb
             int calificacionId = int.Parse(e.CommandArgument.ToString());
             try
             {
-                if (lnC.existe(calificacionId))
-                {   
-                    Session["_eliminarCalificacion"] = calificacionId;
-                    Response.Redirect("wfrEliminarCalificaciones.aspx", false);
-                    
+                if (!lnC.asociados(calificacionId))
+                {
+
+                    if (lnC.existe(calificacionId))
+                    {
+                        Session["_eliminarCalificacion"] = calificacionId;
+                        Response.Redirect("wfrEliminarCalificaciones.aspx", false);
+
+                    }
+                    else
+                        Session["_wrn"] = "Esta calificación ya no existe, fue borrada!";
                 }
                 else
-                    Session["_wrn"] = "Esta calificación ya no existe, fue borrada!";
+                    Session["_err"] = "No es posible borrar esta calificación, ya que se encuentra asociada a Permiso(s) de cambio de calificación!!";
+            
+                
             }
             catch (Exception ex)
             {
