@@ -20,6 +20,12 @@ namespace LogicaNegocio
         {
             CadConexion = cad;
         }
+        /// <summary>
+        /// Valida si un estudiante existe en base a su Id,
+        /// devuelve un boolean como confirmación
+        /// </summary>
+        /// <param name="condicion"></param>
+        /// <returns></returns>
         public bool existe(string condicion)
         {
             ADEstudiante ade = new ADEstudiante(CadConexion);
@@ -33,7 +39,12 @@ namespace LogicaNegocio
                 throw ex;
             }
         }
-
+        /// <summary>
+        /// Lista los estudiantes que existan en una sección, 
+        /// los devuelve en un DataTable 
+        /// </summary>
+        /// <param name="seccion"></param>
+        /// <returns></returns>
         public DataTable listarPorSeccion(string seccion)
         {
             ADEstudiante ade = new ADEstudiante(CadConexion);
@@ -47,7 +58,12 @@ namespace LogicaNegocio
                 throw ex;
             }
         }
-
+        /// <summary>
+        /// Verifica que exista un estudiante con su Id, 
+        /// devuelve una cadena con su nombre completo de encontrarse
+        /// </summary>
+        /// <param name="estudianteId"></param>
+        /// <returns></returns>
         public string existe(int estudianteId)
         {
             ADEstudiante ade = new ADEstudiante(CadConexion);

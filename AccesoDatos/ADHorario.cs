@@ -19,7 +19,13 @@ namespace AccesoDatos
         {
             CadConexion = cad;
         }
-
+        /// <summary>
+        /// Lista detalles vitales para mostrar el horario de una sección en un 
+        /// día específico, devuelve un DataTable con los resultados
+        /// </summary>
+        /// <param name="sec"></param>
+        /// <param name="dia"></param>
+        /// <returns></returns>
         public DataTable horarioPorDiaYSeccion(string sec, char dia)
         {
 
@@ -46,7 +52,11 @@ namespace AccesoDatos
             }
             return datos;
         }
-
+        /// <summary>
+        /// Lista las secciones existentes, asociadoas a horarios,
+        /// devuelve u DatatTable con los resultados
+        /// </summary>
+        /// <returns></returns>
         public DataTable secciones()
         {
 
@@ -66,7 +76,12 @@ namespace AccesoDatos
             }
             return datos;
         }
-
+        /// <summary>
+        /// Lista las secciones que imparte un profesor, según los horarios,
+        /// devuelve un DataTable según resultados
+        /// </summary>
+        /// <param name="profesorId"></param>
+        /// <returns></returns>
         public DataTable secciones(int profesorId)
         {
 

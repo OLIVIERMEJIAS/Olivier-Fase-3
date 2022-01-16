@@ -20,7 +20,12 @@ namespace AccesoDatos
         {
             CadConexion = cad;
         }
-
+        /// <summary>
+        /// Recopila datos importantes de una asistencia basado en un Id de asistencia
+        /// devuelve un objeto EAsistencia
+        /// </summary>
+        /// <param name="asistenciaId"></param>
+        /// <returns></returns>
         public EAsistencia listar(int asistenciaId)
         {
             EAsistencia asist = new EAsistencia();
@@ -53,7 +58,12 @@ namespace AccesoDatos
             return asist;
         }
 
-
+        /// <summary>
+        /// Lista todas las asistecnias de un estudiante, basándose en un Id estudiante
+        /// devuelve un DataTable
+        /// </summary>
+        /// <param name="estudianteId"></param>
+        /// <returns></returns>
         public DataTable listarPorEstudiante(int estudianteId)
         {
 
@@ -82,7 +92,12 @@ namespace AccesoDatos
         }
 
         
-
+        /// <summary>
+        /// Inserta en la base de datos una asistencia, basándose en un objeto EAsistencia
+        /// devuelve un boolean de confirmación de la tarea
+        /// </summary>
+        /// <param name="asist"></param>
+        /// <returns></returns>
         public bool agregar(EAsistencia asist)
         {
 
@@ -116,7 +131,12 @@ namespace AccesoDatos
             }
             return result;
         }
-
+        /// <summary>
+        /// Actualiza una asistencia, basándose en un objeto EAsistencia,
+        /// devuelve un boolean de confirmación
+        /// </summary>
+        /// <param name="asist"></param>
+        /// <returns></returns>
         public bool actualizar(EAsistencia asist)
         {
 
@@ -147,7 +167,12 @@ namespace AccesoDatos
             }
             return result;
         }
-
+        /// <summary>
+        /// Elimina una asistencia, basándose en un Id de asistencia,
+        /// devuelve un boolean como confirmación
+        /// </summary>
+        /// <param name="asistenciaId"></param>
+        /// <returns></returns>
         public bool eliminar(int asistenciaId)
         {
 
@@ -179,7 +204,12 @@ namespace AccesoDatos
             }
             return result;
         }
-
+        /// <summary>
+        /// Verifica si existe una asistencia, basándose en un Id de asistencia,
+        /// devuelve un boolean como confirmación
+        /// </summary>
+        /// <param name="asistenciaId"></param>
+        /// <returns></returns>
         public bool existe(int asistenciaId)
         {
             Object scalar;

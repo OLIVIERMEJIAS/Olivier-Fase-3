@@ -22,7 +22,12 @@ namespace LogicaNegocio
         {
             CadCadena = cad;
         }
-
+        /// <summary>
+        /// Agrega un detalle de horario, en base con un objeto EDetalleHorario
+        /// devuelve un boolean como confirmación
+        /// </summary>
+        /// <param name="det"></param>
+        /// <returns></returns>
         public bool agregar(EDetalleHorario det)
         {
             ADDetalleHorario add = new ADDetalleHorario(CadCadena);
@@ -37,69 +42,12 @@ namespace LogicaNegocio
             }
         }
 
-        public bool buscarHorEspecialidadPrimerDia(int horId, int profeId, ref string horI, 
-            ref byte limInfAula, ref char diaSem)
-        {
-            ADDetalleHorario add = new ADDetalleHorario(CadCadena);
-            try
-            {
-                return add.buscarHorEspecialidadPrimerDia(horId, profeId, ref horI, ref limInfAula, ref diaSem);
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
-        }
-
-        public bool buscarHorEspecialidadSegDia(int horId, int profeId, ref string horI,
-            ref byte limInfAula, ref char diaSem)
-        {
-            ADDetalleHorario add = new ADDetalleHorario(CadCadena);
-            try
-            {
-                return add.buscarHorEspecialidadSegDia(horId, profeId, ref horI, ref limInfAula, ref diaSem);
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
-        }
-
-        public bool agregarDetallesHorarrio(ArrayList detalles)
-        {
-            ADDetalleHorario add = new ADDetalleHorario(CadCadena);
-            bool result = false;
-            try
-            {
-                foreach (EDetalleHorario item in detalles)
-                {
-                    result = add.agregar(item);
-                }
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
-            return result;
-        }
-        public DataTable listarPorSeccion(string sec)
-        {
-            ADDetalleHorario add = new ADDetalleHorario(CadCadena);
-
-            try
-            {
-                return add.listarPorSeccion(sec);
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-
+        
+        /// <summary>
+        /// Verifica que existan registros en la entidad
+        ///  de detalles de horario de la base de datos
+        /// </summary>
+        /// <returns></returns>
         public bool hayRegistros()
         {
             ADDetalleHorario adDH = new ADDetalleHorario(CadCadena);
@@ -114,8 +62,16 @@ namespace LogicaNegocio
             }
         }
 
-        
-
+        /// <summary>
+        /// Verifica que una sección este disponible a un día en una hora
+        /// de inicio, mediante si Id de horario,
+        /// devuelve "" si está libre y una cadena con una hora de fin de 
+        /// lección cuando está ocupada
+        /// </summary>
+        /// <param name="horaI"></param>
+        /// <param name="dia"></param>
+        /// <param name="horId"></param>
+        /// <returns></returns>
         public string disponibleHoraI(string horaI, char dia, int horId)
         {
             ADDetalleHorario adDH = new ADDetalleHorario(CadCadena);
@@ -130,7 +86,11 @@ namespace LogicaNegocio
                 throw ex;
             }
         }
-
+        /// <summary>
+        /// Elimina todos los registros de la tabla detalles de horario
+        /// para cuando sea preciso cambiar todos los horarios por otros
+        /// </summary>
+        /// <returns></returns>
         public bool eliminarRegistros()
         {
             ADDetalleHorario adDH = new ADDetalleHorario(CadCadena);

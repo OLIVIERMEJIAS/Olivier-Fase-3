@@ -19,7 +19,12 @@ namespace LogicaNegocio
         {
             CadConexion = cad;
         }
-
+        /// <summary>
+        /// Accese a la materia que imparte un profesor, con su Id, 
+        /// devuelve un objeto EMateria
+        /// </summary>
+        /// <param name="profeId"></param>
+        /// <returns></returns>
         public EMateria accederAMateria(int profeId)
         {
             

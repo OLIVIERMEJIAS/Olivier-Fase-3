@@ -19,7 +19,12 @@ namespace AccesoDatos
         {
             CadConexion = cad;
         }
-
+        /// <summary>
+        /// Confirma que los datos de acceso de sesión sean correctos,
+        /// basdo en un objeto EDirector, devuelve un boolean confirmando
+        /// </summary>
+        /// <param name="dir"></param>
+        /// <returns></returns>
         public bool accesoUsuario(EDirector dir)
         {
             bool result = false;

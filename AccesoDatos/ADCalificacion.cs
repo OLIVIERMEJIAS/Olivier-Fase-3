@@ -20,7 +20,12 @@ namespace AccesoDatos
         {
             CadConexion = cad;
         }
-
+        /// <summary>
+        /// Recoge los datos importante de una calificación basándose en un Id de calificación
+        /// devuelve un objeto ECalificacion
+        /// </summary>
+        /// <param name="calificacionId"></param>
+        /// <returns></returns>
         public ECalificacion listar(int calificacionId)
         {
             ECalificacion cali = new ECalificacion();
@@ -56,7 +61,12 @@ namespace AccesoDatos
             return cali;
         }
 
-
+        /// <summary>
+        /// Recopila las calificaciones de un estudiante bas+andose en un Id de estudiante
+        /// devuelve un DataTable con los resultados
+        /// </summary>
+        /// <param name="estudianteId"></param>
+        /// <returns></returns>
         public DataTable listarPorEstudiante(int estudianteId)
         {
 
@@ -87,7 +97,12 @@ namespace AccesoDatos
         }
 
 
-
+        /// <summary>
+        /// Inserta una calificación basado en un objeto tipo ECalificacion, devuelve
+        /// un boolean de confirmación
+        /// </summary>
+        /// <param name="cali"></param>
+        /// <returns></returns>
         public bool agregar(ECalificacion cali)
         {
 
@@ -124,7 +139,12 @@ namespace AccesoDatos
             }
             return result;
         }
-
+        /// <summary>
+        /// Actualiza una calificación basando en un objeto ECalificacion,
+        /// devuelve un boolean de confirmación
+        /// </summary>
+        /// <param name="cali"></param>
+        /// <returns></returns>
         public bool actualizar(ECalificacion cali)
         {
 
@@ -157,7 +177,12 @@ namespace AccesoDatos
             }
             return result;
         }
-
+        /// <summary>
+        /// Elimina una calificación, basado en un Id de calificación, devuelve un boolean de 
+        /// confirmación
+        /// </summary>
+        /// <param name="calificacionId"></param>
+        /// <returns></returns>
         public bool eliminar(int calificacionId)
         {
 
@@ -189,7 +214,12 @@ namespace AccesoDatos
             }
             return result;
         }
-
+        /// <summary>
+        /// Confirma que exista una calificación basándose en un Id de calificación,
+        /// devuelve un boolean si existe
+        /// </summary>
+        /// <param name="calificacionId"></param>
+        /// <returns></returns>
         public bool existe(int calificacionId)
         {
             Object scalar;
@@ -222,7 +252,12 @@ namespace AccesoDatos
             }
             return result;
         }
-
+        /// <summary>
+        /// Confirma si existen permisos de cambio de calificación asociados a una calificacón 
+        /// en base a un Id de calificación
+        /// </summary>
+        /// <param name="caliId"></param>
+        /// <returns></returns>
         public bool asociados(int caliId)
         {
 

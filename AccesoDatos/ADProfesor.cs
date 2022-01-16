@@ -20,6 +20,13 @@ namespace AccesoDatos
         {
             CadConexion = cad;
         }
+        /// <summary>
+        /// Verifica los datos de acceso de sesión de un profesor, en base con un objeto
+        /// EProfesor, devuelve un int de confirmación, si devuelve algo diferente a -1 el profesor
+        /// es correcto y será su Id de empleaod, así mismo modifica atributos del objeto entrante
+        /// </summary>
+        /// <param name="prof"></param>
+        /// <returns></returns>
         public int accesoUsuario(EProfesor prof)
         {
             int result = -1;
@@ -60,7 +67,13 @@ namespace AccesoDatos
             }
             return result;
         }
-
+        /// <summary>
+        /// Devuelve el número de lecciones que está impartiendo un profesor, hay diferente
+        /// números para cada profesor, pero lo que devuelve es la cantidad de registros existentes
+        /// en la entidad detalles de horario, se base en un Id de profesor
+        /// </summary>
+        /// <param name="profId"></param>
+        /// <returns></returns>
         public byte numLecciones(int profId)
         {
             byte result = 0;
@@ -91,7 +104,12 @@ namespace AccesoDatos
 
             return result;
         }
-
+        /// <summary>
+        /// Accesde al primer profesor por los cuales una materia es impartida,
+        /// devuelve un int con el Id del profesor
+        /// </summary>
+        /// <param name="mateId"></param>
+        /// <returns></returns>
         public int accederAProfesor(byte mateId)
         {
 
@@ -129,7 +147,16 @@ namespace AccesoDatos
         }
 
        
-
+        /// <summary>
+        /// Verifica si un profesor esta ocupado en un día específico, 
+        /// con base en una hora de inicio y un Id de profesor, si devuelve "" 
+        /// es que esta libre, si no devuelve una cadena con la hora de fnalización 
+        /// de esas leciones que está impartiendo
+        /// </summary>
+        /// <param name="horaI"></param>
+        /// <param name="dia"></param>
+        /// <param name="profeId"></param>
+        /// <returns></returns>
         public string disponibleHoraI(string horaI, char dia, int profeId)
         {
 

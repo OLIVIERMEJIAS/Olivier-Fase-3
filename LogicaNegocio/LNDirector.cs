@@ -19,7 +19,12 @@ namespace LogicaNegocio
         {
             CadConexion = cad;
         }
-
+        /// <summary>
+        /// Verifca los datos de acceso e sesíón del ditector,
+        /// devuelve un boolean como confirmación
+        /// </summary>
+        /// <param name="dir"></param>
+        /// <returns></returns>
         public bool accesoUsuario(EDirector dir)
         {
             bool result = false;

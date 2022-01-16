@@ -19,7 +19,12 @@ namespace LogicaNegocio
         {
             CadConexion = cad;
         }
-
+        /// <summary>
+        /// Lista la fecha de fin de un trimeste basándose en el número 
+        /// de este, devuelve un objeto ETrimestre
+        /// </summary>
+        /// <param name="numTrim"></param>
+        /// <returns></returns>
         public ETrimestre listar(byte numTrim)
         {
             ADTrimestre adT = new ADTrimestre(CadConexion);

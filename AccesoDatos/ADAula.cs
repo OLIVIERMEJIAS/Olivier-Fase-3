@@ -19,7 +19,15 @@ namespace AccesoDatos
         {
             CadConexion = cad;
         }
-
+        /// <summary>
+        /// Verifica que en una hora de inicio de lección un aula no este ocupada,
+        /// devuelve un string con la hora final si está ocupada, y "" si no lo está,
+        /// se basa en una hora de inicio, un día y un Id de aula
+        /// </summary>
+        /// <param name="horaI"></param>
+        /// <param name="dia"></param>
+        /// <param name="aulaId"></param>
+        /// <returns></returns>
         public string disponibleHoraI(string horaI, char dia, byte aulaId)
         {
             

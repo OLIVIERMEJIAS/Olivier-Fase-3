@@ -20,6 +20,13 @@ namespace AccesoDatos
         {
             CadConexion = cad;
         }
+
+        /// <summary>
+        /// Inserta un detalle de horario, en base a un objeto tipo EDetalleHorario,
+        /// devuelve un boolean de confirmación
+        /// </summary>
+        /// <param name="det"></param>
+        /// <returns></returns>
         public bool agregar(EDetalleHorario det)
         {
 
@@ -59,7 +66,11 @@ namespace AccesoDatos
        
 
        
-
+        /// <summary>
+        /// Confirma si hay registros en la entidad de la base de datos de detalles de horario
+        /// devuelve un boolean de confirmación
+        /// </summary>
+        /// <returns></returns>
         public bool hayRegistros()
         {
             SqlDataReader reader;
@@ -91,76 +102,12 @@ namespace AccesoDatos
             return result;
         }
 
-        public bool buscarHorEspecialidadSegDia(int horId, int profeId, ref string horI,
-           ref byte limInfAula, ref char diaSem)
-        {
-            DataTable datos = new DataTable();
-            SqlDataAdapter adaptador;
-            bool result = false;
-            string aula;
-            SqlConnection conexion = new SqlConnection(CadConexion);
-            string sentencia = "Select horaInicio, aulaId, dia from DetallesHorario" +
-                $" where profesorId = {profeId} and horarioId = {horId}";
-
-            try
-            {
-                adaptador = new SqlDataAdapter(sentencia, conexion);
-                adaptador.Fill(datos);
-                if (datos != null)
-                {
-
-                    horI = datos.Rows[1][0].ToString();
-                    aula = datos.Rows[1][1].ToString();
-                    diaSem = char.Parse(datos.Rows[1][2].ToString());
-                    limInfAula = byte.Parse(aula);
-                    result = true;
-                }
-
-            }
-            catch (Exception)
-            {
-
-                throw new Exception("No se pudo realizar conexión de datos");
-            }
-
-            return result;
-        }
-
-        public bool buscarHorEspecialidadPrimerDia(int horId, int profeId, ref string horI, 
-            ref byte limInfAula, ref char diaSem)
-        {
-            DataTable datos = new DataTable();
-            SqlDataAdapter adaptador;
-            bool result = false;
-            string aula;
-            SqlConnection conexion = new SqlConnection(CadConexion);
-            string sentencia = "Select horaInicio, aulaId, dia from DetallesHorario" +
-                $" where profesorId = {profeId} and horarioId = {horId}";
-
-            try
-            {
-               adaptador = new SqlDataAdapter(sentencia, conexion);
-                adaptador.Fill(datos);
-                if (datos.Rows.Count != 0)
-                {
-
-                    horI = datos.Rows[0][0].ToString();
-                    aula = datos.Rows[0][1].ToString();
-                    diaSem = char.Parse(datos.Rows[0][2].ToString());
-                    limInfAula = byte.Parse(aula);
-                    result = true;
-                }
-                
-            }
-            catch (Exception)
-            {
-            
-                throw new Exception("No se pudo realizar conexión de datos");
-            }
-            
-            return result;
-        }
-
+        /// <summary>
+        /// Elimina todos los registros de la entidad detalles de horario, 
+        /// ya que cuando se presiona el botón generar
+        /// horarios, si existe deben ser cambiados desde cero
+        /// </summary>
+        /// <returns></returns>
         public bool eliminarRegistros()
         {
 
@@ -190,33 +137,16 @@ namespace AccesoDatos
             return result;
         }
 
-        public DataTable listarPorSeccion(string sec)
-        {
-
-            DataTable datos = new DataTable();
-            SqlConnection conexion = new SqlConnection(CadConexion);
-            string sentencia = "Select d.dia, m.materia, d.horaInicio, d.horaFin " +
-                "from Horarios h inner join DetallesHorario d On h.horarioId = d.horarioId " +
-                "inner join MateriasProfesores mp " +
-                "On d.profesorId =  mp.profesorId inner join Materias m " +
-                "On mp.materiaId = m.materiaId Where";
-            sentencia = $"{sentencia} h.seccion = '{sec}'";
-            SqlDataAdapter adaptador = new SqlDataAdapter(sentencia, conexion);
-
-            try
-            {
-                adaptador.Fill(datos);
-                adaptador.Dispose();
-            }
-            catch (Exception)
-            {
-                adaptador.Dispose();
-                throw new Exception("No se pudo realizar conexión de datos");
-            }
-
-            return datos;
-        }
-
+        
+        /// <summary>
+        /// Conforma disponibilidad de un grupo, con base en hora de inciio, día y Id de horario
+        /// devuelve un string vacío si esta libre a esa hora de inicio, devuelve un string con 
+        /// una hora de finalización de lección si esta ocupada esa lección en ese momento
+        /// </summary>
+        /// <param name="horaI"></param>
+        /// <param name="dia"></param>
+        /// <param name="horId"></param>
+        /// <returns></returns>
         public string disponibleHoraI(string horaI, char dia, int horId)
         {
 

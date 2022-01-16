@@ -19,7 +19,12 @@ namespace AccesoDatos
         {
             CadConexion = cad;
         }
-
+        /// <summary>
+        /// Verifica la fecha de fin de un trimestre, en base a su número de trimestre
+        /// devuelve un objeto ETrimestre
+        /// </summary>
+        /// <param name="numTrim"></param>
+        /// <returns></returns>
         public ETrimestre listar(byte numTrim)
         {
             ETrimestre trim = new ETrimestre();

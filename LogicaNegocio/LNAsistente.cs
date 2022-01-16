@@ -19,7 +19,12 @@ namespace LogicaNegocio
         {
             CadConexion = cad;
         }
-
+        /// <summary>
+        /// Confirma los datos de acceso de sesión del asistente de dirección
+        /// devuelve un boolean confirmando
+        /// </summary>
+        /// <param name="asis"></param>
+        /// <returns></returns>
         public bool accesoUsuario(EAsistente asis)
         {
             bool result = false;

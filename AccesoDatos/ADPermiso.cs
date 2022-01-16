@@ -20,7 +20,15 @@ namespace AccesoDatos
         {
             CadConexion = cad;
         }
-
+        /// <summary>
+        /// Lista los permisos de cambio de calificación, con base en un Id de profesor,
+        /// y una condicación,
+        /// la cual puede ser rechazado, aceptado o pendiente
+        /// devuelve un DataTable con los resultados y los datos importante para cada registro
+        /// </summary>
+        /// <param name="profeId"></param>
+        /// <param name="condicion"></param>
+        /// <returns></returns>
         public DataTable listar(int profeId, string condicion)
         {
 
@@ -53,7 +61,12 @@ namespace AccesoDatos
 
             return datos;
         }
-
+        /// <summary>
+        /// Inserta un permiso de cambio de calificación, en base con un objeto EPermiso
+        /// devuelve un boolean de confirmación
+        /// </summary>
+        /// <param name="permi"></param>
+        /// <returns></returns>
         public bool insertar(EPermiso permi)
         {
 
@@ -92,7 +105,12 @@ namespace AccesoDatos
             }
             return result;
         }
-
+        /// <summary>
+        /// Lista todos los permisos dependiendo de la condificón o estado del permiso, aceptado, 
+        /// rechazado, o pendiente
+        /// </summary>
+        /// <param name="condicion"></param>
+        /// <returns></returns>
         public DataTable listar(string condicion)
         {
 
@@ -125,7 +143,12 @@ namespace AccesoDatos
 
             return datos;
         }
-
+        /// <summary>
+        /// Verifica si un permiso existe, en base con su Id de permiso
+        /// devuelve un objeto EPerimiso con datos vitales para procesamiento posterior
+        /// </summary>
+        /// <param name="permisoId"></param>
+        /// <returns></returns>
         public EPermiso existe(int permisoId)
         {
             SqlDataReader reader;
@@ -162,7 +185,13 @@ namespace AccesoDatos
 
             return permi;
         }
-
+        /// <summary>
+        /// Actualiza el estado de un permiso según un Id de permiso
+        /// devuelve un boolean confirmando
+        /// </summary>
+        /// <param name="permisoId"></param>
+        /// <param name="estado"></param>
+        /// <returns></returns>
         public bool actualizar(int permisoId, char estado)
         {
 

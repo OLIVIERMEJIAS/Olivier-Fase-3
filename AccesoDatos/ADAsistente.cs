@@ -20,7 +20,12 @@ namespace AccesoDatos
         {
             CadConexion = cad;
         }
-
+        /// <summary>
+        /// Verifica que la contraseña y el usuario del asistente existan, para iniciar sesión
+        /// devuelve un boolean con confirmación
+        /// </summary>
+        /// <param name="asis"></param>
+        /// <returns></returns>
         public bool accesoUsuario(EAsistente asis)
         {
             bool result = false;

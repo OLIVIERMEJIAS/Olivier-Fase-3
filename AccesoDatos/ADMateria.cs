@@ -20,7 +20,12 @@ namespace AccesoDatos
         {
             CadConexion = cad;
         }
-
+        /// <summary>
+        /// Verifica que materia imparte un profesor, en base a un Id de profesor,
+        /// devuelve un objeto EMateria
+        /// </summary>
+        /// <param name="profeId"></param>
+        /// <returns></returns>
         public EMateria accederAMateria(int profeId)
         {
      
