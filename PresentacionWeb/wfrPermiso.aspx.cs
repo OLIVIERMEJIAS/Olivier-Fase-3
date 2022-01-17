@@ -26,7 +26,7 @@ namespace PresentacionWeb
                 lblEstudiante.Text += lnE.existe(int.Parse(Session["_estudiante"].ToString()));
                 ECalificacion cali;
                 //se obtine la variable que guarda el Id de la calificación y cargan los datos
-                cali = lnC.listar(int.Parse(Session["_modificarCalificacion"].ToString()));
+                cali = lnC.listar(int.Parse(Session["_permiso"].ToString()));
                 lblNotaA.Text += cali.Calificacion.ToString();
                 lblEstadoA.Text += cali.Estado;
                 //se carga el estado de reemplazo y

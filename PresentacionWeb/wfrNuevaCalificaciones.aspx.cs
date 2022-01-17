@@ -32,7 +32,7 @@ namespace PresentacionWeb
                             txtEstudiante.Text = nombreEst;
                         txtIdMateria.Text = Config.MateriaId.ToString();
                         txtMateria.Text = Config.MateriaNombre;
-                        txtFecha.Text = DateTime.Today.ToString();
+                        txtFecha.Text = DateTime.Now.ToString();
 
 
                     }
