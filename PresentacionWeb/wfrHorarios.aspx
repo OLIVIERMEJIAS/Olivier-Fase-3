@@ -7,32 +7,32 @@
             <h1>Generación y Consulta de Horarios</h1>
         </div>
     </div>
-        <br />
+    <br />
        
-        <div class="container" style="width: fit-content">
-            <asp:Button CssClass="btn btn-outline-primary container" ID="btnGenerar" runat="server" Text="Generar Horarios Nuevos" OnClick="btnGenerar_Click" />
+    <div class="container" style="width: fit-content">
+        <asp:Button CssClass="btn btn-outline-primary container" ID="btnGenerar" runat="server" Text="Generar Horarios Nuevos" OnClick="btnGenerar_Click" />
+    </div>
+    <div class="container text-center">
+        <asp:Label ID="lblAdvertencia" runat="server" Text="*Al usar este botón se borrarán los registros existentes" ForeColor="Red" Font-Size="Medium" Font-Italic="True"></asp:Label>
+    </div>
+    <br />
+    <div class="container">
+        <div class="card-header text-center">   
+            <h2>Seleccione una sección, para ver sus horarios:</h2>
         </div>
-        <div class="container text-center">
-            <asp:Label ID="lblAdvertencia" runat="server" Text="*Al usar este botón se borrarán los registros existentes" ForeColor="Red" Font-Size="Medium" Font-Italic="True"></asp:Label>
-        </div>
-        <br />
-        <div class="container">
-            <div class="card-header text-center">   
-                <h2>Seleccione una sección, para ver sus horarios:</h2>
-            </div>
-        </div>
-        <br />
-        <div class="container" style="width: fit-content">
-                <asp:Label ID="lblSec" runat="server" Text="Sección:"></asp:Label>
+    </div>
+    <br />
+    <div class="container" style="width: fit-content">
+        <asp:Label ID="lblSec" runat="server" Text="Sección:"></asp:Label>
 
-                <div class="input-group mb-3">
-                 <asp:TextBox CssClass="form-control" ID="txtSeccion" runat="server"  ReadOnly="True" aria-describedby="btnModalSec" ValidationGroup="5" Text="7-1"></asp:TextBox>
+        <div class="input-group mb-3">
+            <asp:TextBox CssClass="form-control" ID="txtSeccion" runat="server"  ReadOnly="True" aria-describedby="btnModalSec" ValidationGroup="5" Text="7-1"></asp:TextBox>
                 
-                    <button class="btn btn-outline-primary" type="button" id="btnModalSec"
-                    data-bs-toggle="modal"
-                    data-bs-target="#secModal" style="width: 62px">Buscar</button>
-                </div>
-            </div>
+            <button class="btn btn-outline-primary" type="button" id="btnModalSec"
+            data-bs-toggle="modal"
+            data-bs-target="#secModal" style="width: 62px">Buscar</button>
+        </div>
+    </div>
     <br />
     <br />
     <div class="container">

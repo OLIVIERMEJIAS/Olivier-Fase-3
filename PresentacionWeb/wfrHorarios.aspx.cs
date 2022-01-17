@@ -238,7 +238,7 @@ namespace PresentacionWeb
                                 ref horFAula8, ref diaAula1Otros, ref diaAula2Otros,
                                 ref diaAula1, ref diaAula2, ref diaAula3, ref diaAula4,
                                 ref diaAula5, ref diaAula6, ref diaAula7, ref diaAula8,
-                                dia
+                                ref dia
                                 );
 
                                 if (disponibleAula == "")
@@ -256,21 +256,24 @@ namespace PresentacionWeb
                                         horF1Profe = disponibleProfe;
                                         if (primeraRondaProfesores)
                                             diaProfe1 = dia;
+                                        dia = diaProfe1;
                                     }
                                     else if (haySegundProf && segundoProfe && !usoDeTercerProfe)
                                     {
                                         horF2Profe = disponibleProfe;
                                         if(primeraRondaProfesores)
                                             diaProfe2 = dia;
+                                        dia = diaProfe2;
 
-                                }
+                                    }
                                     else if (haySegundProf && segundoProfe && usoDeTercerProfe)
                                     {
                                         horF3Profe = disponibleProfe;
                                         if (primeraRondaProfesores)
                                             diaProfe3 = dia;
+                                        dia = diaProfe3;
 
-                                }
+                                    }
 
                                     if (disponibleProfe == "")
                                     {
@@ -303,6 +306,8 @@ namespace PresentacionWeb
                                                         iHoraI = 0;
                                                         iHoraF = 0;
                                                         materia--;
+                                                        if (materia == 0)
+                                                            materia++;
                                                         segundaEsp = false;
                                                         asignacionDos = true;
                                                         reiniciarAulas = true;
@@ -781,6 +786,8 @@ namespace PresentacionWeb
                         iHoraI = 0;
                         iHoraF = 0;
                         indiceMateria--;
+                        if (indiceMateria == 0)
+                            indiceMateria++;
                         segundaEsp = false;
                         asignacionDos = true;
                         reiniciarAulas = true;
@@ -829,7 +836,7 @@ namespace PresentacionWeb
             ref byte diaAula1, ref byte diaAula2, ref byte diaAula3,
             ref byte diaAula4, ref byte diaAula5, ref byte diaAula6,
             ref byte diaAula7,
-            ref byte diaAula8, byte dia
+            ref byte diaAula8, ref byte dia
             )
         {
             if (aulas2)
@@ -839,13 +846,14 @@ namespace PresentacionWeb
                     horFAula1Otros = disponible;
                     if(primeraRondaAulas)
                         diaAula1Otros = dia;
+                    dia = diaAula1Otros;
                 }
                 else if (limInfAula == 10 || limInfAula == 12)
                 {
                     horFAula2Otros = disponible;
                     if(primeraRondaAulas)
                         diaAula2Otros = dia;
-                    
+                    dia = diaAula2Otros;
                 }
             }
             else
@@ -855,41 +863,49 @@ namespace PresentacionWeb
                         horFAula1 = disponible;
                         if (primeraRondaAulas)
                             diaAula1 = dia;
+                        dia = diaAula1;
                         break;
                     case 2:
                         horFAula2 = disponible;
                         if (primeraRondaAulas)
                             diaAula2 = dia;
+                        dia = diaAula2;
                         break;
                     case 3:
                         horFAula3 = disponible;
                         if (primeraRondaAulas)
                             diaAula3 = dia;
+                        dia = diaAula3;
                         break;
                     case 4:
                         horFAula4 = disponible;
                         if (primeraRondaAulas)
                             diaAula4 = dia;
+                        dia = diaAula4;
                         break;
                     case 5:
                         horFAula5 = disponible;
                         if (primeraRondaAulas)
                             diaAula5 = dia;
+                        dia = diaAula5;
                         break;
                     case 6:
                         horFAula6 = disponible;
                         if (primeraRondaAulas)
                             diaAula6 = dia;
+                        dia = diaAula6;
                         break;
                     case 7:
                         horFAula7 = disponible;
                         if (primeraRondaAulas)
                             diaAula7 = dia;
+                        dia = diaAula7;
                         break;
                     case 8:
                         horFAula8 = disponible;
                         if (primeraRondaAulas)
                             diaAula8 = dia;
+                        dia = diaAula8;
 
                         break;
                 }
@@ -1049,11 +1065,12 @@ namespace PresentacionWeb
                     if (!primeraRondaAulas)
                         avanzarHoras(horasFin, materia, ref iHoraI,
                         ref iHoraF, horaFinal, ref dia, ref diaSem, dias);
-                        
+                    primeraRondaProfesores = true; 
                 }
 
                 else
                 {
+                    primeraRondaProfesores = true;
                     primeraRondaAulas = false;
                     fijarLimitesAulas(ref limInfAula, ref limSupAula, materia,
                         ref aulas2, ref aulas8);
@@ -1069,6 +1086,7 @@ namespace PresentacionWeb
                 {
                     profeId++;
                     segundoProfe = true;
+                    primeraRondaAulas = true;
                     if(!primeraRondaProfesores)
                     {
                         avanzarHoras(horasFin, materia, ref iHoraI,
@@ -1083,6 +1101,7 @@ namespace PresentacionWeb
                         profeId++;
                         usoDeTercerProfe = true;
                         segundoProfe = true;
+                        primeraRondaAulas = true;
                         if (!primeraRondaProfesores)
                         {
                             avanzarHoras(horasFin, materia, ref iHoraI,
@@ -1096,20 +1115,21 @@ namespace PresentacionWeb
                         avanzarHoras(horasFin, materia, ref iHoraI,
                         ref iHoraF, horaFinal, ref dia, ref diaSem, dias);
                         reiniciarAulas = true;
-
+                        primeraRondaAulas = true;
                         segundoProfe = false;
                     }
                     
                 }
                 else
                 {
-                    
+                    primeraRondaAulas = true;
                     avanzarHoras(horasFin, materia, ref iHoraI,
                     ref iHoraF, horaFinal, ref dia, ref diaSem, dias);
                 }
             }
             else
             {
+                primeraRondaAulas = true;
                 avanzarHoras(horasFin, materia, ref iHoraI,
                     ref iHoraF, horaFinal, ref dia, ref diaSem, dias);
             }

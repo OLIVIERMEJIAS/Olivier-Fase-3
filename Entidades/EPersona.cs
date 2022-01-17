@@ -6,7 +6,7 @@ namespace Entidades
 {
     public class EPersona
     {
-        public ushort PersonaId { get; set; }
+        public int PersonaId { get; set; }
         public long NumIdentificacion { get; set; }
         public string Nombre { get; set; }
         public string Apellido1 { get; set; }
@@ -37,7 +37,7 @@ namespace Entidades
             Borrado = false;
         }
 
-        public EPersona(ushort id, int ident, string nom,
+        public EPersona(int id, int ident, string nom,
             string ape1, string ape2, char gen, string email,
             DateTime fechIng, DateTime fechNac, ushort dist,
             string dirExact, bool act, bool bor)

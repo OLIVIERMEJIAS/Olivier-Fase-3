@@ -45,13 +45,13 @@
         <div class="container text-center" style="width: fit-content">
             <asp:Label ID="lblUsuario" runat="server" Text="Nombre de Usuario"></asp:Label>
             <br />
-            <asp:TextBox CssClass="form" ID="txtUsuario" runat="server" Text="NU001"></asp:TextBox>
+            <asp:TextBox CssClass="form" ID="txtUsuario" runat="server" Text="ASI001"></asp:TextBox>
             <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ErrorMessage="Se requiere un Nombre de Usuario" ControlToValidate="txtUsuario" ValidationGroup="1" ForeColor="Red">*</asp:RequiredFieldValidator>
             <br />
             <br />
             <asp:Label  ID="lblContrasena" runat="server" Text="Contraseña"></asp:Label>
             <br />
-            <asp:TextBox CssClass="form" ID="txtContrasena" runat="server" Text="CON001"></asp:TextBox>
+            <asp:TextBox CssClass="form" ID="txtContrasena" runat="server" Text="CONASI"></asp:TextBox>
             <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="Se requiere una Contraseña" ControlToValidate="txtContrasena" ValidationGroup="1" ForeColor="Red">*</asp:RequiredFieldValidator>
             <br />
             <asp:ValidationSummary ID="ValidationSummary1" runat="server" ValidationGroup="1" ForeColor="Red" />
