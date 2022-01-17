@@ -20,7 +20,8 @@ namespace PresentacionWeb
         protected void cargarAsistencias()
         {
             try
-            {
+            {//carga las asistencia de un estudiante, con el Id
+             //guardado en la variable de sesión
                 int estuId = int.Parse(Session["_estudiante"].ToString());
                 gdvAsistencias.DataSource = lnA.listarPorEstudiante(estuId);
                 gdvAsistencias.DataBind();
@@ -32,7 +33,12 @@ namespace PresentacionWeb
             }
              
         }
-
+        /// <summary>
+        /// Con el commandArgument que guarda el Id de la asistencia
+        /// se ve si existe, si existe se procede a la eliminación
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void lnkEliminar_Command1(object sender, CommandEventArgs e)
         {
             int asistenciaId = int.Parse(e.CommandArgument.ToString());
@@ -54,7 +60,12 @@ namespace PresentacionWeb
         }
 
        
-
+        /// <summary>
+        /// Si se desea modificar se procede a ver si existe, de existir 
+        /// se envía a la página de mantenimento de asistencias
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void lnkModificar_Command1(object sender, CommandEventArgs e)
         {
             int asistenciaId = int.Parse(e.CommandArgument.ToString());
@@ -74,7 +85,12 @@ namespace PresentacionWeb
                 Session["_err"] = ex.Message;
             }
         }
-
+        /// <summary>
+        /// Para volver se redirije a la página de la 
+        /// lista de registros de asistencias
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void btnVolver_Click(object sender, EventArgs e)
         {
             Response.Redirect("wfrListarAsistencias.aspx", false);

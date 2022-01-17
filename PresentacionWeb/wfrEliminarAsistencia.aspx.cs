@@ -18,7 +18,12 @@ namespace PresentacionWeb
             if (!IsPostBack)
             {
                 try
-                {
+                {   //esta página es para la confirmación de
+                    //la eliminación de un registro de asistencia
+                    //se obtiene el Id de la asistencia de la v
+                    //ariable se sesión y con ella se carga un
+                    //objeto EAsistencia con detalles importantes
+                    //para mostrar
                     int asistenciaId = int.Parse(Session["_eliminarAsistencia"].ToString());
                     EAsistencia asist;
                     asist = lnA.listar(asistenciaId);
@@ -40,7 +45,9 @@ namespace PresentacionWeb
         {
             int asistenciaId = int.Parse(Session["_eliminarAsistencia"].ToString());
             try
-            {
+            {//al confirmar se procede a la eliminación y
+             //se redirije a la página de registros de a
+             //sistencia como tal de estudiante
                 if (lnA.eliminar(asistenciaId))
                 {
                     Session["_exito"] = "Asistencia Eliminada con Éxito!";
@@ -56,6 +63,8 @@ namespace PresentacionWeb
 
         protected void btnCancelar_Click(object sender, EventArgs e)
         {
+            //al cancelar la eliminación se procede a la redirección
+            //a la página de registros de asistencias como tal del estudiante
             Response.Redirect("wfrAsistencias.aspx", false);
         }
     }

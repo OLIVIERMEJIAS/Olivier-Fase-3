@@ -19,7 +19,8 @@ namespace PresentacionWeb
             cargarCalificaciones();
 
         }
-
+        //procedimiento que cargar las calificaciones del estudiante,
+        //se accede a una variable de sesión para obtener el Id del estudiante
         protected void cargarCalificaciones()
         {
             try
@@ -35,7 +36,8 @@ namespace PresentacionWeb
             }
 
         }
-
+        //al eliminar o tratar de hacerlo, se debe validar que no esté esta
+       //calificación asociada a permisos de cambio de calificación
         protected void lnkEliminar_Command(object sender, CommandEventArgs e)
         {
             int calificacionId = int.Parse(e.CommandArgument.ToString());
@@ -43,7 +45,10 @@ namespace PresentacionWeb
             {
                 if (!lnC.asociados(calificacionId))
                 {
-
+                    //y así mismo a comprobar que la calificación aún existe 
+                    //de existir se redirecciona a la página de confirmación
+                    //de eliminación de calificaciones, no antes de guardar
+                    //el Id de la calificación en la variable de sesión
                     if (lnC.existe(calificacionId))
                     {
                         Session["_eliminarCalificacion"] = calificacionId;
@@ -69,10 +74,13 @@ namespace PresentacionWeb
 
         protected void lnkModificar_Command(object sender, CommandEventArgs e)
         {
-            
+            //al tratar de modificar se guarda el commandArgument en un variable
+            //con el Id de la calificación
             int calificacionId = int.Parse(e.CommandArgument.ToString());
             try
             {
+                //si la calificación aún existe se procede a ir a la ágina de mantenimiento
+                //de calificaciones, no sin antes enviar el Id por variable de sesión
                 if (lnC.existe(calificacionId))
                 {
                     Session["_modificarCalificacion"] = calificacionId;
@@ -87,7 +95,8 @@ namespace PresentacionWeb
                 Session["_err"] = ex.Message;
             }
         }
-
+        //si no se desea eliminar o modificar ninguna calificación al 
+        //clickear volver, se vuelve a la página de estudiantes por sección
         protected void btnVolver_Click(object sender, EventArgs e)
         {
             Response.Redirect("wfrListarCalificaciones.aspx", false);

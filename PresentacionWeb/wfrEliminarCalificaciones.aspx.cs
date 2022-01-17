@@ -18,14 +18,20 @@ namespace PresentacionWeb
             if (!IsPostBack)
             {
                 try
-                {
+                {   //se eliminar la calificaciones,
+                    //se cargará esta página de confirmación,
+                    //donde se cargarán todos los datos necesarios para
+                    //un buen reconocimiento de lo que se va a borrar
                     int calificacionId = int.Parse(Session["_eliminarCalificacion"].ToString());
                     ECalificacion cali;
                     cali = lnC.listar(calificacionId);
+                    //se lista la calificación con detalles
+                    //con base a su Id
                     lblFecha.Text += cali.FechaIngreso;
                     lblCalificacion.Text += cali.Calificacion;
                     lblEstado.Text += cali.Estado;
                     lblTrimestre.Text += cali.TrimestreID;
+                    //se lista el nombre del estudiante
                     string nombreEst = lnE.existe(cali.EstudianteID);
                     if (nombreEst != "")
                         lblEstudiante.Text += nombreEst;
@@ -42,7 +48,8 @@ namespace PresentacionWeb
         {
             int calificacionId = int.Parse(Session["_eliminarCalificacion"].ToString());
             try
-            {
+            {   //al confirmar la eliminación se borra y se redirije
+                //a la página de cregistros de calificaciones como tal
                 if (lnC.eliminar(calificacionId))
                 {
                     Session["_exito"] = "Calificación Eliminada con Éxito!";
@@ -58,6 +65,8 @@ namespace PresentacionWeb
 
         protected void btnCancelar_Click(object sender, EventArgs e)
         {
+            //al cancelar la eliminación solo se redirije a los
+            //registros de calificaciones del estudiante
             Response.Redirect("wfrCalificaciones.aspx", false);
         }
     }
