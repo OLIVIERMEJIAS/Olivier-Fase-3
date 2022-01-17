@@ -16,9 +16,30 @@ namespace LogicaNegocio
             CadConexion = "";
         }
 
+
         public LNEstudiante(string cad)
         {
             CadConexion = cad;
+        }
+        /// <summary>
+        /// Lista datos completos de estudiantes por sección 
+        /// devuelve un DataTable con los resultados
+        /// </summary>
+        /// <param name="seccion"></param>
+        /// <param name="datosCompletos"></param>
+        /// <returns></returns>
+        public DataTable listarPorSeccion(string seccion, bool datosCompletos)
+        {
+            ADEstudiante ade = new ADEstudiante(CadConexion);
+            try
+            {
+                return ade.listarPorSeccion(seccion, datosCompletos);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
         /// <summary>
         /// Valida si un estudiante existe en base a su Id,

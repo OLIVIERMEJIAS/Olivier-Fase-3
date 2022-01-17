@@ -128,5 +128,38 @@ namespace AccesoDatos
             
             return datos;
         }
+        /// <summary>
+        /// Lista los datos completos de los estudiantes 
+        /// de una sección, devuelve un DataTable
+        /// </summary>
+        /// <param name="seccion"></param>
+        /// <param name="datosCompletos"></param>
+        /// <returns></returns>
+        public DataTable listarPorSeccion(string seccion, bool datosCompletos)
+        {
+            DataTable datos = new DataTable();
+            SqlDataAdapter adapter;
+            SqlConnection conexion = new SqlConnection(CadConexion);
+            string sentencia = "Select e.estudianteId, e.carnet, e.numIdentificacion as cedula," +
+                " e.nombre + ' ' + e.apellido1 + ' ' + e.apellido2 as nombre, e.email," +
+                "e.genero, e.fechaIngreso, e.fechaNacimiento, d.distrito, " +
+                "e.dirExact, e.activo, e.borrado" +
+                $" From Estudiantes e inner join distritos d On " +
+                $"e.distritoId = d.distritoId Where seccion = '{seccion}'";
+
+
+            try
+            {
+                adapter = new SqlDataAdapter(sentencia, conexion);
+                adapter.Fill(datos);
+
+            }
+            catch (Exception)
+            {
+                throw new Exception("No se pudo realizar búsqueda de estudiantes");
+            }
+
+            return datos;
+        }
     }
 }
