@@ -22,6 +22,48 @@ namespace LogicaNegocio
             CadConexion = cad;
         }
         /// <summary>
+        /// Verifica si una cédula existe
+        /// devuelve un boolean como resultado
+        /// </summary>
+        /// <param name="numIdent"></param>
+        /// <returns></returns>
+        public bool existeCedula(long numIdent)
+        { 
+            ADEstudiante ade = new ADEstudiante(CadConexion);
+            try
+            {
+                return ade.existeCedula(numIdent);
+            }
+            catch (Exception ex)
+            { 
+
+                throw ex;
+            }
+
+        }
+
+        
+
+        /// <summary>
+        /// Verifica si un email existe
+        /// +devuelve un boolean como resultado
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        public bool existeEmail(string email)
+        {
+            ADEstudiante ade = new ADEstudiante(CadConexion);
+            try
+            {
+                return ade.existeEmail(email);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+        /// <summary>
         /// Lista datos completos de estudiantes por sección 
         /// devuelve un DataTable con los resultados
         /// </summary>

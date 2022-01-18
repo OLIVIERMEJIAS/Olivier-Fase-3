@@ -349,5 +349,83 @@ namespace AccesoDatos
             }
             return result;
         }
+        /// <summary>
+        /// Verifica que exista un número de cédula
+        /// devuelve un boolean para confirmar
+        /// </summary>
+        /// <param name="numIdentn"></param>
+        /// <returns></returns>
+        public bool existeCedula(long numIdent)
+        {
+            bool result = false;
+            SqlDataReader reader;
+            EEstudiante est = new EEstudiante();
+            SqlConnection conexion = new SqlConnection(CadConexion);
+            string sentencia = "Select 1 " +
+                "from Estudiantes where numeroIdentificacion = " +
+                $"{numIdent}";
+                
+            SqlCommand comando = new SqlCommand(sentencia, conexion);
+
+            try
+            {
+                conexion.Open();
+                reader = comando.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    result = true;
+                }
+                conexion.Close();
+            }
+            catch (Exception)
+            {
+                conexion.Close();
+                throw new Exception("No se pudo realizar búsqueda de estudiante");
+            }
+            finally
+            {
+                conexion.Dispose();
+                comando.Dispose();
+            }
+            return result;
+        }
+        /// <summary>
+        /// Verifica que un email exista
+        /// devuelve un boolean como resultado
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        public bool existeEmail(string email)
+        {
+            bool result = false;
+            SqlDataReader reader;
+            EEstudiante est = new EEstudiante();
+            SqlConnection conexion = new SqlConnection(CadConexion);
+            string sentencia = "Select 1 " +
+                $"from Estudiantes where email = '{email}'";
+            SqlCommand comando = new SqlCommand(sentencia, conexion);
+
+            try
+            {
+                conexion.Open();
+                reader = comando.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    result = true;
+                }
+                conexion.Close();
+            }
+            catch (Exception)
+            {
+                conexion.Close();
+                throw new Exception("No se pudo realizar búsqueda de estudiante");
+            }
+            finally
+            {
+                conexion.Dispose();
+                comando.Dispose();
+            }
+            return result;
+        }
     }
 }
