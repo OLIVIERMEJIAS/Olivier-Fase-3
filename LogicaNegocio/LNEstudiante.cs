@@ -22,6 +22,26 @@ namespace LogicaNegocio
             CadConexion = cad;
         }
         /// <summary>
+        /// Valida que exista un carnet de estudiante
+        /// devuelve un boolean de resultado
+        /// </summary>
+        /// <param name="car"></param>
+        /// <returns></returns>
+        public bool existeCarnet(string car)
+        {
+            ADEstudiante ade = new ADEstudiante(CadConexion);
+
+            try
+            {
+                return ade.existeCarnet(car);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+        /// <summary>
         /// Verifica si una cédula existe
         /// devuelve un boolean como resultado
         /// </summary>

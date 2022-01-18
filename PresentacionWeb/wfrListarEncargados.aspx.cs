@@ -15,10 +15,29 @@ namespace PresentacionWeb
         {
             if (!IsPostBack)
             {
-                cargarEncargados();
+                if (Session["_estudianteId"] != null)
+                {
+                    int estuId = int.Parse(Session["_estudianteId"].ToString());
+                    cargarEncargadosPorEstudiante(estuId);
+                }
+                else
+                    cargarEncargados();
+                   
             }
         }
+        protected void cargarEncargadosPorEstudiante(int estuId)
+        {
+            try
+            {
+                gdvEncargados.DataSource = lnE.listarPorEstudiante(estuId);
+                gdvEncargados.DataBind();
+            }
+            catch (Exception ex)
+            {
 
+                Session["err"] = ex.Message;
+            }
+        }
         protected void cargarEncargados(string condicion = "")
         {
             try

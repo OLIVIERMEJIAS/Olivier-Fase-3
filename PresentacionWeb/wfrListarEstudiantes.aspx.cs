@@ -84,7 +84,7 @@ namespace PresentacionWeb
                 if(lnE.existe($"estudianteId = {estId}"))
                 {
                     Session["_eliminarEstudiante"] = e.CommandArgument.ToString();
-                    Response.Redirect("wfrEliminarEstudiante", false);
+                    Response.Redirect("wfrEliminarEstudiante.aspx", false);
                 }
                 else
                     Session["_err"] = "Ya no existe este estudiante";
@@ -110,7 +110,7 @@ namespace PresentacionWeb
                 if (lnE.existe($"estudianteId = {estId}"))
                 {
                     Session["_modificarEstudiante"] = e.CommandArgument.ToString();
-                    Response.Redirect("wfrNuevoEstudiante", false);
+                    Response.Redirect("wfrNuevoEstudiante.aspx", false);
                 }
                 else
                     Session["_err"] = "Ya no existe este estudiante";
@@ -129,7 +129,16 @@ namespace PresentacionWeb
         protected void lnkVerEncargados_Command(object sender, CommandEventArgs e)
         {
             Session["_estudianteId"] = e.CommandArgument.ToString();
-            Response.Redirect("wfrListarEncargados");
+            Response.Redirect("wfrListarEncargados.aspx",false);
+        }
+        /// <summary>
+        /// Enviar a la página de nuevo estudiante
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void btnNuevo_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("wfrNuevoEstudiante.aspx", false);
         }
     }
 }

@@ -20,6 +20,26 @@ namespace LogicaNegocio
             CadConexion = cad;
         }
         /// <summary>
+        /// Lista encargados por estudiante,
+        /// devuelve un DataTable
+        /// </summary>
+        /// <param name="estuId"></param>
+        /// <returns></returns>
+        public DataTable listarPorEstudiante(int estuId)
+        {
+            ADEncargado ade = new ADEncargado(CadConexion);
+
+            try
+            {
+                return ade.listarPorEstudiante(estuId);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex; 
+            }
+        }
+        /// <summary>
         /// Listar los encargados con datos completos
         /// devuelve un DataTable
         /// </summary>

@@ -23,6 +23,9 @@
         </div>
     </div>
     <br />
+    <div class="container" style="width: fit-content">
+        <asp:Button ID="btnNuevo" runat="server" Text="Nuevo Estudiante" OnClick="btnNuevo_Click" />
+    </div>
     <br />
     <div class="container">
         <asp:GridView ID="gdvEstudiantes" runat="server" AutoGenerateColumns="False" BackColor="White" BorderColor="#999999" BorderStyle="None" BorderWidth="1px" CellPadding="3" Width="100%" GridLines="Vertical">

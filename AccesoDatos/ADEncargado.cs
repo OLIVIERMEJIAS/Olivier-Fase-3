@@ -34,10 +34,43 @@ namespace AccesoDatos
                 " e.nombre + ' ' + e.apellido1 + ' ' + e.apellido2 as nombre, e.email," +
                 "e.genero, e.fechaIngreso, e.fechaNacimiento, d.distrito, e.activo, e.borrado" +
                 $" From Encargados e inner join distritos d On " +
-                "e.distritoId = d.distritoId'";
+                "e.distritoId = d.distritoId";
             if (condicion != "")
                 sentencia = $"{sentencia} where e.nombre like '%{condicion}%'"; 
 
+            try
+            {
+                adapter = new SqlDataAdapter(sentencia, conexion);
+                adapter.Fill(datos);
+
+            }
+            catch (Exception)
+            {
+                throw new Exception("No se pudo realizar búsqueda de estudiantes");
+            }
+
+            return datos;
+        }
+        /// <summary>
+        /// Lista encargados por estudiante,
+        /// devuelve un DataTable
+        /// </summary>
+        /// <param name="estuId"></param>
+        /// <returns></returns>
+        public DataTable listarPorEstudiante(int estuId)
+        {
+            DataTable datos = new DataTable();
+            SqlDataAdapter adapter;
+            SqlConnection conexion = new SqlConnection(CadConexion);
+            string sentencia = "Select e.encargadoId, e.numIdentificacion as cedula," +
+                " e.nombre + ' ' + e.apellido1 + ' ' + e.apellido2 as nombre, e.email," +
+                "e.genero, e.fechaIngreso, e.fechaNacimiento, d.distrito, e.activo, e.borrado" +
+                $" From Encargados e inner join distritos d On " +
+                "e.distritoId = d.distritoId" +
+                " inner join EncargadosEstudiantes ee" +
+                " on ee.encargadoId = e.encargadoId" +
+                $" where ee.estudianteId = {estuId}";
+            
             try
             {
                 adapter = new SqlDataAdapter(sentencia, conexion);

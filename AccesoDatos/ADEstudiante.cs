@@ -172,15 +172,16 @@ namespace AccesoDatos
             EEstudiante est = new EEstudiante();
             SqlDataReader reader;
             SqlConnection conexion = new SqlConnection(CadConexion);
-            string sentencia = "Select estudianteId, carnet, numIdentificacion" +
+            string sentencia = "Select estudianteId, carnet, numIdentificacion, " +
                 " seccion, nombre, apellido1, apellido2, email," +
                 "genero, fechaIngreso, fechaNacimiento, distritoId, " +
                 "dirExact, activo, borrado" +
-                $" From Estudiantes Where estudianteId = '{estId}'";
+                $" From Estudiantes Where estudianteId = {estId}";
             SqlCommand comando = new SqlCommand(sentencia, conexion);
 
             try
             {
+                conexion.Open();
                 reader = comando.ExecuteReader();
                 if (reader.HasRows)
                 {
@@ -194,18 +195,25 @@ namespace AccesoDatos
                     est.Apellido2 = reader.GetString(6);
                     est.Email = reader.GetString(7);
                     est.Genero = reader.GetChar(8);
-                    est.FechaIngreso = reader.GetDateTime(9);
-                    est.FechaNacimiento = reader.GetDateTime(10);
+                    est.FechaIngreso = reader.GetDateTime(9).Date;
+                    est.FechaNacimiento = reader.GetDateTime(10).Date;
                     est.Distrito = reader.GetInt32(11);
                     est.DirExact = reader.GetString(12);
                     est.Activo = reader.GetBoolean(13);
                     est.Borrado = reader.GetBoolean(14);
                 }
-
+                conexion.Close();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw new Exception("No se pudo realizar búsqueda de estudiantes");
+                conexion.Close();
+                throw ex;
+                //throw new Exception("No se pudo realizar búsqueda de estudiantes");
+            }
+            finally
+            {
+                conexion.Dispose();
+                comando.Dispose();
             }
 
             return est;
@@ -271,7 +279,7 @@ namespace AccesoDatos
             bool result = false;
             SqlConnection conexion = new SqlConnection(CadConexion);
             string sentencia = "Update Estudiantes " +
-                "Set carnet = @carnet, numeroIdentificacion = @numIdent, " +
+                "Set carnet = @carnet, numIdentificacion = @numIdent, " +
                 "seccion = @seccion, nombre = @nombre," +
                 "@apellido1 = ape1, apellido2 = @ape2, " +
                 "email = @email, fechaIngreso = @fechaIngreso, " +
@@ -362,9 +370,49 @@ namespace AccesoDatos
             EEstudiante est = new EEstudiante();
             SqlConnection conexion = new SqlConnection(CadConexion);
             string sentencia = "Select 1 " +
-                "from Estudiantes where numeroIdentificacion = " +
+                "from Estudiantes where numIdentificacion = " +
                 $"{numIdent}";
                 
+            SqlCommand comando = new SqlCommand(sentencia, conexion);
+
+            try
+            {
+                conexion.Open();
+                reader = comando.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    result = true;
+                }
+                conexion.Close();
+            }
+            catch (Exception)
+            {
+                conexion.Close();
+                throw new Exception("No se pudo realizar búsqueda de estudiante");
+            }
+            finally
+            {
+                conexion.Dispose();
+                comando.Dispose();
+            }
+            return result;
+        }
+        /// <summary>
+        /// Verifica la existe del carnet de estudiante
+        /// devuelve un boolean de confirmación
+        /// </summary>
+        /// <param name="car"></param>
+        /// <returns></returns>
+        public bool existeCarnet(string car)
+        {
+            bool result = false;
+            SqlDataReader reader;
+            EEstudiante est = new EEstudiante();
+            SqlConnection conexion = new SqlConnection(CadConexion);
+            string sentencia = "Select 1 " +
+                "from Estudiantes where carnet = " +
+                $"{car}";
+
             SqlCommand comando = new SqlCommand(sentencia, conexion);
 
             try
