@@ -76,6 +76,8 @@
     <Content Include="wfrCalificaciones.aspx" />
     <Content Include="wfrEliminarAsistencia.aspx" />
     <Content Include="wfrEliminarCalificaciones.aspx" />
+    <Content Include="wfrEliminarEncargado.aspx" />
+    <Content Include="wfrEliminarEstudiante.aspx" />
     <Content Include="wfrEncargados.aspx" />
     <Content Include="wfrEstudiantes.aspx" />
     <Content Include="wfrHorarios.aspx" />
@@ -88,6 +90,7 @@
     <Content Include="wfrListarProfesores.aspx" />
     <Content Include="wfrNuevaAsistencia.aspx" />
     <Content Include="wfrNuevaCalificaciones.aspx" />
+    <Content Include="wfrNuevoEstudiante.aspx" />
     <Content Include="wfrPermiso.aspx" />
     <Content Include="wfrProfesores.aspx" />
     <Content Include="wfrSesion.aspx" />
@@ -129,6 +132,20 @@
     </Compile>
     <Compile Include="wfrEliminarCalificaciones.aspx.designer.cs">
       <DependentUpon>wfrEliminarCalificaciones.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="wfrEliminarEncargado.aspx.cs">
+      <DependentUpon>wfrEliminarEncargado.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="wfrEliminarEncargado.aspx.designer.cs">
+      <DependentUpon>wfrEliminarEncargado.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="wfrEliminarEstudiante.aspx.cs">
+      <DependentUpon>wfrEliminarEstudiante.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="wfrEliminarEstudiante.aspx.designer.cs">
+      <DependentUpon>wfrEliminarEstudiante.aspx</DependentUpon>
     </Compile>
     <Compile Include="wfrEncargados.aspx.cs">
       <DependentUpon>wfrEncargados.aspx</DependentUpon>
@@ -213,6 +230,13 @@
     </Compile>
     <Compile Include="wfrNuevaCalificaciones.aspx.designer.cs">
       <DependentUpon>wfrNuevaCalificaciones.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="wfrNuevoEstudiante.aspx.cs">
+      <DependentUpon>wfrNuevoEstudiante.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="wfrNuevoEstudiante.aspx.designer.cs">
+      <DependentUpon>wfrNuevoEstudiante.aspx</DependentUpon>
     </Compile>
     <Compile Include="wfrPermiso.aspx.cs">
       <DependentUpon>wfrPermiso.aspx</DependentUpon>

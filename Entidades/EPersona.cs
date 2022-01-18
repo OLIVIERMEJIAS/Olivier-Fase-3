@@ -15,7 +15,7 @@ namespace Entidades
         public string Email { get; set; }
         public DateTime FechaIngreso { get; set; }
         public DateTime FechaNacimiento { get; set; }
-        public ushort Distrito { get; set; }
+        public int Distrito { get; set; }
         public string DirExact { get; set; }
         public bool Activo { get; set; }
         public bool Borrado { get; set; }
@@ -39,7 +39,7 @@ namespace Entidades
 
         public EPersona(int id, int ident, string nom,
             string ape1, string ape2, char gen, string email,
-            DateTime fechIng, DateTime fechNac, ushort dist,
+            DateTime fechIng, DateTime fechNac, int dist,
             string dirExact, bool act, bool bor)
         {
             PersonaId = id;

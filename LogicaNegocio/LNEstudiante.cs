@@ -99,5 +99,84 @@ namespace LogicaNegocio
                 throw ex;
             }
         }
+        /// <summary>
+        /// Lista todos los detalles de un estudiante,
+        /// basado en su Id, devuelve un objeto EEstudiante
+        /// </summary>
+        /// <param name="estId"></param>
+        /// <returns></returns>
+        public EEstudiante listarDetallesPorEstudiante(int estId)
+        {
+            ADEstudiante ade = new ADEstudiante(CadConexion);
+            try
+            {
+                return ade.listarDetallesPorEstudiante(estId);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex; 
+            }
+        }
+        /// <summary>
+        /// Inserta un registro de estudiante, basado en un objeto EEstudiante
+        /// devuelve un boolean de confirmación
+        /// </summary>
+        /// <param name="est"></param>
+        /// <returns></returns>
+        public bool agregar(EEstudiante est)
+        {
+            ADEstudiante ade = new ADEstudiante(CadConexion);
+
+            try
+            {
+                return ade.agregar(est);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+        /// <summary>
+        /// Actualiza un registro de estudiante, basado en un 
+        /// objeto EEstudiante, devuelve un boolean de confirmación
+        /// </summary>
+        /// <param name="est"></param>
+        /// <returns></returns>
+        public bool actualizar(EEstudiante est)
+        {
+            ADEstudiante ade = new ADEstudiante(CadConexion);
+
+            try
+            {
+                return ade.actualizar(est);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+        /// <summary>
+        /// Elimina un registro de estudiante,
+        /// basado en su Id, devuelve un boolean confirmando
+        /// </summary>
+        /// <param name="estId"></param>
+        /// <returns></returns>
+        public bool eliminar(int estId)
+        {
+            ADEstudiante ade = new ADEstudiante(CadConexion);
+
+            try
+            {
+                return ade.eliminar(estId);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
     }
 }

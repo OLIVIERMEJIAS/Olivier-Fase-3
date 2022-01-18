@@ -25,9 +25,25 @@
     <br />
     <br />
     <div class="container">
-        <asp:GridView ID="gdvEstudiantes" runat="server" AutoGenerateColumns="False" BackColor="#DEBA84" BorderColor="#DEBA84" BorderStyle="None" BorderWidth="1px" CellPadding="3" Width="100%" CellSpacing="2">
+        <asp:GridView ID="gdvEstudiantes" runat="server" AutoGenerateColumns="False" BackColor="White" BorderColor="#999999" BorderStyle="None" BorderWidth="1px" CellPadding="3" Width="100%" GridLines="Vertical">
+            <AlternatingRowStyle BackColor="#DCDCDC" />
             <Columns>
                 
+                <asp:TemplateField>
+                    <ItemTemplate>
+                        <asp:LinkButton ID="lnkEliminar" runat="server" CommandArgument='<%# Eval("estudianteId").ToString() %>' ForeColor="Red">Eliminar</asp:LinkButton>
+                    </ItemTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField>
+                    <ItemTemplate>
+                        <asp:LinkButton ID="lnkModificar" runat="server" CommandArgument='<%# Eval("estudianteId").ToString() %>' ForeColor="Green">Modificar</asp:LinkButton>
+                    </ItemTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField>
+                    <ItemTemplate>
+                        <asp:LinkButton ID="lnkVerEncargados" runat="server" CommandArgument='<%# Eval("estudianteId").ToString() %>' ForeColor="Blue">Ver Encargados</asp:LinkButton>
+                    </ItemTemplate>
+                </asp:TemplateField>
                 <asp:BoundField DataField="estudianteId" HeaderText="Estudiante Id" Visible="False" />
                 <asp:BoundField DataField="carnet" HeaderText="Cárnet" />
                 <asp:BoundField DataField="cedula" HeaderText="Cédula" />
@@ -40,15 +56,15 @@
                 <asp:CheckBoxField DataField="activo" HeaderText="Activo" ReadOnly="True" />
                 <asp:CheckBoxField DataField="borrado" HeaderText="Borrado" ReadOnly="True" />
             </Columns>
-            <FooterStyle BackColor="#F7DFB5" ForeColor="#8C4510" />
-            <HeaderStyle BackColor="#A55129" Font-Bold="True" ForeColor="White" />
-            <PagerStyle ForeColor="#8C4510" HorizontalAlign="Center" />
-            <RowStyle BackColor="#FFF7E7" ForeColor="#8C4510" />
-            <SelectedRowStyle BackColor="#738A9C" Font-Bold="True" ForeColor="White" />
-            <SortedAscendingCellStyle BackColor="#FFF1D4" />
-            <SortedAscendingHeaderStyle BackColor="#B95C30" />
-            <SortedDescendingCellStyle BackColor="#F1E5CE" />
-            <SortedDescendingHeaderStyle BackColor="#93451F" />
+            <FooterStyle BackColor="#CCCCCC" ForeColor="Black" />
+            <HeaderStyle BackColor="#000084" Font-Bold="True" ForeColor="White" />
+            <PagerStyle ForeColor="Black" HorizontalAlign="Center" BackColor="#999999" />
+            <RowStyle BackColor="#EEEEEE" ForeColor="Black" />
+            <SelectedRowStyle BackColor="#008A8C" Font-Bold="True" ForeColor="White" />
+            <SortedAscendingCellStyle BackColor="#F1F1F1" />
+            <SortedAscendingHeaderStyle BackColor="#0000A9" />
+            <SortedDescendingCellStyle BackColor="#CAC9C9" />
+            <SortedDescendingHeaderStyle BackColor="#000065" />
         </asp:GridView>
     </div>
 
@@ -59,11 +75,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Buscar Sección</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <div class="row mt-3">
+            <h5 class="modal-title">Buscar Secciónow mt-3"</h5>
                 <div class="col-auto">
                     <asp:Label ID="Label5" runat="server" Text="Sección"></asp:Label>
                 </div>
@@ -95,5 +107,5 @@
           </div>
         </div>
       </div>
-    </div>
+    
 </asp:Content>

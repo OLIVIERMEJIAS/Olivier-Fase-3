@@ -7,7 +7,7 @@ using System.Data;
 
 namespace AccesoDatos
 {
-   public class ADEstudiante
+    public class ADEstudiante
     {
         public string CadConexion { get; set; }
 
@@ -36,12 +36,12 @@ namespace AccesoDatos
                 "from Estudiantes where " +
                 condicion;
             SqlCommand comando = new SqlCommand(sentencia, conexion);
-         
+
             try
             {
                 conexion.Open();
                 reader = comando.ExecuteReader();
-                if(reader.HasRows)
+                if (reader.HasRows)
                 {
                     result = true;
                 }
@@ -73,7 +73,7 @@ namespace AccesoDatos
             SqlConnection conexion = new SqlConnection(CadConexion);
             string sentencia = "Select nombre + ' ' + apellido1 + ' ' + apellido2 as nombre " +
                 $"from Estudiantes where estudianteId = {estudianteId}";
-                
+
             SqlCommand comando = new SqlCommand(sentencia, conexion);
 
             try
@@ -113,19 +113,19 @@ namespace AccesoDatos
             string sentencia = "Select estudianteId, carnet, numIdentificacion as cedula," +
                 " nombre + ' ' + apellido1 + ' ' + apellido2 as nombre, email" +
                 $" From Estudiantes Where seccion = '{seccion}'";
-           
+
 
             try
             {
                 adapter = new SqlDataAdapter(sentencia, conexion);
                 adapter.Fill(datos);
-                
+
             }
             catch (Exception)
             {
                 throw new Exception("No se pudo realizar búsqueda de estudiantes");
             }
-            
+
             return datos;
         }
         /// <summary>
@@ -160,6 +160,194 @@ namespace AccesoDatos
             }
 
             return datos;
+        }
+        /// <summary>
+        /// Lista todos los detalles de un estudiante,
+        /// basado en el Id, devuelve un objeto EEstudiante
+        /// </summary>
+        /// <param name="estId"></param>
+        /// <returns></returns>
+        public EEstudiante listarDetallesPorEstudiante(int estId)
+        {
+            EEstudiante est = new EEstudiante();
+            SqlDataReader reader;
+            SqlConnection conexion = new SqlConnection(CadConexion);
+            string sentencia = "Select estudianteId, carnet, numIdentificacion" +
+                " seccion, nombre, apellido1, apellido2, email," +
+                "genero, fechaIngreso, fechaNacimiento, distritoId, " +
+                "dirExact, activo, borrado" +
+                $" From Estudiantes Where estudianteId = '{estId}'";
+            SqlCommand comando = new SqlCommand(sentencia, conexion);
+
+            try
+            {
+                reader = comando.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    reader.Read();
+                    est.Id = reader.GetInt32(0);
+                    est.Carnet = reader.GetString(1);
+                    est.NumIdentificacion = reader.GetInt64(2);
+                    est.Seccion = reader.GetString(3);
+                    est.Nombre = reader.GetString(4);
+                    est.Apellido1 = reader.GetString(5);
+                    est.Apellido2 = reader.GetString(6);
+                    est.Email = reader.GetString(7);
+                    est.Genero = reader.GetChar(8);
+                    est.FechaIngreso = reader.GetDateTime(9);
+                    est.FechaNacimiento = reader.GetDateTime(10);
+                    est.Distrito = reader.GetInt32(11);
+                    est.DirExact = reader.GetString(12);
+                    est.Activo = reader.GetBoolean(13);
+                    est.Borrado = reader.GetBoolean(14);
+                }
+
+            }
+            catch (Exception)
+            {
+                throw new Exception("No se pudo realizar búsqueda de estudiantes");
+            }
+
+            return est;
+        }
+        /// <summary>
+        /// Inserta un estudiante basado en un objeto tipo EEstudiante, devuelve
+        /// un boolean de confirmación
+        /// </summary>
+        /// <param name="est"></param>
+        /// <returns></returns>
+        public bool agregar(EEstudiante est)
+        {
+            bool result = false;
+            SqlConnection conexion = new SqlConnection(CadConexion);
+            string sentencia = "Insert Into Estudiantes " +
+                "Values(@carnet, @numIdent, @seccion, @nombre," +
+                "@ape1, @ape2, @email, @fechaIngreso, @fechaNacimiento," +
+                "@distId, @dirExact, @activo, @borrado";
+            SqlCommand comando = new SqlCommand(sentencia, conexion);
+            comando.Parameters.AddWithValue("@carnet", est.Carnet);
+            comando.Parameters.AddWithValue("@numIdent", est.NumIdentificacion);
+            comando.Parameters.AddWithValue("@seccion", est.Seccion);
+            comando.Parameters.AddWithValue("@nombre", est.Nombre);
+            comando.Parameters.AddWithValue("@ape1", est.Apellido1);
+            comando.Parameters.AddWithValue("@ape2", est.Apellido2);
+            comando.Parameters.AddWithValue("@email", est.Email);
+            comando.Parameters.AddWithValue("@fechaIngreso", est.FechaIngreso);
+            comando.Parameters.AddWithValue("@fechaNacimiento", est.FechaNacimiento);
+            comando.Parameters.AddWithValue("@distId", est.Distrito);
+            comando.Parameters.AddWithValue("@dirExact", est.DirExact);
+            comando.Parameters.AddWithValue("@activo", est.Activo);
+            comando.Parameters.AddWithValue("@borrado", est.Borrado);
+
+            try
+            {
+                conexion.Open();
+                if (comando.ExecuteNonQuery() != 0)
+                {
+                    result = true;
+                }
+
+            }
+            catch (Exception)
+            {
+                conexion.Close();
+                throw new Exception("No se pudo realizar conexión de datos");
+            }
+            finally
+            {
+                conexion.Dispose();
+                comando.Dispose();
+            }
+            return result;
+        }
+        /// <summary>
+        /// Actualiza un estudiante basado en un objeto EEstudiante
+        /// devuelve un boolean como confirmación
+        /// </summary>
+        /// <param name="est"></param>
+        /// <returns></returns>
+        public bool actualizar(EEstudiante est)
+        {
+            bool result = false;
+            SqlConnection conexion = new SqlConnection(CadConexion);
+            string sentencia = "Update Estudiantes " +
+                "Set carnet = @carnet, numeroIdentificacion = @numIdent, " +
+                "seccion = @seccion, nombre = @nombre," +
+                "@apellido1 = ape1, apellido2 = @ape2, " +
+                "email = @email, fechaIngreso = @fechaIngreso, " +
+                "fechaNacimiento = @fechaNacimiento," +
+                "distritoId = @distId, dirExact = @dirExact, " +
+                "activo = @activo, borrado = @borrado" +
+                 $" Where estudianteId = {est.Id}";
+            SqlCommand comando = new SqlCommand(sentencia, conexion);
+            comando.Parameters.AddWithValue("@carnet", est.Carnet);
+            comando.Parameters.AddWithValue("@numIdent", est.NumIdentificacion);
+            comando.Parameters.AddWithValue("@seccion", est.Seccion);
+            comando.Parameters.AddWithValue("@nombre", est.Nombre);
+            comando.Parameters.AddWithValue("@ape1", est.Apellido1);
+            comando.Parameters.AddWithValue("@ape2", est.Apellido2);
+            comando.Parameters.AddWithValue("@email", est.Email);
+            comando.Parameters.AddWithValue("@fechaIngreso", est.FechaIngreso);
+            comando.Parameters.AddWithValue("@fechaNacimiento", est.FechaNacimiento);
+            comando.Parameters.AddWithValue("@distId", est.Distrito);
+            comando.Parameters.AddWithValue("@dirExact", est.DirExact);
+            comando.Parameters.AddWithValue("@activo", est.Activo);
+            comando.Parameters.AddWithValue("@borrado", est.Borrado);
+
+            try
+            {
+                conexion.Open();
+                if (comando.ExecuteNonQuery() != 0)
+                {
+                    result = true;
+                }
+
+            }
+            catch (Exception)
+            {
+                conexion.Close();
+                throw new Exception("No se pudo realizar conexión de datos");
+            }
+            finally
+            {
+                conexion.Dispose();
+                comando.Dispose();
+            }
+            return result;
+        }
+        /// <summary>
+        /// Se elimina un estudiante basado en su número de Id
+        /// devuelve un boolean confirmando
+        /// </summary>
+        /// <param name="estId"></param>
+        /// <returns></returns>
+        public bool eliminar(int estId)
+        {
+            bool result = false;
+            SqlConnection conexion = new SqlConnection(CadConexion);
+            string sentencia = "Delete from Estudiantes" +
+                $" Where estudianteId = {estId}";
+            SqlCommand comando = new SqlCommand(sentencia, conexion);
+            try
+            {
+                conexion.Open();
+                if (comando.ExecuteNonQuery() != 0)
+                {
+                    result = true;
+                }
+
+            }
+            catch (Exception)
+            {
+                conexion.Close();
+                throw new Exception("No se pudo realizar conexión de datos");
+            }
+            finally
+            {
+                conexion.Dispose();
+                comando.Dispose();
+            }
+            return result;
         }
     }
 }
