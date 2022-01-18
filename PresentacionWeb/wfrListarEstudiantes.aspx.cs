@@ -70,7 +70,66 @@ namespace PresentacionWeb
         {
             cargarEstudiantes(e.CommandArgument.ToString());
         }
+        /// <summary>
+        /// Envía a la página de eliminación, 
+        /// no sin antes verificar que exista aún el estudiante
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void lnkEliminar_Command(object sender, CommandEventArgs e)
+        {
+            int estId = int.Parse(e.CommandArgument.ToString());
+            try
+            {
+                if(lnE.existe($"estudianteId = {estId}"))
+                {
+                    Session["_eliminarEstudiante"] = e.CommandArgument.ToString();
+                    Response.Redirect("wfrEliminarEstudiante", false);
+                }
+                else
+                    Session["_err"] = "Ya no existe este estudiante";
+            
+            }
+            catch (Exception ex)
+            {
 
-        
+                Session["_err"] = ex.Message;
+            }
+        }
+        /// <summary>
+        /// Envía a la página de mantenimiento de Estudiantes
+        /// primero vefica que exista el estudiante
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void lnkModificar_Command(object sender, CommandEventArgs e)
+        {
+            int estId = int.Parse(e.CommandArgument.ToString());
+            try
+            {
+                if (lnE.existe($"estudianteId = {estId}"))
+                {
+                    Session["_modificarEstudiante"] = e.CommandArgument.ToString();
+                    Response.Redirect("wfrNuevoEstudiante", false);
+                }
+                else
+                    Session["_err"] = "Ya no existe este estudiante";
+            }
+            catch (Exception ex)
+            {
+
+                Session["_err"] = ex.Message;
+            }
+        }
+        /// <summary>
+        /// Envía a la página de encargados
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void lnkVerEncargados_Command(object sender, CommandEventArgs e)
+        {
+            Session["_estudianteId"] = e.CommandArgument.ToString();
+            Response.Redirect("wfrListarEncargados");
+        }
     }
 }

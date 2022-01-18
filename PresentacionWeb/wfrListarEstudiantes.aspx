@@ -31,17 +31,17 @@
                 
                 <asp:TemplateField>
                     <ItemTemplate>
-                        <asp:LinkButton ID="lnkEliminar" runat="server" CommandArgument='<%# Eval("estudianteId").ToString() %>' ForeColor="Red">Eliminar</asp:LinkButton>
+                        <asp:LinkButton ID="lnkEliminar" runat="server" CommandArgument='<%# Eval("estudianteId").ToString() %>' ForeColor="Red" OnCommand="lnkEliminar_Command">Eliminar</asp:LinkButton>
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField>
                     <ItemTemplate>
-                        <asp:LinkButton ID="lnkModificar" runat="server" CommandArgument='<%# Eval("estudianteId").ToString() %>' ForeColor="Green">Modificar</asp:LinkButton>
+                        <asp:LinkButton ID="lnkModificar" runat="server" CommandArgument='<%# Eval("estudianteId").ToString() %>' ForeColor="Green" OnCommand="lnkModificar_Command">Modificar</asp:LinkButton>
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField>
                     <ItemTemplate>
-                        <asp:LinkButton ID="lnkVerEncargados" runat="server" CommandArgument='<%# Eval("estudianteId").ToString() %>' ForeColor="Blue">Ver Encargados</asp:LinkButton>
+                        <asp:LinkButton ID="lnkVerEncargados" runat="server" CommandArgument='<%# Eval("estudianteId").ToString() %>' ForeColor="Blue" OnCommand="lnkVerEncargados_Command">Ver Encargados</asp:LinkButton>
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:BoundField DataField="estudianteId" HeaderText="Estudiante Id" Visible="False" />
