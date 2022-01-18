@@ -1134,7 +1134,9 @@ namespace PresentacionWeb
                 if (limInfAula == 9 || limInfAula == 11)
                 {
                     horFAula1Otros = disponible;
-                    //solo en la primera ronda se guarda el primer 
+                    //solo en la primera ronda se guarda el día general
+                    //ya que este es el que se usará en la primera vez de la segunda
+                    //ronda
                     if(primeraRondaAulas)
                         diaAula1Otros = dia;
                     //el dia se vuelve a reasignar para cuando se haya dispobilidad en un aula
@@ -1207,7 +1209,9 @@ namespace PresentacionWeb
 
             
         }
-
+        //Este es el método que asigna o reinciar a los profesores
+        //desde el primer profesor que imparte la materia
+        //asigna que hay segundo profesor según materia
         private void asignaciondeProfe(byte materia, ref bool haySegundProf,
             ref int profeId, ref bool segundoProfe, ref bool usoDeTercerProfe, ref bool
             hayTresProfes)
@@ -1230,7 +1234,8 @@ namespace PresentacionWeb
             }
 
         }
-
+        //aquí se asignan las horas en las variables string
+        //según los índices de horas
         private void asignarHoras(int iHoraI, int iHoraF,
             ref string horI, ref string horF,
             string[] horasInicio,
@@ -1260,7 +1265,8 @@ namespace PresentacionWeb
             else
                 horF = horasFin[iHoraF];
         }
-
+        //Aquí se fijan los límites de las aulas desde el principio,
+        //desde la primera aula disponible
         private void fijarLimitesAulas(ref byte limInfAula,
             ref byte limSupAula, byte materia, ref bool aulas2, ref bool aulas8)
         {
@@ -1283,7 +1289,9 @@ namespace PresentacionWeb
                 aulas8 = true;
             }
         }
-
+        ///Este método usa el método buscarIndiceHoraFinal
+        //y la valoración de su se trabaja o está involucrada
+        //la materia de educación financiera
         private void valorarHorasYAvanzar(string disponible, string[] horasFinEduFinan,
             string[] horasFin, ref int iHoraI, ref int iHoraF, ref byte dia,
                 ref char diaSem, char[] dias, bool evalAulas, bool evalProfe, ref byte limInfAula,
@@ -1312,7 +1320,14 @@ namespace PresentacionWeb
                 ref usoDeTercerProfe, ref reiniciarAulas,
                  ref primeraRondaProfesores, ref primeraRondaAulas, ref aulas2, ref aulas8);
         }
-
+        //aquí se avanzan las horas de inicio y fin
+        //segun las materias,
+        //se busca la horaFinal que se ingrese y se busca
+        //en el arreglo de horas finales y
+        //según las lecciones seguidas que se quieran dar
+        //se moveran específicamente
+        //si lel índice de las horas se sale de los arreglos de horas, se reinican a cero
+        //y pasa al siguiente día
         private void avanzarHoras(string[] horasFin, byte materia, ref int iHoraI,
             ref int iHoraF, string horaFinal, ref byte dia, ref char diaSem, char[] dias)
         {
@@ -1342,7 +1357,10 @@ namespace PresentacionWeb
                 }
             }
         }
-
+        //este método se encarga de moverse a través de las aulas y
+        //los profesores, de ir avanzando o sumando a los Id,
+        //ya que en la base de datos están en orden
+        //se va moviendo hacia adelante
         private void buscarIndiceHoraFinal(string horaFinal, string[] horasFin
             , byte materia, ref int iHoraI, ref int iHoraF, ref byte dia, ref char diaSem, char[] dias,
             bool evalAulas, bool evalProfe, ref byte limInfAula, ref byte limSupAula,
@@ -1350,20 +1368,33 @@ namespace PresentacionWeb
             ref bool usoDeTercerProfe, ref bool reiniciarAulas,
             ref bool primeraRondaProfesores, ref bool primeraRondaAulas, ref bool aulas2, ref bool aulas8)
         {
-
+            //esta evalucación se refiere a cuando se trata de aulas
             if (evalAulas && !evalProfe)
             {
+                //cuando el límite menos no ha alcanzado el mayor
+                //las aulas siguen hacia adelante
                 if (limInfAula != limSupAula)
                 {
                     limInfAula++;
+                    //si no es la primera ronda se avanzan horas
+                    //en la primera ronda no es preciso puesto que las mismas
+                    //se deben analizar las mismas variables en las aulas
                     if (!primeraRondaAulas)
                         avanzarHoras(horasFin, materia, ref iHoraI,
                         ref iHoraF, horaFinal, ref dia, ref diaSem, dias);
+                    //la primera ronda de aulas se reinicia
+                    //debido auqe las variantes de horas y días deben 
+                    //se consultadas a todos los profesores como tal
                     primeraRondaProfesores = true; 
+
+
                 }
 
                 else
-                {
+                {//cuando ya se llegó a la última aula se vuelve 
+                    //al inicio
+                    //se reiniciar las rondas
+                    //y se avanzan las horas y el día de ser necesario
                     primeraRondaProfesores = true;
                     primeraRondaAulas = false;
                     fijarLimitesAulas(ref limInfAula, ref limSupAula, materia,
@@ -1374,13 +1405,25 @@ namespace PresentacionWeb
                 }
 
             }
+            //cuando es la valoración de profesores
             else if (!evalAulas && evalProfe)
             {
+                //cuando hay segundo profesor y no se ha usado
+                //se pasa al siguente y se falsea la variable
+                //segundoProfe para que no se reinicen
+                //los profesores después en el método de
+                //arriba de asignar profesores
                 if (haySegundProf && !segundoProfe)
                 {
                     profeId++;
                     segundoProfe = true;
+                    //al cambiar de profesor, se reinica la ronda de las aulas
+                    //ya que es nuevo ahorario de profesor
+                    //debe poder consultar en todos las aulas por igual
                     primeraRondaAulas = true;
+                    //si no es la primera ronda no se vanzan horas, 
+                    //ya que se necesita uniformidad en las consultas de disponibilidad
+
                     if(!primeraRondaProfesores)
                     {
                         avanzarHoras(horasFin, materia, ref iHoraI,
@@ -1388,14 +1431,22 @@ namespace PresentacionWeb
                         reiniciarAulas = true;
                     }
                 }
+                //cuando el segundo profe está en uso
                 else if(haySegundProf && segundoProfe)
                 {
+                    //se pregunta si hay un tercer profesor
+                    //en uso si es la materia de inglés
                     if (materia == 1 && !usoDeTercerProfe)
                     {
+                        //se avanza al tercer profesor
+                        //variable importantes se reasignan
                         profeId++;
                         usoDeTercerProfe = true;
                         segundoProfe = true;
                         primeraRondaAulas = true;
+                        //si no es primera ronda se avanzar las horas
+                        // y de serlo se consulta disponiblidad de forma
+                       //uniforme
                         if (!primeraRondaProfesores)
                         {
                             avanzarHoras(horasFin, materia, ref iHoraI,
@@ -1405,17 +1456,25 @@ namespace PresentacionWeb
                     }
                     else
                     {
+                        //cuando no haya tercer profesor
+                        //o ya está en uso
+                        //se avanzan las horas y el día de ser preciso
 
                         avanzarHoras(horasFin, materia, ref iHoraI,
                         ref iHoraF, horaFinal, ref dia, ref diaSem, dias);
                         reiniciarAulas = true;
                         primeraRondaAulas = true;
+                        //se torna false la variable segundoPorfe, para que entre en el método de
+                        //asignación o reinicio de profesor al primero
                         segundoProfe = false;
                     }
                     
                 }
                 else
                 {
+                    //cuando no hay segundo profe del todo
+                    //se avanzan las horas 
+                    //y reinicar variables importantes
                     primeraRondaAulas = true;
                     avanzarHoras(horasFin, materia, ref iHoraI,
                     ref iHoraF, horaFinal, ref dia, ref diaSem, dias);
@@ -1423,6 +1482,9 @@ namespace PresentacionWeb
             }
             else
             {
+                //aquí se evalúa la disponibilidad del grupo,
+                //se avanzan las horas el el día si ne necesita
+                //y se reinicia la primera ronda de aulas
                 primeraRondaAulas = true;
                 avanzarHoras(horasFin, materia, ref iHoraI,
                     ref iHoraF, horaFinal, ref dia, ref diaSem, dias);
