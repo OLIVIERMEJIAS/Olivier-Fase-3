@@ -169,6 +169,7 @@ namespace AccesoDatos
         /// <returns></returns>
         public EEstudiante listarDetallesPorEstudiante(int estId)
         {
+            //ESTE MÉTODO SE CAE AL NO AGUANTAR LA EXTRACCIÓN DEL DATAREADER
             EEstudiante est = new EEstudiante();
             SqlDataReader reader;
             SqlConnection conexion = new SqlConnection(CadConexion);
@@ -195,8 +196,8 @@ namespace AccesoDatos
                     est.Apellido2 = reader.GetString(6);
                     est.Email = reader.GetString(7);
                     est.Genero = reader.GetChar(8);
-                    est.FechaIngreso = reader.GetDateTime(9).Date;
-                    est.FechaNacimiento = reader.GetDateTime(10).Date;
+                    est.FechaIngreso = reader.GetDateTime(9);
+                    est.FechaNacimiento = reader.GetDateTime(10);
                     est.Distrito = reader.GetInt32(11);
                     est.DirExact = reader.GetString(12);
                     est.Activo = reader.GetBoolean(13);

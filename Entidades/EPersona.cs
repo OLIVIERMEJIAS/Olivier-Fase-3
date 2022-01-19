@@ -29,8 +29,6 @@ namespace Entidades
             Apellido2 = "";
             Genero = ' ';
             Email = "";
-            FechaIngreso = new DateTime();
-            FechaNacimiento = new DateTime();
             Distrito = 0;
             DirExact = "";
             Activo = true;

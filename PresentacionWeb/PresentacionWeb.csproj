@@ -76,7 +76,6 @@
     <Content Include="wfrCalificaciones.aspx" />
     <Content Include="wfrEliminarAsistencia.aspx" />
     <Content Include="wfrEliminarCalificaciones.aspx" />
-    <Content Include="wfrEliminarEncargado.aspx" />
     <Content Include="wfrEliminarEstudiante.aspx" />
     <Content Include="wfrEncargados.aspx" />
     <Content Include="wfrEstudiantes.aspx" />
@@ -132,13 +131,6 @@
     </Compile>
     <Compile Include="wfrEliminarCalificaciones.aspx.designer.cs">
       <DependentUpon>wfrEliminarCalificaciones.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="wfrEliminarEncargado.aspx.cs">
-      <DependentUpon>wfrEliminarEncargado.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="wfrEliminarEncargado.aspx.designer.cs">
-      <DependentUpon>wfrEliminarEncargado.aspx</DependentUpon>
     </Compile>
     <Compile Include="wfrEliminarEstudiante.aspx.cs">
       <DependentUpon>wfrEliminarEstudiante.aspx</DependentUpon>
